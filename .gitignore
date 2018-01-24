@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+CMakeFiles
+CMakeCache.txt
+*.cmake
+Makefile
+Testing
+solitare_solver
+solver_test
+test/gtest
