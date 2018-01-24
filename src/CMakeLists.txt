@@ -1,4 +1,8 @@
-set(LIB_SRCS Card.cpp)
+set(LIB_SRCS
+    Card.hpp Card.cpp
+    Deck.hpp Deck.cpp
+    Game.hpp
+    ScorpionGame.hpp ScorpionGame.cpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 

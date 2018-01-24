@@ -15,8 +15,18 @@
  */
 class Card {
 public:
+    Card();
     Card(unsigned char);
     Card(const std::string&);
+
+    Card(const Card&);
+    Card& operator=(const Card&);
+
+    void set(unsigned char);
+    void rank(unsigned char);
+    void suite(unsigned char);
+    bool upturned();
+    void turnup(bool);
 
     bool operator==(const Card&) const;
     bool operator!=(const Card&) const;
@@ -32,36 +42,5 @@ private:
 
     unsigned char card;
 };
-
-// class Card {
-// public:
-//     enum Suite {
-//         SPADE = 0, CLUB, HEART, DIAMOND
-//     };
-
-//     enum Rank {
-//         CA = 0, C2, C3, C4, C5, C6, C7, C8, C9, C0, CJ, CQ, CK
-//     };
-
-//     Card();
-//     Card(Suite, Rank);
-//     Card(Suite, Rank, bool);
-
-//     bool operator==(const Card& card) const;
-
-//     unsigned char hash() const;
-
-//     Suite suite() const;
-//     void set_suite(Suite);
-//     Rank rank() const;
-//     void set_rank(Rank);
-//     bool is_upturned() const;
-//     void turn();
-//     void turn(bool t);
-// private:
-//     Suite suite_;
-//     Rank rank_;
-//     bool upturned_;
-// };
 
 #endif

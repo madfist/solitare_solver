@@ -1,0 +1,19 @@
+{
+    "folders": [
+        {
+            "path": ".",
+            "folder_exclude_patterns": [
+                "CMakeFiles",
+                "Testing",
+                "gtest"
+            ],
+            "file_exclude_patterns": [
+                "*.cmake",
+                "CMakeCache.txt",
+                "Makefile",
+                "solitare_solver",
+                "test_solver"
+            ]
+        }
+    ]
+}
