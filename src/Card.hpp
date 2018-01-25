@@ -8,6 +8,8 @@
 
 #include <string>
 
+typedef unsigned char CardCode;
+
 /**
  * @brief Normal french cards A-2-10-J-Q-K, spade, club, heart, diamond
  *
@@ -16,16 +18,18 @@
 class Card {
 public:
     Card();
-    Card(unsigned char);
+    Card(CardCode);
     Card(const std::string&);
 
     Card(const Card&);
     Card& operator=(const Card&);
 
-    void set(unsigned char);
-    void rank(unsigned char);
-    void suite(unsigned char);
-    bool upturned();
+    void set(CardCode);
+    CardCode rank() const;
+    void rank(CardCode);
+    CardCode suite() const;
+    void suite(CardCode);
+    bool upturned() const;
     void turnup(bool);
 
     bool operator==(const Card&) const;
@@ -37,10 +41,10 @@ private:
     void parse(const std::string&);
     std::string print() const;
 
-    static unsigned char search_card(char);
+    static CardCode search_card(char);
     static char card_strings[];
 
-    unsigned char card;
+    CardCode card;
 };
 
 #endif

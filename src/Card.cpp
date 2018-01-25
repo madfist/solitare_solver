@@ -3,18 +3,18 @@
 
 char Card::card_strings[] = {'S','C','H','D','A','2','3','4','5','6','7','8','9','T','J','Q','K','_','^','X'};
 
-static const unsigned char CARD_STRINGS_SUITE_SHIFT = 4;
-static const unsigned char CARD_STRINGS_TURN_SHIFT = 17;
-static const unsigned char CARD_RANK = 0x0F;
-static const unsigned char CARD_SUITE = 0x30;
-static const unsigned char CARD_UPTURNED = 0x40;
-static const unsigned char CARD_SEPARATOR = 0x80;
-static const unsigned char CARD_SUITE_SHIFT = 4;
-static const unsigned char CARD_TURN_SHIFT = 6;
+static const CardCode CARD_STRINGS_SUITE_SHIFT = 4;
+static const CardCode CARD_STRINGS_TURN_SHIFT = 17;
+static const CardCode CARD_RANK = 0x0F;
+static const CardCode CARD_SUITE = 0x30;
+static const CardCode CARD_UPTURNED = 0x40;
+static const CardCode CARD_SEPARATOR = 0x80;
+static const CardCode CARD_SUITE_SHIFT = 4;
+static const CardCode CARD_TURN_SHIFT = 6;
 
 Card::Card() : card(0) {}
 
-Card::Card(unsigned char c) : card(c) {}
+Card::Card(CardCode c) : card(c) {}
 
 Card::Card(const std::string& cs) : card(0) {
     parse(cs);
@@ -29,21 +29,29 @@ Card& Card::operator=(const Card& c) {
     return *this;
 }
 
-void Card::set(unsigned char c) {
+void Card::set(CardCode c) {
     card = c;
 }
 
-void Card::rank(unsigned char c) {
+CardCode Card::rank() const {
+    return card & CARD_RANK;
+}
+
+void Card::rank(CardCode c) {
     card &= ~CARD_RANK;
     card |= c;
 }
 
-void Card::suite(unsigned char c) {
+CardCode Card::suite() const {
+    return (card & CARD_SUITE) >> CARD_SUITE_SHIFT;
+}
+
+void Card::suite(CardCode c) {
     card &= ~CARD_SUITE;
     card |= (c << CARD_SUITE_SHIFT);
 }
 
-bool Card::upturned() {
+bool Card::upturned() const {
     return (card & CARD_UPTURNED);
 }
 
@@ -75,8 +83,8 @@ std::string Card::print() const {
     return out;
 }
 
-unsigned char Card::search_card(char c) {
-    unsigned char i = 0;
+CardCode Card::search_card(char c) {
+    CardCode i = 0;
     while (i < 20 && c != card_strings[i++]);
     return i%20-1;
 }

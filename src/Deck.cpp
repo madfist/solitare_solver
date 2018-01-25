@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <random>
 #include <sstream>
+#include <iostream>
 
 #include "Deck.hpp"
 
@@ -71,6 +72,7 @@ std::istream& operator>>(std::istream& is, Pile& p) {
     if (line.back() == ' ') {
         line.pop_back();
     }
+    std::cout << "line " << line << std::endl;
     ss.str(line);
     while (!ss.eof()) {
         ss >> c;
