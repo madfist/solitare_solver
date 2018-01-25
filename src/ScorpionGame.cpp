@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <typeinfo>
 
 #include "ScorpionGame.hpp"
 
@@ -84,7 +86,7 @@ std::list<ScorpionStep> ScorpionGame::valid_steps() {
             auto prev = p_from.begin();
             for (auto c = p_from.begin(); c != p_from.end(); ++c) {
                 // upturn if previous step moved pile from downturned card
-                if (c->upturned()) {
+                if (!c->upturned()) {
                     if (*prev == steps.back().card) {
                         steps.back().turnedup = true;
                     }
@@ -114,23 +116,28 @@ std::list<ScorpionStep> ScorpionGame::valid_steps() {
 }
 
 bool ScorpionGame::win() {
+        std::cout << "empty_stock:" << stock.empty() << std::endl;
     if (!stock.empty())
         return false;
     for (auto p = piles.begin(); p != piles.end(); ++p) {
+        std::cout << "pile_size:" << p->size() << std::endl;
         if (p->size() > 0 && p->size() < 13)
             return false;
+        std::cout << "empty_pile:" << p->empty() << std::endl;
         if (p->empty())
             continue;
-        if (p->front().rank() != ACE)
+        std::cout << "back:" << p->back() << "." << (int)p->back().rank() << std::endl;
+        if (p->back().rank() != ACE)
             return false;
 
-        auto card = p->begin();
+        auto card = p->rbegin();
         auto prev = card++;
         do {
+            std::cout << *prev << " is_before " << *card << ":" << rules.is_before(*prev, *card) << std::endl;
             if (!rules.is_before(*prev, *card))
                 return false;
             prev = card;
-        } while (++card != p->end());
+        } while (++card != p->rend());
     }
     return true;
 }
@@ -193,11 +200,15 @@ std::ostream& operator<<(std::ostream& os, const ScorpionGame& g) {
 }
 
 std::istream& operator>>(std::istream& is, ScorpionGame& g) {
+    std::string line;
     g.for_all_piles([&] (unsigned i, Pile& p) {
-        p.clear();
-        is >> p;
+        std::getline(is, line);
+        // std::cout << "line:" << line << "e" << line.empty() << std::endl;
+        std::stringstream ss(line);
+        ss >> p;
     });
-    g.stock.clear();
-    is >> g.stock;
+    std::getline(is, line);
+    std::stringstream ss(line);
+    ss >> g.stock;
     return is;
 }

@@ -38,7 +38,7 @@ public:
     friend std::istream& operator>>(std::istream& is, Deck& d);
 private:
     std::vector<Card> deck;
-    std::vector<Card>::iterator cards_left;
+    std::vector<Card>::reverse_iterator cards_left;
 };
 
 #endif

@@ -42,3 +42,26 @@ TEST(test_card, set) {
     card.turnup(true);
     EXPECT_EQ(Card(SAU), card);
 }
+
+TEST(test_card, get) {
+    Card card(C7_);
+    EXPECT_EQ(card.rank(), 6);
+    EXPECT_EQ(card.suite(), 1);
+    EXPECT_EQ(card.upturned(), 0);
+    EXPECT_EQ(Card().rank(), 0);
+}
+
+TEST(test_card, io) {
+    std::istringstream in("CA^ HK_ D3_");
+    Card card;
+    in >> card;
+    EXPECT_EQ(card, Card("CA^"));
+    in >> card;
+    EXPECT_EQ(card, Card("HK_"));
+    in >> card;
+    EXPECT_EQ(card, Card("D3_"));
+    
+    std::stringstream out;
+    out << card;
+    EXPECT_EQ(out.str(), "D3_");
+}

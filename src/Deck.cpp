@@ -9,7 +9,7 @@ static const int DECK_SIZE = 52;
 static const int SUITE_SIZE = 4;
 static const int RANK_SIZE = 13;
 
-Deck::Deck() : deck(DECK_SIZE), cards_left(deck.begin()) {
+Deck::Deck() : deck(DECK_SIZE), cards_left(deck.rbegin()) {
     for (int r = 0; r < RANK_SIZE; ++r) {
         for (int s = 0; s < SUITE_SIZE; ++s) {
             deck[s*RANK_SIZE + r].rank(r);
@@ -19,7 +19,7 @@ Deck::Deck() : deck(DECK_SIZE), cards_left(deck.begin()) {
 }
 
 void Deck::shuffle() {
-    std::shuffle(cards_left, deck.end(), std::default_random_engine(time(NULL)));
+    std::shuffle(deck.begin(), deck.end(), std::default_random_engine(time(NULL)));
 }
 
 Pile Deck::deal(int n, bool ut) {
@@ -57,26 +57,28 @@ std::istream& operator>>(std::istream& is, Deck& d) {
 
 std::ostream& operator<<(std::ostream& os, const Pile& p) {
     if (!p.empty()) {
-        for (auto c = p.rbegin(); c != p.rend(); ++c) {
-            os << *c << " ";
+        int i = 0;
+        for (auto c = p.begin(); c != p.end(); ++c) {
+            os << *c;
+            if (i++ < p.size()-1) {
+                os << ' ';
+            }
         }
     }
     return os;
 }
 
 std::istream& operator>>(std::istream& is, Pile& p) {
-    std::string line;
-    std::stringstream ss;
     Card c;
-    std::getline(is, line);
-    if (line.back() == ' ') {
-        line.pop_back();
+    p.clear();
+    // std::cout << "peek" << is.peek() << std::endl;
+    if (is.peek() == EOF) {
+        // std::cout << "EOF" << std::endl;
+        is.get();
     }
-    std::cout << "line " << line << std::endl;
-    ss.str(line);
-    while (!ss.eof()) {
-        ss >> c;
-        p.push_front(c);
+    while (!is.eof()) {
+        is >> c;
+        p.push_back(c);
     }
     return is;
 }
