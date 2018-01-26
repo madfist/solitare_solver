@@ -35,7 +35,7 @@ Pile Deck::deal(int n, bool ut) {
 Pile Deck::deal(int nd, int nu) {
     auto pile = deal(nd + nu, true);
     int c = 0;
-    for (auto i = pile.begin(); i != pile.end() && c < nd; ++i, ++c) {
+    for (auto i = pile.rbegin(); i != pile.rend() && c < nd; ++i, ++c) {
         i->turnup(false);
     }
     return pile;
@@ -72,12 +72,11 @@ std::ostream& operator<<(std::ostream& os, const Pile& p) {
 std::istream& operator>>(std::istream& is, Pile& p) {
     Card c;
     p.clear();
-    // std::cout << "peek" << is.peek() << std::endl;
-    if (is.peek() == EOF) {
-        // std::cout << "EOF" << std::endl;
+    if (is.peek() == '\r')
         is.get();
-    }
-    while (!is.eof()) {
+    if (is.peek() == EOF)
+        is.get();
+    while (!is.eof() && is.peek() != '\r') {
         is >> c;
         p.push_front(c);
     }

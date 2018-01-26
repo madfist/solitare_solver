@@ -5,7 +5,7 @@ set(LIB_SRCS
     ScorpionGame.hpp ScorpionGame.cpp
     Rules.hpp Rules.cpp
     Solver.hpp
-    crc32.h crc32.c)
+    crc32.c)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 

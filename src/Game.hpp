@@ -7,7 +7,7 @@
 #include <algorithm>
 
 #include "Card.hpp"
-#include "crc32.h"
+extern "C" uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len);
 
 typedef std::forward_list<CardCode> GameState;
 

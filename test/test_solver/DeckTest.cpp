@@ -16,8 +16,8 @@ TEST(deck_test, deal) {
     EXPECT_EQ(Card("DQ_"), pile2.back());
     Pile pile3 = deck.deal(1, 1);
     EXPECT_EQ(2, pile3.size());
-    EXPECT_EQ(Card("D6_"), pile3.front());
-    EXPECT_EQ(Card("D7^"), pile3.back());
+    EXPECT_EQ(Card("D6^"), pile3.front());
+    EXPECT_EQ(Card("D7_"), pile3.back());
 }
 
 TEST(pile_test, io) {

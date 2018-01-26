@@ -12,7 +12,7 @@
 template<class Step>
 class Solution {
 public:
-    Solution() : steps() {}
+    Solution() : steps(), total_steps(0), taboo_hits(0) {}
     void add(const Step& s) {
         steps.push_front(s);
     }
@@ -23,6 +23,9 @@ public:
     Solution& operator--() { // this makes no sense I know, but it is fancy ;)
         ++taboo_hits;
         return *this;
+    }
+    explicit operator bool() const {
+        return !steps.empty();
     }
     Solution& finish(unsigned ml, unsigned ss, unsigned ts) {
         max_level = ml;
@@ -107,7 +110,7 @@ public:
 
                 //if we got back to ROOT => return solution
                 if (next_node_id == StepNode<Step>::ROOT)
-                    return solution.finish(max_level, nodes.size(), 0);
+                    return solution.finish(max_level, nodes.size(), taboo.size());
             }
 
             game->do_step(nodes[next_node_id].step());
@@ -121,7 +124,7 @@ public:
             next_node_id = nodes[next_node_id].root();
         } while (next_node_id != StepNode<Step>::ROOT);
 
-        return solution.finish(max_level, nodes.size(), 0);
+        return solution.finish(max_level, nodes.size(), taboo.size());
     }
 private:
     Solver();
