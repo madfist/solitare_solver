@@ -24,6 +24,7 @@ void Deck::shuffle() {
 
 Pile Deck::deal(int n, bool ut) {
     Pile pile(std::make_move_iterator(cards_left), std::make_move_iterator(cards_left + n));
+    pile.reverse();
     cards_left += n;
     for (auto i = pile.begin(); i != pile.end(); ++i) {
         i->turnup(ut);
@@ -58,7 +59,7 @@ std::istream& operator>>(std::istream& is, Deck& d) {
 std::ostream& operator<<(std::ostream& os, const Pile& p) {
     if (!p.empty()) {
         int i = 0;
-        for (auto c = p.begin(); c != p.end(); ++c) {
+        for (auto c = p.rbegin(); c != p.rend(); ++c) {
             os << *c;
             if (i++ < p.size()-1) {
                 os << ' ';
@@ -78,7 +79,7 @@ std::istream& operator>>(std::istream& is, Pile& p) {
     }
     while (!is.eof()) {
         is >> c;
-        p.push_back(c);
+        p.push_front(c);
     }
     return is;
 }

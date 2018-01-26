@@ -1,10 +1,11 @@
 set(LIB_SRCS
     Card.hpp Card.cpp
     Deck.hpp Deck.cpp
-    Game.hpp
+    Game.hpp Game.cpp
     ScorpionGame.hpp ScorpionGame.cpp
     Rules.hpp Rules.cpp
-    Solver.hpp)
+    Solver.hpp
+    crc32.h crc32.c)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 

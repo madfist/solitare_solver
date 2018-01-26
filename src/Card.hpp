@@ -10,6 +10,8 @@
 
 typedef unsigned char CardCode;
 
+std::ostream& operator<<(std::ostream&, const CardCode&);
+
 /**
  * @brief Normal french cards A-2-10-J-Q-K, spade, club, heart, diamond
  *
@@ -24,6 +26,7 @@ public:
     Card(const Card&);
     Card& operator=(const Card&);
 
+    CardCode get() const;
     void set(CardCode);
     CardCode rank() const;
     void rank(CardCode);
@@ -32,11 +35,14 @@ public:
     bool upturned() const;
     void turnup(bool);
 
+    static bool separator(CardCode);
+    static Card card_separator();
+
     bool operator==(const Card&) const;
     bool operator!=(const Card&) const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Card& c); ///< Stream output operator @param os stream @param c Card @return stream
-    friend std::istream& operator>>(std::istream& is, Card& c);       ///< Stream input operator @param is stream @param c Card @return stream
+    friend std::ostream& operator<<(std::ostream&, const Card&); ///< Stream output operator @param os stream @param c Card @return stream
+    friend std::istream& operator>>(std::istream&, Card&);       ///< Stream input operator @param is stream @param c Card @return stream
 private:
     void parse(const std::string&);
     std::string print() const;

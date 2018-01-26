@@ -24,24 +24,27 @@ std::ostream& operator<<(std::ostream&, const ScorpionStep&);
 class ScorpionGame : public Game<ScorpionStep> {
 public:
     ScorpionGame();
-    ScorpionGame(Deck& d);
+    ScorpionGame(Deck&, bool s = false);
 
     ~ScorpionGame() override {}
-    bool operator==(const Game& g) override;
-    void do_step(ScorpionStep& s) override;
-    void undo_step(ScorpionStep& s) override;
-    std::list<ScorpionStep> valid_steps() override;
-    bool win() override;
+    bool operator==(const Game&) const override;
+    bool empty() const override;
+    GameState state() const override;
+    void state(GameState&) override;
+    void do_step(ScorpionStep&) override;
+    void undo_step(ScorpionStep&) override;
+    std::list<ScorpionStep> valid_steps() const override;
+    bool win() const override;
 
-    friend std::ostream& operator<<(std::ostream& os, const ScorpionGame& g);
-    friend std::istream& operator>>(std::istream& is, ScorpionGame& g);
+    friend std::ostream& operator<<(std::ostream&, const ScorpionGame&);
+    friend std::istream& operator>>(std::istream&, ScorpionGame&);
 private:
     void deal(Deck& d);
 
     void do_stock_move();
     void undo_stock_move();
-    void do_move_and_upturn(ScorpionStep& s);
-    void undo_move_and_upturn(ScorpionStep& s);
+    void do_move_and_upturn(ScorpionStep&);
+    void undo_move_and_upturn(ScorpionStep&);
 
     bool is_four_pile_all_ace() const;
 

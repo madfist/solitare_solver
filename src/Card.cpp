@@ -29,6 +29,10 @@ Card& Card::operator=(const Card& c) {
     return *this;
 }
 
+CardCode Card::get() const {
+    return card;
+}
+
 void Card::set(CardCode c) {
     card = c;
 }
@@ -58,6 +62,14 @@ bool Card::upturned() const {
 void Card::turnup(bool ut) {
     card &= ~CARD_UPTURNED;
     card |= (ut) ? 1 << CARD_TURN_SHIFT : 0;
+}
+
+bool Card::separator(CardCode cc) {
+    return (cc & CARD_SEPARATOR);
+}
+
+Card Card::card_separator() {
+    return Card(CARD_SEPARATOR);
 }
 
 bool Card::operator==(const Card& c) const {
@@ -99,4 +111,9 @@ std::istream& operator>>(std::istream& is, Card& c) {
     is >> in;
     c.parse(in);
     return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const CardCode& cc) {
+    os << (int)cc;
+    return os;
 }

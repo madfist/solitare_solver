@@ -8,4 +8,5 @@ add_executable(solver_test ${SRCS})
 target_link_libraries(solver_test libsolver libgtest libgmock gcov)
 
 add_test(NAME solver_test
-         COMMAND solver_test)
+         COMMAND solver_test
+         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})

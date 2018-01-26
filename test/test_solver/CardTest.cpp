@@ -41,10 +41,15 @@ TEST(test_card, set) {
     EXPECT_EQ(Card(SA_), card);
     card.turnup(true);
     EXPECT_EQ(Card(SAU), card);
+
+    Card sep = Card::card_separator();
+    EXPECT_TRUE(Card::separator(sep.get()));
+    EXPECT_TRUE(!Card::separator(card.get()));
 }
 
 TEST(test_card, get) {
-    Card card(C7_);
+    Card card("C7_");
+    EXPECT_EQ(card.get(), C7_);
     EXPECT_EQ(card.rank(), 6);
     EXPECT_EQ(card.suite(), 1);
     EXPECT_EQ(card.upturned(), 0);
@@ -60,7 +65,7 @@ TEST(test_card, io) {
     EXPECT_EQ(card, Card("HK_"));
     in >> card;
     EXPECT_EQ(card, Card("D3_"));
-    
+
     std::stringstream out;
     out << card;
     EXPECT_EQ(out.str(), "D3_");

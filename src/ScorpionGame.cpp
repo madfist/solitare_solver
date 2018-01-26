@@ -23,13 +23,11 @@ std::ostream& operator<<(std::ostream& os, const ScorpionStep& s) {
     return os;
 }
 
-ScorpionGame::ScorpionGame() : piles(PILES), rules() {
-    Deck deck;
-    deck.shuffle();
-    deal(deck);
-}
+ScorpionGame::ScorpionGame() : piles(PILES), rules() {}
 
-ScorpionGame::ScorpionGame(Deck& deck) : piles(PILES), rules() {
+ScorpionGame::ScorpionGame(Deck& deck, bool s) : piles(PILES), rules() {
+    if (s)
+        deck.shuffle();
     deal(deck);
 }
 
@@ -44,7 +42,7 @@ void ScorpionGame::deal(Deck& d) {
     stock = d.deal(3, false);
 }
 
-bool ScorpionGame::operator==(const Game& g) {
+bool ScorpionGame::operator==(const Game& g) const {
     try {
         const ScorpionGame& sg = dynamic_cast<const ScorpionGame&>(g);
         bool e = true;
@@ -55,6 +53,48 @@ bool ScorpionGame::operator==(const Game& g) {
     } catch (const std::bad_cast& e) {
         return false;
     }
+}
+
+bool ScorpionGame::empty() const {
+    bool empty = true;
+    for_all_piles([&] (unsigned i, const Pile& p) {
+        empty &= p.empty();
+    });
+    return empty && stock.empty();
+}
+
+GameState ScorpionGame::state() const {
+    GameState state;
+    for_all_piles([&] (unsigned i, const Pile& p) {
+        std::for_each(p.begin(), p.end(), [&] (const Card& c) {
+            state.push_front(c.get());
+        });
+        state.push_front(Card::card_separator().get());
+    });
+    std::for_each(stock.begin(), stock.end(), [&] (const Card& c) {
+        state.push_front(c.get());
+    });
+    return state;
+}
+
+void ScorpionGame::state(GameState& gs) {
+    stock.clear();
+    CardCode cc;
+    while (!gs.empty() && !Card::separator(cc = gs.front())) {
+        stock.push_front(Card(cc));
+        gs.pop_front();
+    }
+    if (!gs.empty())
+        gs.pop_front();
+    std::for_each(piles.rbegin(), piles.rend(), [&] (Pile& p) {
+        p.clear();
+        while (!gs.empty() && !Card::separator(cc = gs.front())) {
+            p.push_front(Card(cc));
+            gs.pop_front();
+        }
+        if (!gs.empty())
+            gs.pop_front();
+    });
 }
 
 void ScorpionGame::do_step(ScorpionStep& s) {
@@ -73,7 +113,7 @@ void ScorpionGame::undo_step(ScorpionStep& s) {
     }
 }
 
-std::list<ScorpionStep> ScorpionGame::valid_steps() {
+std::list<ScorpionStep> ScorpionGame::valid_steps() const {
     std::list<ScorpionStep> steps;
     if (is_four_pile_all_ace()) {
         return steps;
@@ -91,7 +131,7 @@ std::list<ScorpionStep> ScorpionGame::valid_steps() {
                         steps.back().turnedup = true;
                     }
                     prev = c;
-                    return;
+                    continue;
                 }
                 // normal step
                 if (!p_to.empty() && rules.is_before(*c, p_to.front())) {
@@ -101,7 +141,7 @@ std::list<ScorpionStep> ScorpionGame::valid_steps() {
                 if (p_to.empty() && c->rank() == KING) {
                     // don't move already king topped pile after stock move, makes no difference
                     if (stock.empty() && p_from.back() == *c)
-                        return;
+                        continue;
                     steps.push_back(ScorpionStep(from, to, *c));
                 }
                 prev = c;
@@ -115,29 +155,24 @@ std::list<ScorpionStep> ScorpionGame::valid_steps() {
     return steps;
 }
 
-bool ScorpionGame::win() {
-        std::cout << "empty_stock:" << stock.empty() << std::endl;
+bool ScorpionGame::win() const {
     if (!stock.empty())
         return false;
     for (auto p = piles.begin(); p != piles.end(); ++p) {
-        std::cout << "pile_size:" << p->size() << std::endl;
         if (p->size() > 0 && p->size() < 13)
             return false;
-        std::cout << "empty_pile:" << p->empty() << std::endl;
         if (p->empty())
             continue;
-        std::cout << "back:" << p->back() << "." << (int)p->back().rank() << std::endl;
-        if (p->back().rank() != ACE)
+        if (p->front().rank() != ACE)
             return false;
 
-        auto card = p->rbegin();
+        auto card = p->begin();
         auto prev = card++;
         do {
-            std::cout << *prev << " is_before " << *card << ":" << rules.is_before(*prev, *card) << std::endl;
             if (!rules.is_before(*prev, *card))
                 return false;
             prev = card;
-        } while (++card != p->rend());
+        } while (++card != p->end());
     }
     return true;
 }
