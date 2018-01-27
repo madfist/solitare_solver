@@ -5,6 +5,7 @@
 #include "gmock/gmock.h"
 #include "Card.hpp"
 #include "Deck.hpp"
+#include "Game.hpp"
 
 TEST(deck_test, deal) {
     Deck deck;
@@ -18,6 +19,16 @@ TEST(deck_test, deal) {
     EXPECT_EQ(2, pile3.size());
     EXPECT_EQ(Card("D6^"), pile3.front());
     EXPECT_EQ(Card("D7_"), pile3.back());
+}
+
+TEST(deck_test, deal_f) {
+    Deck deck;
+    GameState state;
+    int i = 0;
+    deck.deal([&] (const Card& c) {
+        state.push_back(c.get());
+    });
+    EXPECT_EQ(Card("DK^"), Card(state[0]));
 }
 
 TEST(pile_test, io) {

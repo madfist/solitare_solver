@@ -9,11 +9,10 @@ static const int DECK_SIZE = 52;
 static const int SUITE_SIZE = 4;
 static const int RANK_SIZE = 13;
 
-Deck::Deck() : deck(DECK_SIZE), cards_left(deck.rbegin()) {
+Deck::Deck(bool ut) : deck(DECK_SIZE), cards_left(deck.rbegin()) {
     for (int r = 0; r < RANK_SIZE; ++r) {
         for (int s = 0; s < SUITE_SIZE; ++s) {
-            deck[s*RANK_SIZE + r].rank(r);
-            deck[s*RANK_SIZE + r].suite(s);
+            deck[s*RANK_SIZE + r].rank(r).suite(s).turnup(ut);
         }
     }
 }

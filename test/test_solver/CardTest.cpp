@@ -3,12 +3,12 @@
 #include "gtest/gtest.h"
 #include "Card.hpp"
 
-static const unsigned char SA_ = 0x00;
-static const unsigned char S7_ = 0x06;
-static const unsigned char SK_ = 0x0C;
-static const unsigned char CA_ = 0x10;
-static const unsigned char C7_ = 0x16;
-static const unsigned char SAU = 0x40;
+static const CardCode SA_ = 0x00;
+static const CardCode S7_ = 0x06;
+static const CardCode SK_ = 0x0C;
+static const CardCode CA_ = 0x10;
+static const CardCode C7_ = 0x16;
+static const CardCode SAU = 0x40;
 
 TEST(test_card, print) {
     std::stringstream ss;
@@ -17,7 +17,7 @@ TEST(test_card, print) {
 }
 
 TEST(test_card, equals) {
-    EXPECT_EQ(Card(), Card(SA_));
+    EXPECT_EQ(Card(), Card(Card::CARD_SEPARATOR));
     EXPECT_EQ(Card(CA_), Card(CA_));
     EXPECT_EQ(Card(SK_), Card("SK_"));
     EXPECT_EQ(Card(SAU), Card("SA^"));
@@ -32,19 +32,16 @@ TEST(test_card, parse) {
 }
 
 TEST(test_card, set) {
-    Card card;
-    card.rank(6);
-    EXPECT_EQ(Card(S7_), card);
-    card.suite(1);
-    EXPECT_EQ(Card(C7_), card);
-    card.set(0);
-    EXPECT_EQ(Card(SA_), card);
-    card.turnup(true);
-    EXPECT_EQ(Card(SAU), card);
+    Card card(SA_);
+    EXPECT_EQ(Card(S7_), card.rank(6));
+    EXPECT_EQ(Card(C7_), card.suite(1));
+    EXPECT_EQ(Card(SA_), card.set(0));
+    EXPECT_EQ(Card(SAU), card.turnup(true));
+    CardCode cc = SAU;
+    EXPECT_EQ(SA_, Card::turnup(cc, false));
 
-    Card sep = Card::card_separator();
-    EXPECT_TRUE(Card::separator(sep.get()));
-    EXPECT_TRUE(!Card::separator(card.get()));
+    Card sep = Card();
+    EXPECT_EQ(sep.get(), Card::CARD_SEPARATOR);
 }
 
 TEST(test_card, get) {
@@ -52,7 +49,8 @@ TEST(test_card, get) {
     EXPECT_EQ(card.get(), C7_);
     EXPECT_EQ(card.rank(), 6);
     EXPECT_EQ(card.suite(), 1);
-    EXPECT_EQ(card.upturned(), 0);
+    EXPECT_EQ(card.upturned(), false);
+    EXPECT_EQ(Card::upturned(C7_), false);
     EXPECT_EQ(Card().rank(), 0);
 }
 

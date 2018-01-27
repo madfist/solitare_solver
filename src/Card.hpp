@@ -19,27 +19,32 @@ std::ostream& operator<<(std::ostream&, const CardCode&);
  */
 class Card {
 public:
+    static const CardCode CARD_SEPARATOR;
     Card();
     Card(CardCode);
     Card(const std::string&);
 
     Card(const Card&);
     Card& operator=(const Card&);
+    Card& operator=(const CardCode&);
 
     CardCode get() const;
-    void set(CardCode);
+    Card& set(CardCode);
     CardCode rank() const;
-    void rank(CardCode);
+    Card& rank(CardCode);
     CardCode suite() const;
-    void suite(CardCode);
+    Card& suite(CardCode);
     bool upturned() const;
-    void turnup(bool);
+    Card& turnup(bool ut = true);
 
-    static bool separator(CardCode);
-    static Card card_separator();
+    static bool upturned(CardCode);
+    static CardCode& turnup(CardCode&, bool ut = true);
 
     bool operator==(const Card&) const;
     bool operator!=(const Card&) const;
+
+    explicit operator bool() const;
+    explicit operator CardCode() const;
 
     friend std::ostream& operator<<(std::ostream&, const Card&); ///< Stream output operator @param os stream @param c Card @return stream
     friend std::istream& operator>>(std::istream&, Card&);       ///< Stream input operator @param is stream @param c Card @return stream

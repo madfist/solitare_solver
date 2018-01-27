@@ -9,7 +9,7 @@
 
 TEST(solver_test, scorpion_solve_one_step) {
     auto game = test_solver::load_game<ScorpionGame>("one_step_win.scorpion.game");
-    if (game->empty())
+    if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 
     Solver<ScorpionStep> solver(game);

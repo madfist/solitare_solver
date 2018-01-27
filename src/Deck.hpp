@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <list>
+#include <algorithm>
 
 #include "Card.hpp"
 
@@ -14,7 +15,7 @@ std::istream& operator>>(std::istream& is, Pile& p);
 ///Standard 52 card deck
 class Deck {
 public:
-    Deck();
+    Deck(bool ut = true);
 
     void shuffle();
 
@@ -33,6 +34,11 @@ public:
      * @return pile of cards
      */
     Pile deal(int nd, int nu);
+
+    template<class Func>
+    Func deal(Func f) const {
+        return std::for_each(deck.rbegin(), deck.rend(), f);
+    }
 
     friend std::ostream& operator<<(std::ostream& os, const Deck& d);
     friend std::istream& operator>>(std::istream& is, Deck& d);

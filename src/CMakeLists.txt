@@ -2,14 +2,17 @@ set(LIB_SRCS
     Card.hpp Card.cpp
     Deck.hpp Deck.cpp
     Game.hpp Game.cpp
+    ScorpionStep.hpp ScorpionStep.cpp
     ScorpionGame.hpp ScorpionGame.cpp
     Rules.hpp Rules.cpp
     Solver.hpp
-    crc32.c)
+    crc32.h crc32.c)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 
 target_include_directories(libsolver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 add_executable(solitare_solver main.cpp)
 

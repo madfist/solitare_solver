@@ -23,6 +23,10 @@ bool Rules::is_before(const Card& c1, const Card& c2) const {
     return result && (c1.rank()+1 == c2.rank());
 }
 
+bool Rules::is_before(const CardCode& cc1, const CardCode& cc2) const {
+    return is_before(Card(cc1), Card(cc2));
+}
+
 bool Rules::is_alternate_suite(const CardCode& s1, const CardCode& s2) const {
     if (s1 == SPADE || s1 == CLUB) {
         return (s2 == HEART || s2 == DIAMOND);

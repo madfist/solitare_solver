@@ -98,12 +98,13 @@ public:
             } else {
                 --solution;
             }
+            // std::cout << "curr:" << current_node_id << "next:" << next_node_id << std::endl;
 
             //out of steps to take => undo until we find new steps
             if (next_node_id == nodes.size() || next_node_id == current_node_id) {
                 // undo step
                 game->undo_step(nodes[current_node_id].step());
-                level--;
+                --level;
 
                 // undo until we find a possible step to take
                 next_node_id = undo_node(current_node_id);
@@ -137,11 +138,14 @@ private:
         int last_node_id = nodes.size() + steps.size();
         int next_node_id = nodes.size() + 1;
 
+        // std::cout << "L" << level << " s:" << steps.size() << " ";
         std::for_each(steps.begin(), steps.end(), [&] (const Step& s) {
+            // std::cout << s;
             if (next_node_id == last_node_id)
                 next_node_id = StepNode<Step>::END;
             nodes.emplace_back(node_id, next_node_id++, s);
         });
+        // std::cout << " s:" << nodes.size() << "-" << steps.size() << std::endl;
 
         return nodes.size() - steps.size();
     }
@@ -179,17 +183,16 @@ private:
     }
 
     bool is_taboo() const {
-        auto t = taboo.find(game->state());
-        return (t != taboo.end());
+        return (taboo.find(game->hash()) != taboo.end());
     }
 
     void add_taboo() {
-        taboo.insert(game->state());
+        taboo.insert(game->hash());
     }
 
     GamePtr<Step> game;
     std::vector<StepNode<Step>> nodes;
-    std::unordered_set<GameState> taboo;
+    std::unordered_set<std::size_t> taboo;
     unsigned level, max_level;
 };
 

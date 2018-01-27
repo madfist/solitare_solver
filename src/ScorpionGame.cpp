@@ -1,100 +1,59 @@
 #include <iostream>
 #include <sstream>
 #include <typeinfo>
+#include <algorithm>
 
 #include "ScorpionGame.hpp"
+#include "crc32.h"
 
 static const int PILES = 7;
 static const int TURNED_PILES = 3;
+static const int PILE_SIZE = 7;
 static const int STOCK_SIZE = 3;
 static const unsigned STOCK_MOVE = 7;
+static const unsigned STOCK_PILE = 7;
+static const unsigned STATE_SIZE = 59;
 static const CardCode ACE = 0;
 static const CardCode KING = 12;
 
-ScorpionStep::ScorpionStep(unsigned f, unsigned t, const Card& c, bool u)
-    : from(f), to(t), card(c), turnedup(u) {}
+ScorpionGame::ScorpionGame() : state(), rules() {}
 
-bool ScorpionStep::is_stock_move() {
-    return (from == STOCK_MOVE && to == STOCK_MOVE);
-}
+ScorpionGame::ScorpionGame(const GameState& gs) : state(gs), rules() {}
 
-std::ostream& operator<<(std::ostream& os, const ScorpionStep& s) {
-    os << "f:" << s.from << "_t:" << s.to << "_c:" << s.card;
-    return os;
-}
-
-ScorpionGame::ScorpionGame() : piles(PILES), rules() {}
-
-ScorpionGame::ScorpionGame(Deck& deck, bool s) : piles(PILES), rules() {
+ScorpionGame::ScorpionGame(Deck& deck, bool s) : state(STATE_SIZE), rules() {
     if (s)
         deck.shuffle();
-    deal(deck);
-}
-
-void ScorpionGame::deal(Deck& d) {
-    for_all_piles([&] (unsigned i, Pile& p) {
-        if (i < TURNED_PILES) {
-            p = d.deal(2, 5);
-        } else {
-            p = d.deal(7, true);
+    int i = PILES, p = 0;
+    deck.deal([&] (const Card& c) {
+        Card card(c);
+        if ((p < TURNED_PILES && (i-PILES)%PILE_SIZE < 2) || p == PILES)
+            card.turnup(false);
+        state[i++] = card.get();
+        if ((i-PILES)%PILE_SIZE == 0) {
+            state[p++] = i;
         }
     });
-    stock = d.deal(3, false);
 }
 
 bool ScorpionGame::operator==(const Game& g) const {
     try {
         const ScorpionGame& sg = dynamic_cast<const ScorpionGame&>(g);
-        bool e = true;
-        for_all_piles([&] (unsigned i, const Pile& p) {
-            e &= std::equal(p.begin(), p.end(), sg.piles[i].begin());
-        });
-        return e && std::equal(stock.begin(), stock.end(), sg.stock.begin());
+        return std::equal(state.begin(), state.end(), sg.state.begin());
     } catch (const std::bad_cast& e) {
         return false;
     }
 }
 
-bool ScorpionGame::empty() const {
-    bool empty = true;
-    for_all_piles([&] (unsigned i, const Pile& p) {
-        empty &= p.empty();
-    });
-    return empty && stock.empty();
+ScorpionGame::operator bool() const {
+    return !state.empty();
 }
 
-GameState ScorpionGame::state() const {
-    GameState state;
-    for_all_piles([&] (unsigned i, const Pile& p) {
-        std::for_each(p.begin(), p.end(), [&] (const Card& c) {
-            state.push_front(c.get());
-        });
-        state.push_front(Card::card_separator().get());
-    });
-    std::for_each(stock.begin(), stock.end(), [&] (const Card& c) {
-        state.push_front(c.get());
-    });
-    return state;
-}
+std::size_t ScorpionGame::hash() const {
+    if (sizeof(std::size_t) == 8)
+        return crc64c(0, state.data(), STATE_SIZE);
+    else
+        return crc32c(0, state.data(), STATE_SIZE);
 
-void ScorpionGame::state(GameState& gs) {
-    stock.clear();
-    CardCode cc;
-    while (!gs.empty() && !Card::separator(cc = gs.front())) {
-        stock.push_front(Card(cc));
-        gs.pop_front();
-    }
-    if (!gs.empty())
-        gs.pop_front();
-    std::for_each(piles.rbegin(), piles.rend(), [&] (Pile& p) {
-        p.clear();
-        while (!gs.empty() && !Card::separator(cc = gs.front())) {
-            p.push_front(Card(cc));
-            gs.pop_front();
-        }
-        if (!gs.empty())
-            gs.pop_front();
-    });
 }
 
 void ScorpionGame::do_step(ScorpionStep& s) {
@@ -113,137 +72,220 @@ void ScorpionGame::undo_step(ScorpionStep& s) {
     }
 }
 
-std::list<ScorpionStep> ScorpionGame::valid_steps() const {
-    std::list<ScorpionStep> steps;
-    if (is_four_pile_all_ace()) {
-        return steps;
-    }
-
-    for_all_piles([&] (unsigned from, const Pile& p_from) {
-        for_all_piles([&] (unsigned to, const Pile& p_to) {
-            if (from == to)
-                return;
-            auto prev = p_from.begin();
-            for (auto c = p_from.begin(); c != p_from.end(); ++c) {
-                // upturn if previous step moved pile from downturned card
-                if (!c->upturned()) {
-                    if (*prev == steps.back().card) {
-                        steps.back().turnedup = true;
-                    }
-                    prev = c;
+std::vector<ScorpionStep> ScorpionGame::valid_steps() const {
+    std::vector<ScorpionStep> steps;
+    // std::cout << "valid:" << steps.size() << std::endl;
+    if (!is_four_pile_all_ace()) {
+        for (unsigned from = 0; from < PILES; ++from) {
+            for (unsigned to = 0; to < PILES; ++to) {
+                if (from == to || pile_empty(from) || Card(state[pile_top(to)]).rank() == ACE)
                     continue;
-                }
-                // normal step
-                if (!p_to.empty() && rules.is_before(*c, p_to.front())) {
-                    steps.push_back(ScorpionStep(from, to, *c));
-                }
-                // king step
-                if (p_to.empty() && c->rank() == KING) {
-                    // don't move already king topped pile after stock move, makes no difference
-                    if (stock.empty() && p_from.back() == *c)
+                // std::cout << from+1 << "->" << to+1 << ": ";
+                unsigned prev = pile_bottom(from);
+                for (unsigned i = pile_top(from); i >= pile_bottom(from); --i) {
+                    // std::cout <<  Card(state[i]) << " - " << Card(state[pile_top(to)]) << " ";
+                    if (!Card::upturned(state[i])) {
+                        if (!steps.empty() && state[prev] == steps.back().card_code()) {
+                            steps.back().turned_up(true);
+                        }
+                        prev = i;
                         continue;
-                    steps.push_back(ScorpionStep(from, to, *c));
+                    }
+                    // normal step
+                    if (!pile_empty(to) && rules.is_before(state[i], state[pile_top(to)])) {
+                        steps.push_back(ScorpionStep(state[i], from, to, i - pile_bottom(from), pile_size(to)));
+                        // std::cout << "add step:" << steps.back() << " s:" << steps.size() << std::endl;
+                    }
+                    // king step
+                    if (pile_empty(to) && Card(state[i]).rank() == KING) {
+                        // don't move already king topped pile after stock move, makes no difference
+                        if (pile_empty(STOCK_PILE) && state[i] == state[pile_bottom(from)])
+                            continue;
+                        steps.push_back(ScorpionStep(state[i], from, to, i - pile_bottom(from), pile_size(to)));
+                        // std::cout << "add step:" << steps.back() << " s:" << steps.size() << std::endl;
+                    }
+                    prev = i;
                 }
-                prev = c;
+                // std::cout << std::endl;
             }
-        });
-    });
-    // stock move
-    if (!stock.empty()) {
-        steps.push_back(ScorpionStep(STOCK_MOVE, STOCK_MOVE, stock.front()));
+        }
+        // stock move
+        if (!pile_empty(STOCK_PILE))
+            steps.push_back(ScorpionStep(ScorpionStep::STOCK_MOVE));
     }
+    // std::cout << "valid:" << steps.size() << std::endl;
     return steps;
 }
 
 bool ScorpionGame::win() const {
-    if (!stock.empty())
+    if (!pile_empty(STOCK_PILE))
         return false;
-    for (auto p = piles.begin(); p != piles.end(); ++p) {
-        if (p->size() > 0 && p->size() < 13)
+    for (unsigned p = 0; p < PILES; ++p) {
+        // std::cout << " p" << state[p] << " z" << pile_size(p) << " e" << pile_empty(p) << " c" << Card(state[pile_top(p)]) << std::endl;
+        if (pile_size(p) > 0 && pile_size(p) < 13)
             return false;
-        if (p->empty())
+        if (pile_empty(p))
             continue;
-        if (p->front().rank() != ACE)
+        if (Card(state[pile_top(p)]).rank() != ACE)
             return false;
-
-        auto card = p->begin();
-        auto prev = card++;
+        unsigned card = pile_top(p);
+        unsigned prev = card--;
         do {
-            if (!rules.is_before(*prev, *card))
+            if (!rules.is_before(state[prev], state[card]))
                 return false;
             prev = card;
-        } while (++card != p->end());
+        } while (--card != pile_bottom(p));
     }
     return true;
 }
 
 void ScorpionGame::do_stock_move() {
-    for (int i = 0; i < STOCK_SIZE; ++i) {
-        stock.front().turnup(true);
-        piles[i].splice(piles[i].begin(), stock, stock.begin());
-    }
+    unsigned end0 = pile_size(0);
+    unsigned end1 = pile_size(1);
+    unsigned end2 = pile_size(2);
+    // std::cout << "[" << end0 << ", " << end1 << ", " << end2 << "]" << std::endl;
+    move_cards_forward(STOCK_PILE, 2, 0, end2);
+    move_cards_forward(2, 1, end2+1, end1);
+    move_cards_forward(1, 0, end1+1, end0);
+    for (unsigned i = 0; i < TURNED_PILES; ++i)
+        Card::turnup(state[pile_top(i)]);
 }
 
 void ScorpionGame::undo_stock_move() {
-    for (int i = 0; i < STOCK_SIZE; ++i) {
-        piles[i].front().turnup(false);
-        stock.splice(stock.end(), piles[i], piles[i].begin());
-    }
+    for (unsigned i = 0; i < TURNED_PILES; ++i)
+        Card::turnup(state[pile_top(i)], false);
+    unsigned end0 = pile_size(0);
+    unsigned end1 = pile_size(1);
+    unsigned end2 = pile_size(2);
+    // std::cout << "[" << end0 << ", " << end1 << ", " << end2 << "]" << std::endl;
+    move_cards_backward(0, 1, end0-1, end1);
+    move_cards_backward(1, 2, end1-1, end2);
+    move_cards_backward(2, STOCK_PILE, end2-1, 0);
 }
 
 void ScorpionGame::do_move_and_upturn(ScorpionStep& s) {
-    for (auto c = piles[s.from].begin(); c != piles[s.from].end(); ++c) {
-        if (*c == s.card) {
-            piles[s.to].splice(piles[s.to].begin(), piles[s.from], piles[s.from].begin(), ++c);
-            if (s.turnedup) {
-                piles[s.from].front().turnup(true);
-            }
-            return;
-        }
+    if (s.pile_from() < s.pile_to()) {
+        move_cards_backward(s.pile_from(), s.pile_to(), s.card_pos(), s.new_pos());
+    } else {
+        move_cards_forward(s.pile_from(), s.pile_to(), s.card_pos(), s.new_pos());
+    }
+    if (s.turned_up()) {
+        Card::turnup(state[pile_bottom(s.pile_from()) + s.card_pos() - 1]);
     }
 }
 
 void ScorpionGame::undo_move_and_upturn(ScorpionStep& s) {
-    for (auto c = piles[s.to].begin(); c != piles[s.to].end(); ++c) {
-        if (*c == s.card) {
-            if (s.turnedup) {
-                piles[s.from].front().turnup(false);
-            }
-            piles[s.from].splice(piles[s.from].begin(), piles[s.to], piles[s.to].begin(), ++c);
-            return;
-        }
+    unsigned first, middle, last, diff;
+    if (s.pile_from() < s.pile_to()) {
+        move_cards_forward(s.pile_to(), s.pile_from(), s.new_pos(), s.card_pos());
+    } else {
+        move_cards_backward(s.pile_to(), s.pile_from(), s.new_pos(), s.card_pos());
+    }
+    if (s.turned_up()) {
+        Card::turnup(state[pile_bottom(s.pile_from()) + s.card_pos() - 1], false);
     }
 }
 
 bool ScorpionGame::is_four_pile_all_ace() const {
-    int n_pile = 0, n_ace = 0;
-    for_all_piles([&] (unsigned i, const Pile& p) {
-        if (!p.empty()) {
+    unsigned n_pile = 0, n_ace = 0, prev_pile = state[0];
+    for (unsigned p = 1, prev = state[0]; p < PILES; prev = state[p++]) {
+        if (state[p] > prev) {
             n_pile++;
-            n_ace += (p.front().rank() == ACE) ? 1 : 0;
+            n_ace += (Card(state[pile_top(p)]).rank() == ACE) ? 1 : 0;
         }
-    });
-    return (n_pile == 4 && n_ace == 4 && stock.empty());
+    }
+}
+
+bool ScorpionGame::pile_empty(unsigned p) const {
+    if (p == 0)
+        return (state[p] == PILES);
+    if (p == STOCK_PILE)
+        return (state[p-1] == STATE_SIZE);
+    return state[p] == state[p-1];
+}
+
+unsigned ScorpionGame::pile_size(unsigned p) const {
+    return pile_top(p) - pile_bottom(p) + 1;
+}
+
+unsigned ScorpionGame::pile_bottom(unsigned n) const {
+    return (n == 0) ? PILES : state[n-1];
+}
+
+unsigned ScorpionGame::pile_top(unsigned n) const {
+    return (n == STOCK_PILE) ? STATE_SIZE-1 : state[n]-1;
+}
+
+void ScorpionGame::move_cards_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
+    unsigned first, middle, last, diff;
+    first = pile_bottom(from) + card_pos;
+    middle = pile_top(from) + 1;
+    last = pile_bottom(to) + new_pos;
+    diff = middle - first;
+    // std::cout << "mb f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+
+    auto st = state.begin();
+    std::rotate(st + first, st + middle, st + last);
+
+    for (unsigned p = from; p < to; ++p)
+        state[p] -= diff;
+}
+
+void ScorpionGame::move_cards_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
+    unsigned first, middle, last, diff;
+    first = pile_bottom(to) + new_pos;
+    middle = pile_bottom(from) + card_pos;
+    last = pile_top(from) + 1;
+    diff = last - middle;
+    // std::cout << "mf f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+
+    auto st = state.begin();
+    std::rotate(st + first, st + middle, st + last);
+
+    for (unsigned p = to; p < from; ++p)
+        state[p] += diff;
 }
 
 std::ostream& operator<<(std::ostream& os, const ScorpionGame& g) {
-    g.for_all_piles([&] (unsigned i, const Pile& p) {
-        os << p << std::endl;
-    });
-    os << g.stock;
+    unsigned i = PILES;
+    for (unsigned p = 0; p < PILES; ++p) {
+        std::cout << p+1 << ":";
+        for (; i < g.state[p]; ++i) {
+            os << Card(g.state[i]);
+            if (i < g.state[p] - 1)
+                os << " ";
+        }
+        os << std::endl;
+    }
+    os << "S:";
+    for (; i<STATE_SIZE; ++i) {
+        os << Card(g.state[i]);
+        if (i < STATE_SIZE - 1)
+            os << " ";
+    }
     return os;
 }
 
 std::istream& operator>>(std::istream& is, ScorpionGame& g) {
-    std::string line;
-    g.for_all_piles([&] (unsigned i, Pile& p) {
+    g.state.clear();
+    g.state.resize(STATE_SIZE);
+    unsigned i = PILES;
+    for (unsigned p = 0; p <= PILES; ++p) {
+        std::string line;
         std::getline(is, line);
-        // std::cout << "line:" << line << "e" << line.empty() << std::endl;
         std::stringstream ss(line);
-        ss >> p;
-    });
-    std::getline(is, line);
-    std::stringstream ss(line);
-    ss >> g.stock;
+
+        if (ss.peek() == '\r')
+            ss.get();
+        if (ss.peek() == EOF)
+            ss.get();
+        while(!ss.eof() && ss.peek() != '\r') {
+            Card c;
+            ss >> c;
+            g.state[i++] = c.get();
+        }
+        if (p < PILES)
+            g.state[p] = i;
+    }
     return is;
 }

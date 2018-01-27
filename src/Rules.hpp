@@ -17,6 +17,7 @@ public:
     Rules(SuiteOrder, RankOrder);
 
     bool is_before(const Card&, const Card&) const;
+    bool is_before(const CardCode&, const CardCode&) const;
 
 private:
     bool is_alternate_suite(const CardCode&, const CardCode&) const;
