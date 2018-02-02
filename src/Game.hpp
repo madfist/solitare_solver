@@ -15,13 +15,14 @@ template<class Step>
 class Game {
 public:
     virtual ~Game() {}
-    virtual bool operator==(const Game& g) const = 0;
-    virtual explicit operator bool() const = 0;
-    virtual std::size_t hash() const = 0;
-    virtual void do_step(Step& s) = 0;
-    virtual void undo_step(Step& s) = 0;
-    virtual std::vector<Step> valid_steps() const = 0;
-    virtual bool win() const = 0;
+    virtual bool operator==(const Game& g) const = 0; ///< Compare games on state level
+    virtual explicit operator bool() const = 0; ///< Tells if the game is set up
+    virtual std::size_t hash() const = 0; ///< Hash value for the game state (CRC32/CRC64)
+    virtual void do_step(Step& s) = 0; ///< Take a step
+    virtual void undo_step(Step& s) = 0; ///< Undo a step
+    virtual std::vector<Step> valid_steps() const = 0; ///< Gather the possible steps from the current state
+    virtual bool win() const = 0; ///< Tells if the game is in a win state
+    virtual bool sanity() const = 0; ///< Tells if it even worth trying to solve the game
 };
 
 template<class Step>

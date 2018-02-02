@@ -2,6 +2,7 @@
 #define SOLITARE_SOLVER_RULES_HEADER
 
 #include "Card.hpp"
+#include <vector>
 
 class Rules {
 public:
@@ -18,6 +19,9 @@ public:
 
     bool is_before(const Card&, const Card&) const;
     bool is_before(const CardCode&, const CardCode&) const;
+
+    std::vector<Card> next(const Card&) const;
+    std::vector<CardCode> next(const CardCode&) const;
 
 private:
     bool is_alternate_suite(const CardCode&, const CardCode&) const;

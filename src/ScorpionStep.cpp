@@ -68,7 +68,7 @@ std::ostream& operator<<(std::ostream& os, const ScorpionStep& s) {
         return os;
     }
     os << "[" << Card(s.card_code()) << ":"  << s.pile_from() + 1 << "->" << s.pile_to() + 1 << "]";
-    os << "{" << s.turned_up() << ", " << s.card_pos() << ", " << s.new_pos() << "}";
-    os << "(" << std::hex << s.data << std::dec << ")";
+    // os << "{" << s.turned_up() << ", " << s.card_pos() << ", " << s.new_pos() << "}";
+    // os << "(" << std::hex << s.data << std::dec << ")";
     return os;
 }

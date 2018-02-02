@@ -106,3 +106,17 @@ TEST(scorpion_game_test, win) {
 
     EXPECT_TRUE(game->win());
 }
+
+TEST(scorpion_game_test, sanity) {
+    auto game = test_solver::load_game<ScorpionGame>("one_stock_step_win.scorpion.game");
+    if (! *game)
+        FAIL() << "Cannot load game data" << std::endl;
+
+    EXPECT_TRUE(game->sanity());
+
+    game = test_solver::load_game<ScorpionGame>("insane.scorpion.game");
+    if (! *game)
+        FAIL() << "Cannot load game data" << std::endl;
+
+    EXPECT_TRUE(!game->sanity());
+}

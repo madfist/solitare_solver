@@ -33,6 +33,9 @@ public:
         taboo_tree_size = ts;
         return *this;
     }
+    bool insane() const {
+        return total_steps == 0;
+    }
     friend std::ostream& operator<<(std::ostream& os, const Solution<Step>& s) {
         os << "Total steps taken: " << s.total_steps << std::endl;
         os << "Taboo hits: " << s.taboo_hits << std::endl;
@@ -87,6 +90,8 @@ public:
      */
     Solution<Step> solve() {
         Solution<Step> solution;
+        if (!game->sanity())
+            return solution.finish(0, 0, 0);
         int current_node_id = StepNode<Step>::ROOT;
         int next_node_id = 0;
         int i = 0;

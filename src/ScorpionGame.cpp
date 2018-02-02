@@ -6,10 +6,11 @@
 #include "ScorpionGame.hpp"
 #include "crc32.h"
 
-static const int PILES = 7;
-static const int TURNED_PILES = 3;
-static const int PILE_SIZE = 7;
-static const int STOCK_SIZE = 3;
+static const unsigned PILES = 7;
+static const unsigned TURNED_PILES = 3;
+static const unsigned DOWN_TURNED_CARDS = 2;
+static const unsigned PILE_SIZE = 7;
+static const unsigned STOCK_SIZE = 3;
 static const unsigned STOCK_MOVE = 7;
 static const unsigned STOCK_PILE = 7;
 static const unsigned STATE_SIZE = 59;
@@ -26,7 +27,7 @@ ScorpionGame::ScorpionGame(Deck& deck, bool s) : state(STATE_SIZE), rules() {
     int i = PILES, p = 0;
     deck.deal([&] (const Card& c) {
         Card card(c);
-        if ((p < TURNED_PILES && (i-PILES)%PILE_SIZE < 2) || p == PILES)
+        if ((p < TURNED_PILES && (i-PILES)%PILE_SIZE < DOWN_TURNED_CARDS) || p == PILES)
             card.turnup(false);
         state[i++] = card.get();
         if ((i-PILES)%PILE_SIZE == 0) {
@@ -139,6 +140,10 @@ bool ScorpionGame::win() const {
     return true;
 }
 
+bool ScorpionGame::sanity() const {
+    return !deadlock();
+}
+
 void ScorpionGame::do_stock_move() {
     unsigned end0 = pile_size(0);
     unsigned end1 = pile_size(1);
@@ -246,6 +251,71 @@ void ScorpionGame::move_cards_forward(unsigned from, unsigned to, unsigned card_
         state[p] += diff;
 }
 
+bool ScorpionGame::deadlock() const {
+    GameState temp_state(state);
+    unsigned p = 0;
+    for (unsigned i = PILES; i < STATE_SIZE; ++i) {
+        // std::cout << "CHECK:" << Card(temp_state[i]) << std::endl;
+        if (!Card::upturned(temp_state[i]))
+            continue;
+        if (i == pile_top(p)) {
+            ++p;
+            continue;
+        }
+        if (rules.is_before(temp_state[i+1], temp_state[i]) || Card(temp_state[i+1]).rank() == KING)
+            continue;
+        // std::cout << "  FLOW:" << Card(temp_state[i]) << Card(temp_state[i+1]);
+        unsigned next_pos = find_card(rules.next(temp_state[i+1])[0]);
+        while (temp_state[i] != temp_state[next_pos]) {
+            // std::cout << Card(temp_state[next_pos]);
+            if (!Card::upturned(temp_state[next_pos]))
+                break;
+            bool at_pile_top = false;
+            for (unsigned p = 0; p < PILES; ++p)
+                at_pile_top |= (next_pos == pile_top(p));
+            if (at_pile_top)
+                break;
+            if (Card(temp_state[next_pos+1]).rank() == KING)
+                break;
+            // std::cout << Card(temp_state[next_pos+1]);
+            next_pos = find_card(rules.next(temp_state[next_pos+1])[0]);
+        }
+        // std::cout << std::endl;
+        if (temp_state[i] == temp_state[next_pos]) {
+            std::cout << "DEADLOCK " << Card(state[i]) << std::endl;
+            return true;
+        }
+    }
+    // std::cout << "END_STATE:" << temp_state << std::endl;
+    return false;
+}
+
+unsigned ScorpionGame::find_card(const CardCode& cc) const {
+    for (unsigned i = 0; i < STATE_SIZE; ++i) {
+        if (state[i] == cc)
+            return i;
+    }
+}
+
+unsigned ScorpionGame::locked_down_turned() const {
+    unsigned result = 0;
+    GameState down_turned_cards;
+    for (unsigned p = 0; p < TURNED_PILES; ++p) {
+        for (unsigned i = 0; i < DOWN_TURNED_CARDS; ++i) {
+            CardCode cc = state[pile_bottom(p) + i];
+            if (!Card::upturned(cc))
+                down_turned_cards.push_back(cc);
+        }
+    }
+    for (unsigned p = 0; p < TURNED_PILES; ++p) {
+        for (unsigned i = 0; i < TURNED_PILES*DOWN_TURNED_CARDS; ++i) {
+            if (rules.is_before(state[pile_bottom(p) + DOWN_TURNED_CARDS], down_turned_cards[i]))
+                result++;
+        }
+    }
+    return result;
+}
+
 std::ostream& operator<<(std::ostream& os, const ScorpionGame& g) {
     unsigned i = PILES;
     for (unsigned p = 0; p < PILES; ++p) {
@@ -273,6 +343,8 @@ std::istream& operator>>(std::istream& is, ScorpionGame& g) {
     for (unsigned p = 0; p <= PILES; ++p) {
         std::string line;
         std::getline(is, line);
+        if (line.find(':') != std::string::npos)
+            line = line.substr(2, line.length()-2);
         std::stringstream ss(line);
 
         if (ss.peek() == '\r')
