@@ -1,5 +1,5 @@
-#ifndef SOLITARE_SOLVER_SCORPION_STEP_HEADER
-#define SOLITARE_SOLVER_SCORPION_STEP_HEADER
+#ifndef SOLITARE_SOLVER_KLONDIKE_STEP_HEADER
+#define SOLITARE_SOLVER_KLONDIKE_STEP_HEADER
 
 #include <array>
 
@@ -9,12 +9,12 @@
 /*
  * Step information
  *
- * 32bit: [0-7 CardCode][8-10 From][11-13 To][14 TurnedUp][15][16-21 CardPos][22-23][24-29 NewCardPos][30][31 StockMove]
+ * 32bit: [0-7 CardCode][8-11 From][12-15 To][16 TurnedUp][17-22 CardPos][23][24-29 NewCardPos][30][31 StockMove]
  */
-class ScorpionStep : public SingleVectorPileStep {
+class KlondikeStep : public SingleVectorPileStep {
 public:
-    ScorpionStep(uint32_t);
-    ScorpionStep(CardCode, unsigned, unsigned, unsigned, unsigned);
+    KlondikeStep(uint32_t);
+    KlondikeStep(CardCode, unsigned, unsigned, unsigned, unsigned);
 
     static const uint32_t STOCK_MOVE;
 private:

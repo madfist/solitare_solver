@@ -5,12 +5,12 @@
 #include "Deck.hpp"
 #include "Rules.hpp"
 #include "ScorpionStep.hpp"
+#include "SingleVectorGameState.hpp"
 
 class ScorpionGame : public Game<ScorpionStep> {
 public:
     ScorpionGame();
-    ScorpionGame(const GameState&);
-    ScorpionGame(Deck&, bool s = false);
+    ScorpionGame(Deck&, bool shuffle = false);
 
     ~ScorpionGame() override {}
     bool operator==(const Game&) const override;
@@ -32,17 +32,10 @@ private:
     void undo_move_and_upturn(ScorpionStep&);
 
     bool is_four_pile_all_ace() const;
-    bool pile_empty(unsigned) const;
-    unsigned pile_size(unsigned) const;
-    unsigned pile_bottom(unsigned) const;
-    unsigned pile_top(unsigned) const;
-    void move_cards_backward(unsigned, unsigned, unsigned, unsigned);
-    void move_cards_forward(unsigned, unsigned, unsigned, unsigned);
     bool deadlock() const;
-    unsigned find_card(const CardCode&) const;
     unsigned locked_down_turned() const;
 
-    GameState state;
+    SingleVectorGameState state;
     Rules rules;
 };
 

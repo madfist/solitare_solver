@@ -21,10 +21,10 @@ TEST(scorpion_game_test, from_deck) {
     Deck deck;
     ScorpionGame game(deck);
 
-    GameState positions(game.state.begin(), game.state.begin()+7);
+    GameState positions(game.state.state.begin(), game.state.state.begin()+7);
     EXPECT_THAT(positions, testing::ElementsAre(14, 21, 28, 35, 42, 49, 56));
 
-    GameState firstthree(game.state.begin()+7, game.state.begin()+10);
+    GameState firstthree(game.state.state.begin()+7, game.state.state.begin()+10);
     EXPECT_THAT(firstthree, testing::ElementsAre(Card("DK_").get(), Card("DQ_").get(), Card("DJ^").get()));
 }
 
@@ -33,10 +33,10 @@ TEST(scorpion_game_test, io) {
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 
-    GameState positions(game->state.begin(), game->state.begin()+7);
+    GameState positions(game->state.state.begin(), game->state.state.begin()+7);
     EXPECT_THAT(positions, testing::ElementsAre(8, 20, 33, 46, 59, 59, 59));
 
-    GameState firstthree(game->state.begin()+7, game->state.begin()+10);
+    GameState firstthree(game->state.state.begin()+7, game->state.state.begin()+10);
     EXPECT_THAT(firstthree, testing::ElementsAre(Card("SA^").get(), Card("SK^").get(), Card("SQ^").get()));
 
     // std::cout << "game:" << std::endl << *game << std::endl;

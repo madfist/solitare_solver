@@ -5,8 +5,14 @@ set(LIB_SRCS
     ScorpionStep.hpp ScorpionStep.cpp
     ScorpionGame.hpp ScorpionGame.cpp
     Rules.hpp Rules.cpp
+    Solution.hpp
     Solver.hpp
-    crc32.h crc32.c)
+    Log.hpp Log.cpp
+    crc.hpp crc.cpp
+    SingleVectorGameState.hpp SingleVectorGameState.cpp
+    SingleVectorPileStep.hpp SingleVectorPileStep.cpp
+    KlondikeGame.hpp KlondikeGame.cpp
+    KlondikeStep.hpp KlondikeStep.cpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 

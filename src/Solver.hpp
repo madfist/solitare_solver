@@ -1,82 +1,15 @@
 #ifndef SOLITARE_SOLVER_SOLVER_HEADER
 #define SOLITARE_SOLVER_SOLVER_HEADER
 
-#include <forward_list>
 #include <iostream>
 #include <algorithm>
 #include <vector>
 #include <unordered_set>
 
 #include "Game.hpp"
-
-template<class Step>
-class Solution {
-public:
-    Solution() : steps(), total_steps(0), taboo_hits(0) {}
-    void add(const Step& s) {
-        steps.push_front(s);
-    }
-    Solution& operator++() {
-        ++total_steps;
-        return *this;
-    }
-    Solution& operator--() { // this makes no sense I know, but it is fancy ;)
-        ++taboo_hits;
-        return *this;
-    }
-    explicit operator bool() const {
-        return !steps.empty();
-    }
-    Solution& finish(unsigned ml, unsigned ss, unsigned ts) {
-        max_level = ml;
-        step_tree_size = ss;
-        taboo_tree_size = ts;
-        return *this;
-    }
-    bool insane() const {
-        return total_steps == 0;
-    }
-    friend std::ostream& operator<<(std::ostream& os, const Solution<Step>& s) {
-        os << "Total steps taken: " << s.total_steps << std::endl;
-        os << "Taboo hits: " << s.taboo_hits << std::endl;
-        os << "Maximum depth: " << s.max_level << std::endl;
-        os << "Step tree size: " << s.step_tree_size << std::endl;
-        os << "Taboo tree size: " << s.taboo_tree_size << std::endl;
-        if (s.steps.empty()) {
-            os << "No solution";
-            return os;
-        }
-        std::for_each(s.steps.begin(), s.steps.end(), [&] (const Step& step) {
-            os << step << " ";
-        });
-        return os;
-    }
-private:
-    unsigned total_steps;
-    unsigned taboo_hits;
-    unsigned max_level;
-    unsigned step_tree_size;
-    unsigned taboo_tree_size;
-    std::forward_list<Step> steps;
-};
-
-template<class Step>
-class StepNode {
-public:
-    static int ROOT;
-    static int END;
-    StepNode(int r, int n, const Step& s) : root_(r), next_(n), step_(s) {}
-    int root() { return root_; }
-    int next() { return next_; }
-    Step& step() { return step_; }
-private:
-    int root_;
-    int next_;
-    Step step_;
-};
-
-template<class Step> int StepNode<Step>::ROOT = -2;
-template<class Step> int StepNode<Step>::END = -1;
+#include "Solution.hpp"
+#include "StepNode.hpp"
+#include "Log.hpp"
 
 template<class Step>
 class Solver {
@@ -103,7 +36,7 @@ public:
             } else {
                 --solution;
             }
-            // std::cout << "curr:" << current_node_id << "next:" << next_node_id << std::endl;
+            Log(Log::DEBUG) << "curr:" << current_node_id << "next:" << next_node_id;
 
             //out of steps to take => undo until we find new steps
             if (next_node_id == nodes.size() || next_node_id == current_node_id) {
@@ -139,18 +72,19 @@ private:
 
     /// Adds new node with new valid steps as leaves
     int next_node(int node_id) {
+        Log log(Log::DEBUG);
         auto steps = game->valid_steps();
         int last_node_id = nodes.size() + steps.size();
         int next_node_id = nodes.size() + 1;
 
-        // std::cout << "L" << level << " s:" << steps.size() << " ";
+        log << "L" << level << " s:" << steps.size() << " ";
         std::for_each(steps.begin(), steps.end(), [&] (const Step& s) {
-            // std::cout << s;
+            log << s;
             if (next_node_id == last_node_id)
                 next_node_id = StepNode<Step>::END;
             nodes.emplace_back(node_id, next_node_id++, s);
         });
-        // std::cout << " s:" << nodes.size() << "-" << steps.size() << std::endl;
+        log << " s:" << nodes.size() << "-" << steps.size();
 
         return nodes.size() - steps.size();
     }

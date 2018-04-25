@@ -6,8 +6,10 @@
 #include "Deck.hpp"
 #include "ScorpionGame.hpp"
 #include "Solver.hpp"
+#include "Log.hpp"
 
 int main(int argc, char *argv[]) {
+    Log::set_level(Log::INFO);
     Deck deck;
     auto game = std::make_shared<ScorpionGame>(deck, true);
     if (argc > 1) {
@@ -18,14 +20,14 @@ int main(int argc, char *argv[]) {
         in.close();
     }
 
-    std::cout << *game << std::endl;
+    Log(Log::INFO) << *game;
 
     Solver<ScorpionStep> solver(game);
     auto solution = solver.solve();
 
-    std::cout << solution << std::endl;
+    Log(Log::INFO) << solution;
     if (solution) {
-        std::cout << "YEAH " << std::endl;
+        Log(Log::INFO) << "YEAH";
     }
     return 0;
 }
