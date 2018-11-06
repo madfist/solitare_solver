@@ -5,14 +5,18 @@
             "folder_exclude_patterns": [
                 "CMakeFiles",
                 "Testing",
+                "external",
+                "bin",
+                "lib",
                 "gtest"
             ],
             "file_exclude_patterns": [
-                "*.cmake",
+                "cmake_install.cmake",
+                "CTestTestfile.cmake",
                 "CMakeCache.txt",
                 "Makefile",
                 "solitare_solver",
-                "test_solver"
+                "solver_test"
             ]
         }
     ]

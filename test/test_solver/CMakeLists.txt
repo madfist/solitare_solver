@@ -5,7 +5,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-cove
 
 add_executable(solver_test ${SRCS})
 
-target_link_libraries(solver_test libsolver libgtest libgmock gcov)
+target_link_libraries(solver_test libsolver gtest gmock_main gcov)
 
 add_test(NAME solver_test
          COMMAND solver_test
