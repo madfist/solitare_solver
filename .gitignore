@@ -33,9 +33,12 @@
 
 CMakeFiles
 CMakeCache.txt
-*.cmake
+cmake_install.cmake
+CTestTestfile.cmake
 Makefile
 Testing
 solitare_solver
 solver_test
 test/gtest
+test/external
+solitare_solver.sublime-workspace

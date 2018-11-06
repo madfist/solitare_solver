@@ -46,6 +46,7 @@ TEST(scorpion_game_test, valid_steps) {
     auto game = test_solver::load_game<ScorpionGame>("one_step_win.scorpion.game");
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
+    // std::cout << *game << std::endl;
     // std::cout << game->state << std::endl;
 
     auto steps = game->valid_steps();

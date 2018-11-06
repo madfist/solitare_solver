@@ -17,7 +17,7 @@ static const unsigned STATE_SIZE = 59; // 52 card + 7 index values for pile_star
 static const CardCode ACE = 0;
 static const CardCode KING = 12;
 
-ScorpionGame::ScorpionGame() : state(), rules() {}
+ScorpionGame::ScorpionGame() : state(STATE_SIZE, PILES), rules() {}
 
 ScorpionGame::ScorpionGame(Deck& deck, bool shuffle) : state(STATE_SIZE, PILES), rules() {
     if (shuffle)
@@ -79,6 +79,7 @@ std::vector<ScorpionStep> ScorpionGame::valid_steps() const {
                 unsigned prev = state.pile_bottom(from);
                 for (unsigned i = state.pile_top(from); i >= state.pile_bottom(from); --i) {
                     // std::cout <<  Card(state[i]) << " - " << Card(state[state.pile_top(to)]) << " ";
+                    // std::cout << state.pile_top(from) << " " << state.pile_bottom(from) << " " << i << std::endl;
                     if (!Card::upturned(state[i])) {
                         if (!steps.empty() && state[prev] == steps.back().card_code()) {
                             steps.back().turned_up(true);
@@ -192,6 +193,7 @@ bool ScorpionGame::is_four_pile_all_ace() const {
             n_ace += (Card(state[state.pile_top(p)]).rank() == ACE) ? 1 : 0;
         }
     }
+    return (n_pile == 4 && n_ace == 4 && state.pile_empty(STOCK_PILE));
 }
 
 bool ScorpionGame::deadlock() const {
@@ -273,7 +275,7 @@ std::ostream& operator<<(std::ostream& os, const ScorpionGame& g) {
 }
 
 std::istream& operator>>(std::istream& is, ScorpionGame& g) {
-    g.state.reset();
+    g.state.reset(STATE_SIZE);
     unsigned i = PILES;
     for (unsigned p = 0; p <= PILES; ++p) {
         std::string line;

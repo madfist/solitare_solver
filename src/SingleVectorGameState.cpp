@@ -1,6 +1,7 @@
 #include "SingleVectorGameState.hpp"
 #include "crc.hpp"
 #include <algorithm>
+#include <numeric>
 
 SingleVectorGameState::SingleVectorGameState() : state(), last_pile(0) {}
 
@@ -23,7 +24,7 @@ bool SingleVectorGameState::operator==(const SingleVectorGameState& s) const {
 }
 
 SingleVectorGameState::operator bool() const {
-    return !state.empty();
+    return !state.empty() && std::accumulate(state.begin(), state.end(), 0);
 }
 
 std::size_t SingleVectorGameState::hash() const {
@@ -34,6 +35,11 @@ void SingleVectorGameState::reset() {
     std::size_t s = state.size();
     state.clear();
     state.resize(s);
+}
+
+void SingleVectorGameState::reset(std::size_t size) {
+    state.clear();
+    state.resize(size);
 }
 
 bool SingleVectorGameState::pile_empty(unsigned p) const {
@@ -91,6 +97,7 @@ unsigned SingleVectorGameState::find_card(const CardCode& cc) const {
         if (state[i] == cc)
             return i;
     }
+    return Card::CARD_SEPARATOR;
 }
 
 std::ostream& operator<<(std::ostream &os, const SingleVectorGameState &gs) {

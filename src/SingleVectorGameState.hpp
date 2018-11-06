@@ -21,6 +21,7 @@ public:
 
     std::size_t hash() const;
     void reset();
+    void reset(std::size_t);
     bool pile_empty(unsigned) const;
     unsigned pile_size(unsigned) const;
     unsigned pile_bottom(unsigned) const;
