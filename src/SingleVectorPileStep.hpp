@@ -1,6 +1,10 @@
 #ifndef SOLITARE_SOLVER_SINGLE_VECTOR_PILE_STEP_HEADER
 #define SOLITARE_SOLVER_SINGLE_VECTOR_PILE_STEP_HEADER
 
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
 #include "Card.hpp"
 
 class SingleVectorPileStep {
@@ -29,5 +33,14 @@ private:
 
     uint32_t data;
 };
+
+template<class Step>
+std::ostream& operator<<(std::ostream& os, const std::vector<Step>& ss) {
+    std::for_each(ss.begin(), ss.end() - 1, [&] (const Step& s) {
+        os << s << '\n';
+    });
+    os << ss.back();
+    return os;
+}
 
 #endif

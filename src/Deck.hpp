@@ -40,6 +40,10 @@ public:
         return std::for_each(deck.rbegin(), deck.rend(), f);
     }
 
+    static const unsigned DECK_SIZE;
+    static const unsigned SUITE_SIZE;
+    static const unsigned RANK_SIZE;
+
     friend std::ostream& operator<<(std::ostream& os, const Deck& d);
     friend std::istream& operator>>(std::istream& is, Deck& d);
 private:

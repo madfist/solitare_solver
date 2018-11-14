@@ -5,7 +5,7 @@
 
 SingleVectorGameState::SingleVectorGameState() : state(), last_pile(0) {}
 
-SingleVectorGameState::SingleVectorGameState(unsigned state_size, unsigned piles) : state(state_size), last_pile(piles) {}
+SingleVectorGameState::SingleVectorGameState(unsigned state_size, unsigned piles) : state(state_size), last_pile(piles - 1) {}
 
 SingleVectorGameState::SingleVectorGameState(const SingleVectorGameState& s) : state(s.state), last_pile(s.last_pile) {}
 
@@ -37,9 +37,10 @@ void SingleVectorGameState::reset() {
     state.resize(s);
 }
 
-void SingleVectorGameState::reset(std::size_t size) {
+void SingleVectorGameState::reset(unsigned size, unsigned p) {
     state.clear();
     state.resize(size);
+    last_pile = p - 1;
 }
 
 bool SingleVectorGameState::pile_empty(unsigned p) const {
@@ -62,6 +63,7 @@ unsigned SingleVectorGameState::pile_top(unsigned p) const {
     return (p == last_pile) ? state.size()-1 : state[p]-1;
 }
 
+/// Move cards towards the back of the vector
 void SingleVectorGameState::move_cards_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
     first = pile_bottom(from) + card_pos;
@@ -77,6 +79,7 @@ void SingleVectorGameState::move_cards_backward(unsigned from, unsigned to, unsi
         state[p] -= diff;
 }
 
+/// Move cards towards the front of the vector
 void SingleVectorGameState::move_cards_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
     first = pile_bottom(to) + new_pos;
@@ -100,9 +103,32 @@ unsigned SingleVectorGameState::find_card(const CardCode& cc) const {
     return Card::CARD_SEPARATOR;
 }
 
+unsigned SingleVectorGameState::first_card_pos() const {
+    return last_pile;
+}
+
 std::ostream& operator<<(std::ostream &os, const SingleVectorGameState &gs) {
     for (auto cc = gs.state.begin(); cc != gs.state.end(); ++cc) {
-        os << "[" << *cc << "]";
+        os << '[' << *cc << ']';
     }
     return os;
+}
+
+PrettyPrintWrapper operator<<(std::ostream& os, PrettyPrint) {
+    return PrettyPrintWrapper(os);
+}
+
+std::ostream& operator<<(PrettyPrintWrapper ppw, const SingleVectorGameState& gs) {
+    unsigned i = gs.last_pile;
+    for (unsigned p = 0; p <= gs.last_pile; ++p) {
+        ppw.output_stream << p+1 << ":";
+        for (; i < gs.state.size() && i < gs[p]; ++i) {
+            ppw.output_stream << Card(gs[i]);
+            if (i < gs[p] - 1)
+                ppw.output_stream << ' ';
+        }
+        if (p < gs.last_pile)
+            ppw.output_stream << '\n';
+    }
+    return ppw.output_stream;
 }

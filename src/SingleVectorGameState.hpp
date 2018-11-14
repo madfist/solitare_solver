@@ -6,6 +6,16 @@
 
 #include "Card.hpp"
 
+class PrettyPrintWrapper {
+public:
+    PrettyPrintWrapper(std::ostream& os): output_stream(os) {}
+    std::ostream& output_stream;
+};
+
+struct PrettyPrint {};
+
+PrettyPrintWrapper operator<<(std::ostream& os, PrettyPrint);
+
 class SingleVectorGameState {
 public:
     SingleVectorGameState();
@@ -21,7 +31,7 @@ public:
 
     std::size_t hash() const;
     void reset();
-    void reset(std::size_t);
+    void reset(unsigned, unsigned);
     bool pile_empty(unsigned) const;
     unsigned pile_size(unsigned) const;
     unsigned pile_bottom(unsigned) const;
@@ -29,8 +39,11 @@ public:
     void move_cards_backward(unsigned, unsigned, unsigned, unsigned);
     void move_cards_forward(unsigned, unsigned, unsigned, unsigned);
     unsigned find_card(const CardCode&) const;
+    unsigned first_card_pos() const;
 
+    std::ostream& pretty_print(std::ostream&);
     friend std::ostream& operator<<(std::ostream&, const SingleVectorGameState&);
+    friend std::ostream& operator<<(PrettyPrintWrapper, const SingleVectorGameState&);
 private:
     std::vector<CardCode> state;
     unsigned last_pile;

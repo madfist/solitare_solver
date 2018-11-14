@@ -5,9 +5,9 @@
 
 #include "Deck.hpp"
 
-static const int DECK_SIZE = 52;
-static const int SUITE_SIZE = 4;
-static const int RANK_SIZE = 13;
+const unsigned Deck::DECK_SIZE = 52;
+const unsigned Deck::SUITE_SIZE = 4;
+const unsigned Deck::RANK_SIZE = 13;
 
 Deck::Deck(bool ut) : deck(DECK_SIZE), cards_left(deck.rbegin()) {
     for (int r = 0; r < RANK_SIZE; ++r) {

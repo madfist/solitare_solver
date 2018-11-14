@@ -50,15 +50,15 @@ TEST(scorpion_game_test, valid_steps) {
     // std::cout << game->state << std::endl;
 
     auto steps = game->valid_steps();
+    // std::cout << steps << std::endl;
+
     EXPECT_EQ(steps.size(), 1);
     EXPECT_EQ(steps.front().card_code(), Card("SA^").get());
     EXPECT_EQ(steps.front().pile_from(), 0);
     EXPECT_EQ(steps.front().pile_to(), 1);
     // std::cout << *game << std::endl;
 
-    // std::for_each(steps.begin(), steps.end(), [] (const ScorpionStep& s) {
-        // std::cout << s << std::endl;
-    // });
+    // std::cout << steps << std::endl;
     auto hash = game->hash();
 
     EXPECT_TRUE(!game->win());

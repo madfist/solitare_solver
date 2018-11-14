@@ -1,6 +1,8 @@
 #ifndef SOLITARE_SOLVER_TEST_UTILS_HEADER
 #define SOLITARE_SOLVER_TEST_UTILS_HEADER
 
+#include <fstream>
+
 #include "Game.hpp"
 
 namespace test_solver {
