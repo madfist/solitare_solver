@@ -16,8 +16,8 @@ public:
     bool operator==(const Game&) const override;
     explicit operator bool() const override;
     std::size_t hash() const override;
-    void do_step(ScorpionStep&) override;
-    void undo_step(ScorpionStep&) override;
+    void do_step(const ScorpionStep&) override;
+    void undo_step(const ScorpionStep&) override;
     std::vector<ScorpionStep> valid_steps() const override;
     bool win() const override;
     bool sanity() const override;
@@ -28,8 +28,8 @@ public:
 private:
     void do_stock_move();
     void undo_stock_move();
-    void do_move_and_upturn(ScorpionStep&);
-    void undo_move_and_upturn(ScorpionStep&);
+    void do_move_and_upturn(const ScorpionStep&);
+    void undo_move_and_upturn(const ScorpionStep&);
 
     bool is_four_pile_all_ace() const;
     bool deadlock() const;

@@ -5,6 +5,7 @@
 #include <ostream>
 
 #include "Card.hpp"
+#include "SingleVectorPileStep.hpp"
 
 class PrettyPrintWrapper {
 public:
@@ -29,15 +30,45 @@ public:
     bool operator==(const SingleVectorGameState&) const;
     explicit operator bool() const;
 
+    class Pile {
+    public:
+        Pile(const SingleVectorGameState&, unsigned);
+
+        CardCode bottom(unsigned offset = 0) const;
+        CardCode top(unsigned offset = 0) const;
+        unsigned size() const;
+        bool empty() const;
+
+        template<class Func>
+        void top_to_bottom(Func f) const {
+            for (unsigned i = ref.pile_top(pile_no); i >= ref.pile_bottom(pile_no); --i) {
+                f(i, ref[i]);
+            }
+        }
+    private:
+        unsigned pile_no;
+        const SingleVectorGameState& ref;
+    };
+
+    const Pile operator()(unsigned) const;
+
     std::size_t hash() const;
     void reset();
     void reset(unsigned, unsigned);
+
     bool pile_empty(unsigned) const;
     unsigned pile_size(unsigned) const;
     unsigned pile_bottom(unsigned) const;
     unsigned pile_top(unsigned) const;
+
+    void do_move_and_upturn(const SingleVectorPileStep& s);
+    void undo_move_and_upturn(const SingleVectorPileStep& s);
+
     void move_cards_backward(unsigned, unsigned, unsigned, unsigned);
     void move_cards_forward(unsigned, unsigned, unsigned, unsigned);
+    void move_single_card_backward(unsigned, unsigned, unsigned, unsigned);
+    void move_single_card_forward(unsigned, unsigned, unsigned, unsigned);
+
     unsigned find_card(const CardCode&) const;
     unsigned first_card_pos() const;
 

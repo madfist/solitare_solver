@@ -9,8 +9,8 @@
 #undef private
 
 TEST(klondike_game_test, empty) {
-	KlondikeGame game;
-	EXPECT_TRUE(!game);
+    KlondikeGame game;
+    EXPECT_TRUE(!game);
 }
 
 TEST(klondike_game_test, from_deck) {
@@ -36,4 +36,22 @@ TEST(klondike_game_test, win) {
     // std::cout << *game << std::endl;
 
     EXPECT_TRUE(game->win());
+
+    auto game2 = test_solver::load_game<KlondikeGame>("win2.klondike.game");
+    if (! *game2)
+        FAIL() << "Cannot load game data" << std::endl;
+    // std::cout << *game << std::endl;
+
+    EXPECT_TRUE(game2->win());
+}
+
+TEST(klondike_game_test, valid_steps) {
+    auto game = test_solver::load_game<KlondikeGame>("win3.klondike.game");
+    std::cout << *game << std::endl;
+    auto steps = game->valid_steps();
+    std::cout << steps << std::endl;
+    game->do_step(steps.front());
+    std::cout << *game << std::endl;
+    game->undo_step(steps.front());
+    std::cout << *game << std::endl;
 }

@@ -52,7 +52,7 @@ std::size_t ScorpionGame::hash() const {
     return state.hash();
 }
 
-void ScorpionGame::do_step(ScorpionStep& s) {
+void ScorpionGame::do_step(const ScorpionStep& s) {
     if (s.is_stock_move()) {
         do_stock_move();
     } else {
@@ -60,7 +60,7 @@ void ScorpionGame::do_step(ScorpionStep& s) {
     }
 }
 
-void ScorpionGame::undo_step(ScorpionStep& s) {
+void ScorpionGame::undo_step(const ScorpionStep& s) {
     if (s.is_stock_move()) {
         undo_stock_move();
     } else {
@@ -165,7 +165,7 @@ void ScorpionGame::undo_stock_move() {
     state.move_cards_backward(2, STOCK_PILE, end2-1, 0);
 }
 
-void ScorpionGame::do_move_and_upturn(ScorpionStep& s) {
+void ScorpionGame::do_move_and_upturn(const ScorpionStep& s) {
     if (s.pile_from() < s.pile_to()) {
         state.move_cards_backward(s.pile_from(), s.pile_to(), s.card_pos(), s.new_pos());
     } else {
@@ -176,7 +176,7 @@ void ScorpionGame::do_move_and_upturn(ScorpionStep& s) {
     }
 }
 
-void ScorpionGame::undo_move_and_upturn(ScorpionStep& s) {
+void ScorpionGame::undo_move_and_upturn(const ScorpionStep& s) {
     if (s.pile_from() < s.pile_to()) {
         state.move_cards_forward(s.pile_to(), s.pile_from(), s.new_pos(), s.card_pos());
     } else {

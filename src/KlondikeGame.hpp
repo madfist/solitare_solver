@@ -16,8 +16,8 @@ public:
     bool operator==(const Game&) const override;
     explicit operator bool() const override;
     std::size_t hash() const override;
-    void do_step(KlondikeStep&) override;
-    void undo_step(KlondikeStep&) override;
+    void do_step(const KlondikeStep&) override;
+    void undo_step(const KlondikeStep&) override;
     std::vector<KlondikeStep> valid_steps() const override;
     bool win() const override;
     bool sanity() const override;

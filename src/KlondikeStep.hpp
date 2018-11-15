@@ -14,7 +14,7 @@
 class KlondikeStep : public SingleVectorPileStep {
 public:
     KlondikeStep(uint32_t);
-    KlondikeStep(CardCode, unsigned, unsigned, unsigned, unsigned);
+    KlondikeStep(CardCode, unsigned, unsigned, unsigned, unsigned, bool s = false);
 
     static const uint32_t STOCK_MOVE;
 private:

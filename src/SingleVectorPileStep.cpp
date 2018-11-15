@@ -5,7 +5,7 @@
 SingleVectorPileStep::SingleVectorPileStep(uint32_t d) : data(d) {}
 
 bool SingleVectorPileStep::is_stock_move() const {
-    return (data == mask(STOCK_STEP));
+    return (data & mask(STOCK_STEP));
 }
 
 CardCode SingleVectorPileStep::card_code() const {
@@ -42,9 +42,10 @@ void SingleVectorPileStep::init(uint32_t d) {
 }
 
 std::ostream& operator<<(std::ostream& os, const SingleVectorPileStep& s) {
-    if (s.data == s.mask(SingleVectorPileStep::STOCK_STEP)) {
+    if (s.is_stock_move()) {
         os << "STOCK_MOVE";
-        return os;
+        if (!s.card_code())
+            return os;
     }
     os << "[" << Card(s.card_code()) << ":"  << s.pile_from() + 1 << "->" << s.pile_to() + 1 << "]";
     // os << "{" << s.turned_up() << ", " << s.card_pos() << ", " << s.new_pos() << "}";

@@ -63,6 +63,28 @@ unsigned SingleVectorGameState::pile_top(unsigned p) const {
     return (p == last_pile) ? state.size()-1 : state[p]-1;
 }
 
+const SingleVectorGameState::Pile SingleVectorGameState::operator()(unsigned p) const {
+    return Pile(*this, p);
+}
+
+SingleVectorGameState::Pile::Pile(const SingleVectorGameState& s, unsigned p) : ref(s), pile_no(p) {}
+
+CardCode SingleVectorGameState::Pile::bottom(unsigned offset) const {
+    return ref[ref.pile_bottom(pile_no) + offset];
+}
+
+CardCode SingleVectorGameState::Pile::top(unsigned offset) const {
+    return ref[ref.pile_top(pile_no) - offset];
+}
+
+unsigned SingleVectorGameState::Pile::size() const {
+    return ref.pile_size(pile_no);
+}
+
+bool SingleVectorGameState::Pile::empty() const {
+    return ref.pile_empty(pile_no);
+}
+
 /// Move cards towards the back of the vector
 void SingleVectorGameState::move_cards_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
@@ -93,6 +115,60 @@ void SingleVectorGameState::move_cards_forward(unsigned from, unsigned to, unsig
 
     for (unsigned p = to; p < from; ++p)
         state[p] += diff;
+}
+
+/// Move cards towards the back of the vector
+void SingleVectorGameState::move_single_card_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
+    unsigned first, middle, last, diff;
+    first = pile_bottom(from) + card_pos;
+    middle = first + 1;
+    last = pile_bottom(to) + new_pos;
+    diff = middle - first;
+    // std::cout << "mb f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+
+    auto st = state.begin();
+    std::rotate(st + first, st + middle, st + last);
+
+    for (unsigned p = from; p < to; ++p)
+        state[p] -= diff;
+}
+
+/// Move cards towards the front of the vector
+void SingleVectorGameState::move_single_card_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
+    unsigned first, middle, last, diff;
+    first = pile_bottom(to) + new_pos;
+    middle = first + 1;
+    last = pile_top(from) + 1;
+    diff = last - middle;
+    // std::cout << "mf f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+
+    auto st = state.begin();
+    std::rotate(st + first, st + middle, st + last);
+
+    for (unsigned p = to; p < from; ++p)
+        state[p] += diff;
+}
+
+void SingleVectorGameState::do_move_and_upturn(const SingleVectorPileStep& s) {
+    if (s.pile_from() < s.pile_to()) {
+        move_cards_backward(s.pile_from(), s.pile_to(), s.card_pos(), s.new_pos());
+    } else {
+        move_cards_forward(s.pile_from(), s.pile_to(), s.card_pos(), s.new_pos());
+    }
+    if (s.turned_up()) {
+        Card::turnup(state[pile_bottom(s.pile_from()) + s.card_pos() - 1]);
+    }
+}
+
+void SingleVectorGameState::undo_move_and_upturn(const SingleVectorPileStep& s) {
+    if (s.pile_from() < s.pile_to()) {
+        move_cards_forward(s.pile_to(), s.pile_from(), s.new_pos(), s.card_pos());
+    } else {
+        move_cards_backward(s.pile_to(), s.pile_from(), s.new_pos(), s.card_pos());
+    }
+    if (s.turned_up()) {
+        Card::turnup(state[pile_bottom(s.pile_from()) + s.card_pos() - 1], false);
+    }
 }
 
 unsigned SingleVectorGameState::find_card(const CardCode& cc) const {
