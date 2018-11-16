@@ -39,6 +39,7 @@ Makefile
 Testing
 solitare_solver
 solver_test
+src/external
 test/gtest
 test/external
 solitare_solver.sublime-workspace

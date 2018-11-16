@@ -18,13 +18,16 @@ public:
     bool turned_up() const;
     unsigned card_pos() const;
     unsigned new_pos() const;
+    unsigned weight() const;
 
     void turned_up(bool);
+
+    bool operator<(const SingleVectorPileStep&) const;
 
     friend std::ostream& operator<<(std::ostream&, const SingleVectorPileStep&);
 protected:
     enum MaskElement {
-        CARD_CODE = 0, PILE_FROM, PILE_TO, TURNED_UP, CARD_POS, NEW_POS, STOCK_STEP
+        CARD_CODE = 0, PILE_FROM, PILE_TO, TURNED_UP, CARD_POS, NEW_POS, STOCK_STEP, WEIGHT
     };
     void init(uint32_t);
 private:

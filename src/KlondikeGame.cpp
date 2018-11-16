@@ -43,7 +43,6 @@ KlondikeGame::KlondikeGame(Deck& deck, bool shuffle /*false*/)
                 state[pile++] = dealt + state.first_card_pos();
             }
             // STOCK
-            card.turnup(false);
             state[i++] = card.get();
         }
     });
@@ -83,57 +82,55 @@ void KlondikeGame::undo_step(const KlondikeStep& s) {
 }
 
 std::vector<KlondikeStep> KlondikeGame::valid_steps() const {
-    std::vector<KlondikeStep> game_steps;
-    std::vector<KlondikeStep> foundation_steps;
-    std::vector<KlondikeStep> stock_steps;
+    std::vector<KlondikeStep> steps;
 
-    for (unsigned from = 0; from < GAME_PILES; ++from) {
-        // game step
-        for (unsigned to = 0; to < GAME_PILES; ++to) {
-            if (from == to || state(from).empty())
+    for (pile from = 0; from < ALL_PILES; ++from) {
+        for (pile to = 0; to < GAME_PILES + FOUNDATION_PILES; ++to) {
+            if (from == to || state(from).empty() || (from >= GAME_PILES && from != STOCK_PILE && to >= GAME_PILES))
                 continue;
-            for (unsigned i = state.pile_top(from); i >= state.pile_bottom(from); --i) {
-                // step between game piles
-                if (!state(to).empty() && pile_rules.is_before(state[i], state(to).top())) {
-                    game_steps.emplace_back(state[i], from, to, i - state.pile_bottom(from), state(to).size());
+            state(from).top_to_bottom([&](unsigned i, const CardCode& cc) {
+                unsigned weight = 3;
+                bool step_found = false;
+                if (!Card::upturned(cc) || (i < state.pile_top(from) && to >= GAME_PILES))
+                    return;
+                // king/ace step
+                if (state(to).empty()) {
+                    if (Card(cc).rank() == KING && to < GAME_PILES) {
+                        // don't move kings between empty piles
+                        if (cc == state(from).bottom())
+                            return;
+                        weight = 2;
+                        step_found = true;
+                    }
+                    else if (Card(cc).rank() == ACE && to >= GAME_PILES) {
+                        // don't move aces to more than one empty pile
+                        if (to - 1 >= GAME_PILES && state(to - 1).empty())
+                            return;
+                        weight = 3;
+                        step_found = true;
+                    }
                 }
-                // king step
-                if (state(to).empty() && Card(state[i]).rank() == KING) {
-                    // don't move already king topped pile
-                    if (state[i] == state(from).bottom())
-                        continue;
-                    game_steps.emplace_back(state[i], from, to, i - state(from).bottom(), state(to).size());
+                // normal step
+                else {
+                    step_found = (to < GAME_PILES && pile_rules.is_before(state[i], state(to).top())) || (to >= GAME_PILES && foundation_rules.is_before(state(to).top(), state(from).top()));
+                    if (i > state.pile_bottom(from) && Card(state[i-1]).rank() == Card(state(to).top()).rank() || from >= GAME_PILES) {
+                        weight = 0;
+                    }
+                    else if (to >= GAME_PILES){
+                        weight = 2;
+                    }
                 }
-                if (!game_steps.empty() && i > state.pile_bottom(from) && !Card::upturned(state[i-1]) && state[i] == game_steps.back().card_code())
-                    game_steps.back().turned_up(true);
-            }
-        }
-        // foundation step
-        bool ace_up = false;
-        for (unsigned to = GAME_PILES; to < GAME_PILES + FOUNDATION_PILES; ++to) {
-            if (!state(to).empty() && foundation_rules.is_before(state(to).top(), state(from).top())) {
-                foundation_steps.emplace_back(state(from).top(), from, to, state(from).size() - 1, state(to).size());
-            }
-            if (!ace_up && Card(state(from).top()).rank() == ACE && state(to).empty()) {
-                ace_up = true;
-                foundation_steps.emplace_back(state(from).top(), from, to, state(from).size() - 1, state(to).size());
-            }
-            if (!foundation_steps.empty() && foundation_steps.back().card_code() == state(from).top() && state(from).size() > 1 && !Card::upturned(state(from).top(1)))
-                foundation_steps.back().turned_up(true);
+                if (step_found) {
+                    steps.emplace_back(cc, from, to, i - state.pile_bottom(from), state(to).size(), (from == STOCK_PILE) ? 2 : weight, (from == STOCK_PILE));
+                    if (i > state.pile_bottom(from) && !Card::upturned(state[i-1]) && state[i] == steps.back().card_code())
+                        steps.back().turned_up(true);
+                }
+            });
         }
     }
-    // stock step
-    state(STOCK_PILE).top_to_bottom([&](unsigned i, const CardCode& cc) {
-        for (unsigned to = 0; to < GAME_PILES; ++to) {
-            if (!state(to).empty() && pile_rules.is_before(cc, state(to).top())) {
-                stock_steps.emplace_back(cc, STOCK_PILE, to, i - state(STOCK_PILE).bottom(), state(to).size(), true);
-            }
-        }
-    });
-    //combine
-    game_steps.insert(game_steps.end(), std::make_move_iterator(foundation_steps.begin()), std::make_move_iterator(foundation_steps.end()));
-    game_steps.insert(game_steps.end(), std::make_move_iterator(stock_steps.begin()), std::make_move_iterator(stock_steps.end()));
-    return game_steps;
+
+    std::sort(steps.begin(), steps.end());
+    return steps;
 }
 
 bool KlondikeGame::win() const {
@@ -156,38 +153,38 @@ bool KlondikeGame::sanity() const {
     return true;
 }
 
-std::ostream& operator<<(std::ostream& os, const KlondikeGame& g) {
-    unsigned i = g.state.first_card_pos();
+std::ostream& KlondikeGame::print(std::ostream& os) const {
+    unsigned i = state.first_card_pos();
     for (unsigned p = 0; p < GAME_PILES; ++p) {
         std::cout << " " << p+1 << ":";
-        for (; i < g.state[p]; ++i) {
-            os << Card(g.state[i]);
-            if (i < g.state[p] - 1)
+        for (; i < state[p]; ++i) {
+            os << Card(state[i]);
+            if (i < state[p] - 1)
                 os << " ";
         }
         os << '\n';
     }
     for (unsigned p = GAME_PILES; p < GAME_PILES + FOUNDATION_PILES; ++p) {
         std::cout << "F" << p+1-GAME_PILES << ":";
-        for (; i < g.state[p]; ++i) {
-            os << Card(g.state[i]);
-            if (i < g.state[p] - 1)
+        for (; i < state[p]; ++i) {
+            os << Card(state[i]);
+            if (i < state[p] - 1)
                 os << " ";
         }
         os << '\n';
     }
     os << " S:";
     for (; i<STATE_SIZE; ++i) {
-        os << Card(g.state[i]);
+        os << Card(state[i]);
         if (i < STATE_SIZE - 1)
             os << " ";
     }
     return os;
 }
 
-std::istream& operator>>(std::istream& is, KlondikeGame& g) {
-    g.state.reset(STATE_SIZE, ALL_PILES);
-    unsigned i = g.state.first_card_pos();
+std::istream& KlondikeGame::read(std::istream& is) {
+    state.reset(STATE_SIZE, ALL_PILES);
+    unsigned i = state.first_card_pos();
     for (unsigned p = 0; p <= GAME_PILES + FOUNDATION_PILES; ++p) {
         std::string line;
         std::getline(is, line);
@@ -202,10 +199,18 @@ std::istream& operator>>(std::istream& is, KlondikeGame& g) {
         while(!ss.eof() && ss.peek() != '\r') {
             Card c;
             ss >> c;
-            g.state[i++] = c.get();
+            state[i++] = c.get();
         }
         if (p < GAME_PILES + FOUNDATION_PILES)
-            g.state[p] = i;
+            state[p] = i;
     }
     return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const KlondikeGame& g) {
+    return g.print(os);
+}
+
+std::istream& operator>>(std::istream& is, KlondikeGame& g) {
+    return g.read(is);
 }

@@ -53,6 +53,7 @@ public:
             }
 
             game->do_step(nodes[next_node_id].step());
+            Log(Log::DEBUG) << *game << std::endl;
             ++level;
             current_node_id = next_node_id;
             max_level = std::max(level, max_level);
@@ -116,6 +117,7 @@ private:
             // set next node to try
             next_node_id = nodes[node_root].next();
         }
+        Log(Log::DEBUG) << "undo: " << nodes[node_root].step() << std::endl;
         game->undo_step(nodes[node_root].step());
         --level;
         return next_node_id;

@@ -32,9 +32,18 @@ unsigned SingleVectorPileStep::new_pos() const {
     return (data & mask(NEW_POS)) >> shift(NEW_POS);
 }
 
+unsigned SingleVectorPileStep::weight() const {
+    return (data & mask(WEIGHT)) >> shift(WEIGHT);
+}
+
 void SingleVectorPileStep::turned_up(bool ut) {
     data &= ~mask(TURNED_UP);
     data |= (ut) ? 1 << shift(TURNED_UP) : 0;
+}
+
+bool SingleVectorPileStep::operator<(const SingleVectorPileStep& s) const {
+    // sorry about this but I need descending order on weights
+    return weight() > s.weight();
 }
 
 void SingleVectorPileStep::init(uint32_t d) {
@@ -47,7 +56,7 @@ std::ostream& operator<<(std::ostream& os, const SingleVectorPileStep& s) {
         if (!s.card_code())
             return os;
     }
-    os << "[" << Card(s.card_code()) << ":"  << s.pile_from() + 1 << "->" << s.pile_to() + 1 << "]";
+    os << "[" << Card(s.card_code()) << ":"  << s.pile_from() + 1 << "->" << s.pile_to() + 1 << "]" << s.weight() << ";";
     // os << "{" << s.turned_up() << ", " << s.card_pos() << ", " << s.new_pos() << "}";
     // os << "(" << std::hex << s.data << std::dec << ")";
     return os;

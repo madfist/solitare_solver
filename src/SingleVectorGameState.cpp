@@ -85,6 +85,18 @@ bool SingleVectorGameState::Pile::empty() const {
     return ref.pile_empty(pile_no);
 }
 
+void SingleVectorGameState::Pile::top_to_bottom(CardCodeFn f) const {
+    for (unsigned i = ref.pile_top(pile_no); i >= ref.pile_bottom(pile_no); --i) {
+        f(i, ref[i]);
+    }
+}
+
+void SingleVectorGameState::Pile::top_to_bottom(CardFn f) const {
+    for (unsigned i = ref.pile_top(pile_no); i >= ref.pile_bottom(pile_no); --i) {
+        f(i, Card(ref[i]));
+    }
+}
+
 /// Move cards towards the back of the vector
 void SingleVectorGameState::move_cards_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
@@ -137,8 +149,8 @@ void SingleVectorGameState::move_single_card_backward(unsigned from, unsigned to
 void SingleVectorGameState::move_single_card_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
     first = pile_bottom(to) + new_pos;
-    middle = first + 1;
-    last = pile_top(from) + 1;
+    middle = pile_bottom(from) + card_pos;
+    last = middle + 1;
     diff = last - middle;
     // std::cout << "mf f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
 

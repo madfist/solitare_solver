@@ -256,29 +256,29 @@ unsigned ScorpionGame::locked_down_turned() const {
     return result;
 }
 
-std::ostream& operator<<(std::ostream& os, const ScorpionGame& g) {
-    unsigned i = g.state.first_card_pos();
+std::ostream& ScorpionGame::print(std::ostream& os) const {
+    unsigned i = state.first_card_pos();
     for (unsigned p = 0; p < GAME_PILES; ++p) {
         os << p+1 << ":";
-        for (; i < g.state[p]; ++i) {
-            os << Card(g.state[i]);
-            if (i < g.state[p] - 1)
+        for (; i < state[p]; ++i) {
+            os << Card(state[i]);
+            if (i < state[p] - 1)
                 os << " ";
         }
         os << '\n';
     }
     os << "S:";
     for (; i<STATE_SIZE; ++i) {
-        os << Card(g.state[i]);
+        os << Card(state[i]);
         if (i < STATE_SIZE - 1)
             os << " ";
     }
     return os;
 }
 
-std::istream& operator>>(std::istream& is, ScorpionGame& g) {
-    g.state.reset(STATE_SIZE, PILES);
-    unsigned i = g.state.first_card_pos();
+std::istream& ScorpionGame::read(std::istream& is) {
+    state.reset(STATE_SIZE, PILES);
+    unsigned i = state.first_card_pos();
     for (unsigned p = 0; p <= GAME_PILES; ++p) {
         std::string line;
         std::getline(is, line);
@@ -293,10 +293,18 @@ std::istream& operator>>(std::istream& is, ScorpionGame& g) {
         while(!ss.eof() && ss.peek() != '\r') {
             Card c;
             ss >> c;
-            g.state[i++] = c.get();
+            state[i++] = c.get();
         }
         if (p < GAME_PILES)
-            g.state[p] = i;
+            state[p] = i;
     }
     return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const ScorpionGame& g) {
+    return g.print(os);
+}
+
+std::istream& operator>>(std::istream& is, ScorpionGame& g) {
+    return g.read(is);
 }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <ostream>
+#include <functional>
 
 #include "Card.hpp"
 #include "SingleVectorPileStep.hpp"
@@ -16,6 +17,9 @@ public:
 struct PrettyPrint {};
 
 PrettyPrintWrapper operator<<(std::ostream& os, PrettyPrint);
+
+using CardCodeFn = std::function<void(unsigned, const CardCode&)>;
+using CardFn = std::function<void(unsigned, const Card&)>;
 
 class SingleVectorGameState {
 public:
@@ -39,12 +43,14 @@ public:
         unsigned size() const;
         bool empty() const;
 
-        template<class Func>
-        void top_to_bottom(Func f) const {
-            for (unsigned i = ref.pile_top(pile_no); i >= ref.pile_bottom(pile_no); --i) {
-                f(i, ref[i]);
-            }
-        }
+        // template<class Func>
+        // void top_to_bottom(Func f) const {
+        //     for (unsigned i = ref.pile_top(pile_no); i >= ref.pile_bottom(pile_no); --i) {
+        //         f(i, ref[i]);
+        //     }
+        // }
+        void top_to_bottom(CardCodeFn) const;
+        void top_to_bottom(CardFn) const;
     private:
         unsigned pile_no;
         const SingleVectorGameState& ref;

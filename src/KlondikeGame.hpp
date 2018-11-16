@@ -7,6 +7,8 @@
 #include "Rules.hpp"
 #include "SingleVectorGameState.hpp"
 
+typedef unsigned pile;
+
 class KlondikeGame : public Game<KlondikeStep> {
 public:
     KlondikeGame();
@@ -21,14 +23,16 @@ public:
     std::vector<KlondikeStep> valid_steps() const override;
     bool win() const override;
     bool sanity() const override;
-
-    friend std::ostream& operator<<(std::ostream&, const KlondikeGame&);
-    friend std::istream& operator>>(std::istream&, KlondikeGame&);
+    std::ostream& print(std::ostream&) const override;
+    std::istream& read(std::istream&) override;
 
 private:
     SingleVectorGameState state;
     Rules pile_rules;
     Rules foundation_rules;
 };
+
+std::ostream& operator<<(std::ostream&, const KlondikeGame&);
+std::istream& operator>>(std::istream&, KlondikeGame&);
 
 #endif

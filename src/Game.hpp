@@ -23,9 +23,21 @@ public:
     virtual std::vector<Step> valid_steps() const = 0; ///< Gather the possible steps from the current state
     virtual bool win() const = 0; ///< Tells if the game is in a win state
     virtual bool sanity() const = 0; ///< Tells if it even worth trying to solve the game
+    virtual std::ostream& print(std::ostream&) const = 0;
+    virtual std::istream& read(std::istream&) = 0;
 };
 
 template<class Step>
 using GamePtr = std::shared_ptr<Game<Step>>;
+
+template<class Step>
+std::ostream& operator<<(std::ostream& os, const Game<Step>& g) {
+    return g.print(os);
+}
+
+template<class Step>
+std::istream& operator>>(std::istream& is, const Game<Step>& g) {
+    return g.read(is);
+}
 
 #endif

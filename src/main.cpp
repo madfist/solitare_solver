@@ -19,6 +19,10 @@ void solve_game(const std::string& filename) {
         std::ifstream in(filename.c_str());
         if (in.good())
             in >> *game;
+        else {
+            Log(Log::ERROR) << "Cannot open input file " << filename << std::endl;
+            return;
+        }
         in.close();
     } else {
         Deck deck;
@@ -43,32 +47,44 @@ int main(int argc, char *argv[]) {
     options.add_options()
         ("g,game", "solitare game type (scorpion|klondike)", cxxopts::value<std::string>()->default_value("scorpion"))
         ("i,input", "input game state", cxxopts::value<std::string>())
-        ("v,verbose", "amount of messages")
+        ("v,verbose", "info messages")
+        ("d,debug", "debug messages")
         ("h,help", "display this help");
 
-    auto opts = options.parse(argc, argv);
+    try {
+        auto opts = options.parse(argc, argv);
 
-    if (opts.count("help")) {
-        std::cout << options.help() << std::endl;
-        return 0;
-    }
+        if (opts.count("help")) {
+            std::cout << options.help() << std::endl;
+            return 0;
+        }
 
-    if (opts.count("verbose")) {
-        Log::set_level(Log::INFO);
-    }
+        if (opts.count("verbose")) {
+            Log::set_level(Log::INFO);
+        }
 
-    std::string filename;
-    if (opts.count("input"))
-        filename = opts["input"].as<std::string>();
+        if (opts.count("debug")) {
+            Log::set_level(Log::DEBUG);
+        }
 
-    if (opts["game"].as<std::string>() == "scorpion") {
-        solve_game<ScorpionGame, ScorpionStep>(filename);
-    } else if (opts.count("game") && opts["game"].as<std::string>() == "klondike") {
-        solve_game<KlondikeGame, KlondikeStep>(filename);
-    } else {
-        Log(Log::ERROR) << "Unknown game type: " << opts["game"].as<std::string>() << std::endl;
+        std::string filename;
+        if (opts.count("input"))
+            filename = opts["input"].as<std::string>();
+
+        if (opts["game"].as<std::string>() == "scorpion") {
+            solve_game<ScorpionGame, ScorpionStep>(filename);
+        } else if (opts.count("game") && opts["game"].as<std::string>() == "klondike") {
+            solve_game<KlondikeGame, KlondikeStep>(filename);
+        } else {
+            Log(Log::ERROR) << "Unknown game type: " << opts["game"].as<std::string>() << std::endl;
+            return 1;
+        }
+    } catch(cxxopts::OptionParseException e) {
+        Log(Log::ERROR) << e.what() << std::endl;
         return 1;
     }
+
+
 
     return 0;
 }

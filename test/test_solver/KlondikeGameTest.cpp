@@ -26,7 +26,7 @@ TEST(klondike_game_test, from_deck) {
     EXPECT_THAT(firstthree, testing::ElementsAre(Card("DK^").get(), Card("DQ_").get(), Card("DJ^").get()));
 
     GameState lastthree(game.state.state.end()-3, game.state.state.end());
-    EXPECT_THAT(lastthree, testing::ElementsAre(Card("S3_").get(), Card("S2_").get(), Card("SA_").get()));
+    EXPECT_THAT(lastthree, testing::ElementsAre(Card("S3^").get(), Card("S2^").get(), Card("SA^").get()));
 }
 
 TEST(klondike_game_test, win) {

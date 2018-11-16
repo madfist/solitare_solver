@@ -21,9 +21,8 @@ public:
     std::vector<ScorpionStep> valid_steps() const override;
     bool win() const override;
     bool sanity() const override;
-
-    friend std::ostream& operator<<(std::ostream&, const ScorpionGame&);
-    friend std::istream& operator>>(std::istream&, ScorpionGame&);
+    std::ostream& print(std::ostream&) const override;
+    std::istream& read(std::istream&) override;
 
 private:
     void do_stock_move();
@@ -38,5 +37,8 @@ private:
     SingleVectorGameState state;
     Rules rules;
 };
+
+std::ostream& operator<<(std::ostream&, const ScorpionGame&);
+std::istream& operator>>(std::istream&, ScorpionGame&);
 
 #endif
