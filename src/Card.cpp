@@ -3,131 +3,99 @@
 
 char Card::card_strings[] = {'S','C','H','D','A','2','3','4','5','6','7','8','9','T','J','Q','K','_','^','#'};
 
+const std::array<uint8_t, 4> Card::MASKS = {0x0F, 0x30, 0x40, 0x80};
+const std::array<uint8_t, 4> Card::SHIFTS = {0, 4, 6, 7};
+
 static const CardCode CARD_STRINGS_SUITE_SHIFT = 4;
 static const CardCode CARD_STRINGS_TURN_SHIFT = 17;
-static const CardCode CARD_RANK = 0x0F;
-static const CardCode CARD_SUITE = 0x30;
-static const CardCode CARD_UPTURNED = 0x40;
-static const CardCode CARD_SUITE_SHIFT = 4;
-static const CardCode CARD_TURN_SHIFT = 6;
 
 const CardCode Card::CARD_SEPARATOR = 0x80;
 
-Card::Card() : card(CARD_SEPARATOR) {}
+Card::Card() : VersatileMask(CARD_SEPARATOR) {}
 
-Card::Card(CardCode c) : card(c) {}
+Card::Card(CardCode c) : VersatileMask(c) {}
 
-Card::Card(const std::string& cs) : card(CARD_SEPARATOR) {
+Card::Card(const std::string& cs) : VersatileMask(CARD_SEPARATOR) {
     parse(cs);
 }
 
-Card::Card(const Card& c) {
-    card = c.card;
-}
-
-Card& Card::operator=(const Card& c) {
-    card = c.card;
-    return *this;
-}
+Card::~Card() {}
 
 Card& Card::operator=(const CardCode& cc) {
-    card = cc;
-    return *this;
-}
-
-CardCode Card::get() const {
-    return card;
-}
-
-Card& Card::set(CardCode c) {
-    card = c;
+    set(cc);
     return *this;
 }
 
 CardCode Card::rank() const {
-    return card & CARD_RANK;
+    return get(CardMaskElement::RANK);
 }
 
 Card& Card::rank(CardCode c) {
-    card &= ~CARD_SEPARATOR;
-    card &= ~CARD_RANK;
-    card |= c;
+    set(CardMaskElement::RANK, c);
     return *this;
 }
 
 CardCode Card::suite() const {
-    return (card & CARD_SUITE) >> CARD_SUITE_SHIFT;
+    return get(CardMaskElement::SUITE);
 }
 
 Card& Card::suite(CardCode c) {
-    card &= ~CARD_SEPARATOR;
-    card &= ~CARD_SUITE;
-    card |= (c << CARD_SUITE_SHIFT);
+    set(CardMaskElement::SUITE, c);
     return *this;
-}
-
-bool Card::upturned() const {
-    return (card & CARD_UPTURNED);
 }
 
 Card& Card::turnup(bool ut) {
-    card &= ~CARD_SEPARATOR;
-    card &= ~CARD_UPTURNED;
-    card |= (ut) ? 1 << CARD_TURN_SHIFT : 0;
+    set(CardMaskElement::UPTURNED, ut);
     return *this;
 }
 
-bool Card::upturned(CardCode cc) {
-    return (cc & CARD_UPTURNED);
-}
-
 CardCode& Card::turnup(CardCode& cc, bool ut) {
-    cc &= ~CARD_SEPARATOR;
-    cc &= ~CARD_UPTURNED;
-    cc |= (ut) ? 1 << CARD_TURN_SHIFT : 0;
+    cc = Card(cc).turnup(ut).get();
     return cc;
 }
 
-bool Card::operator==(const Card& c) const {
-    return (c.card == card);
-}
-
-bool Card::operator!=(const Card& c) const {
-    return (c.card != card);
-}
-
 Card::operator bool() const {
-    return (card & CARD_SEPARATOR);
+    return get(CardMaskElement::UPTURNED);
 }
 
 Card::operator CardCode() const {
-    return card;
+    return get();
 }
 
 void Card::parse(const std::string& cs) {
     if (cs[0] == '#') {
-        card = CARD_SEPARATOR;
+        set(CARD_SEPARATOR);
         return;
     }
-    card = search_card(cs[0]) << CARD_SUITE_SHIFT;
-    card += search_card(cs[1]) - CARD_STRINGS_SUITE_SHIFT;
-    card += (search_card(cs[2]) - CARD_STRINGS_TURN_SHIFT) << CARD_TURN_SHIFT;
+    set(CardMaskElement::SUITE, search_card(cs[0]));
+    set(CardMaskElement::RANK, search_card(cs[1]) - CARD_STRINGS_SUITE_SHIFT);
+    set(CardMaskElement::UPTURNED, search_card(cs[2]) - CARD_STRINGS_TURN_SHIFT);
+    set(CardMaskElement::SEPARATOR, 0);
 }
 
 std::string Card::print() const {
-    if (card == CARD_SEPARATOR)
+    if (get(CardMaskElement::SEPARATOR)) {
         return "#";
-    std::string out("___");
-    out[0] = card_strings[(card & CARD_SUITE) >> CARD_SUITE_SHIFT];
-    out[1] = card_strings[(card & CARD_RANK) + CARD_STRINGS_SUITE_SHIFT];
-    out[2] = card_strings[((card & CARD_UPTURNED) >> CARD_TURN_SHIFT) + CARD_STRINGS_TURN_SHIFT];
-    return out;
+    }
+    return std::string({
+        card_strings[get(CardMaskElement::SUITE)],
+        card_strings[get(CardMaskElement::RANK) + CARD_STRINGS_SUITE_SHIFT],
+        card_strings[get(CardMaskElement::UPTURNED) + CARD_STRINGS_TURN_SHIFT]
+    });
 }
 
 CardCode Card::search_card(char c) {
     CardCode i = 0;
     while (i < 20 && c != card_strings[i++]);
     return i%20-1;
+}
+
+uint8_t Card::mask(CardMaskElement m) const {
+    return MASKS[m];
+}
+
+uint8_t Card::shift(CardMaskElement m) const {
+    return SHIFTS[m];
 }
 
 std::ostream& operator<<(std::ostream& os, const Card& c) {

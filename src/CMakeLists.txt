@@ -27,6 +27,7 @@ set(LIB_SRCS
     ScorpionStep.hpp ScorpionStep.cpp
     ScorpionGame.hpp ScorpionGame.cpp
     Rules.hpp Rules.cpp
+    RuledCard.hpp RuledCard.cpp
     Solution.hpp
     Solver.hpp
     Log.hpp Log.cpp
@@ -34,7 +35,8 @@ set(LIB_SRCS
     SingleVectorGameState.hpp SingleVectorGameState.cpp
     SingleVectorPileStep.hpp SingleVectorPileStep.cpp
     KlondikeGame.hpp KlondikeGame.cpp
-    KlondikeStep.hpp KlondikeStep.cpp)
+    KlondikeStep.hpp KlondikeStep.cpp
+    VersatileMask.hpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 

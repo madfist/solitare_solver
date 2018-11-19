@@ -12,7 +12,7 @@ Rules::Rules() : suite_order(SAME), rank_order(ACE_KING_DISABLED) {}
 Rules::Rules(SuiteOrder so, RankOrder ro) : suite_order(so), rank_order(ro) {}
 
 bool Rules::is_before(const Card& c1, const Card& c2) const {
-    bool result = (c1.upturned() == c2.upturned());
+    bool result = ((bool)c1 == (bool)c2);
     switch (suite_order) {
         case SAME:
             result = result && c1.suite() == c2.suite(); break;

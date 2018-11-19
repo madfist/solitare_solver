@@ -82,7 +82,8 @@ std::vector<ScorpionStep> ScorpionGame::valid_steps() const {
                 for (unsigned i = state.pile_top(from); i >= state.pile_bottom(from); --i) {
                     // std::cout <<  Card(state[i]) << " - " << Card(state[state.pile_top(to)]) << " ";
                     // std::cout << state.pile_top(from) << " " << state.pile_bottom(from) << " " << i << std::endl;
-                    if (!Card::upturned(state[i])) {
+                    // if (!Card::upturned(state[i])) {
+                    if (!Card(state[i])) {
                         if (!steps.empty() && state[prev] == steps.back().card_code()) {
                             steps.back().turned_up(true);
                         }
@@ -203,7 +204,8 @@ bool ScorpionGame::deadlock() const {
     unsigned p = 0;
     for (unsigned i = state.first_card_pos(); i < STATE_SIZE; ++i) {
         // std::cout << "CHECK:" << Card(temp_state[i]) << std::endl;
-        if (!Card::upturned(temp_state[i]))
+        // if (!Card::upturned(temp_state[i]))
+        if (!Card(temp_state[i]))
             continue;
         if (i == state.pile_top(p)) {
             ++p;
@@ -215,7 +217,8 @@ bool ScorpionGame::deadlock() const {
         unsigned next_pos = state.find_card(rules.next(temp_state[i+1])[0]);
         while (temp_state[i] != temp_state[next_pos]) {
             // std::cout << Card(temp_state[next_pos]);
-            if (!Card::upturned(temp_state[next_pos]))
+            // if (!Card::upturned(temp_state[next_pos]))
+            if (!Card(temp_state[next_pos]))
                 break;
             bool at_pile_top = false;
             for (unsigned p = 0; p < GAME_PILES; ++p)
@@ -243,7 +246,8 @@ unsigned ScorpionGame::locked_down_turned() const {
     for (unsigned p = 0; p < TURNED_GAME_PILES; ++p) {
         for (unsigned i = 0; i < DOWN_TURNED_CARDS; ++i) {
             CardCode cc = state[state.pile_bottom(p) + i];
-            if (!Card::upturned(cc))
+            // if (!Card::upturned(cc))
+            if (!Card(cc))
                 down_turned_cards.push_back(cc);
         }
     }

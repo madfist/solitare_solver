@@ -3,6 +3,7 @@
 #include <iterator>
 
 #include "KlondikeGame.hpp"
+#include "RuledCard.hpp"
 
 static const unsigned STATE_SIZE = Deck::DECK_SIZE + 11; // 52 cards + 11 index values for piles_start
 static const unsigned GAME_PILES = 7;
@@ -89,9 +90,10 @@ std::vector<KlondikeStep> KlondikeGame::valid_steps() const {
             if (from == to || state(from).empty() || (from >= GAME_PILES && from != STOCK_PILE && to >= GAME_PILES))
                 continue;
             state(from).top_to_bottom([&](unsigned i, const CardCode& cc) {
+                RuledCard rc(cc, (to < GAME_PILES) ? pile_rules : foundation_rules);
                 unsigned weight = 3;
                 bool step_found = false;
-                if (!Card::upturned(cc) || (i < state.pile_top(from) && to >= GAME_PILES))
+                if (/*!Card::upturned(cc)*/ !Card(cc) || (i < state.pile_top(from) && to >= GAME_PILES))
                     return;
                 // king/ace step
                 if (state(to).empty()) {
@@ -122,7 +124,7 @@ std::vector<KlondikeStep> KlondikeGame::valid_steps() const {
                 }
                 if (step_found) {
                     steps.emplace_back(cc, from, to, i - state.pile_bottom(from), state(to).size(), (from == STOCK_PILE) ? 2 : weight, (from == STOCK_PILE));
-                    if (i > state.pile_bottom(from) && !Card::upturned(state[i-1]) && state[i] == steps.back().card_code())
+                    if (i > state.pile_bottom(from) && !Card/*::upturned*/(state[i-1]) && state[i] == steps.back().card_code())
                         steps.back().turned_up(true);
                 }
             });
@@ -140,7 +142,8 @@ bool KlondikeGame::win() const {
             continue;
         }
         for (unsigned i = state.pile_bottom(p); i < state.pile_top(p); ++i) {
-            if (!Card::upturned(state[i])) {
+            // if (!Card::upturned(state[i])) {
+            if (!Card(state[i])) {
                 return false;
             }
         }
