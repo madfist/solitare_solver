@@ -27,9 +27,12 @@ public:
     std::istream& read(std::istream&) override;
 
 private:
+    bool check_next_step_for_circle(const KlondikeStep&) const;
+
     SingleVectorGameState state;
     Rules pile_rules;
     Rules foundation_rules;
+    bool check_further;
 };
 
 std::ostream& operator<<(std::ostream&, const KlondikeGame&);

@@ -12,6 +12,8 @@ public:
 
     bool operator<(const Card&);
     bool operator>(const Card&);
+    bool operator<(const CardCode&);
+    bool operator>(const CardCode&);
 private:
     Card card;
     Rules rules;

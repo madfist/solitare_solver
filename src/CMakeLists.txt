@@ -36,7 +36,9 @@ set(LIB_SRCS
     SingleVectorPileStep.hpp SingleVectorPileStep.cpp
     KlondikeGame.hpp KlondikeGame.cpp
     KlondikeStep.hpp KlondikeStep.cpp
-    VersatileMask.hpp)
+    VersatileMask.hpp
+    ParallelSolver.hpp
+    shared_mutex.hpp shared_mutex.cpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 
@@ -46,4 +48,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 add_executable(solitare_solver main.cpp)
 
-target_link_libraries(solitare_solver libsolver)
+target_link_libraries(solitare_solver libsolver pthread)

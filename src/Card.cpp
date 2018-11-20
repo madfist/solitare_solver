@@ -32,6 +32,7 @@ CardCode Card::rank() const {
 
 Card& Card::rank(CardCode c) {
     set(CardMaskElement::RANK, c);
+    set(CardMaskElement::SEPARATOR, 0);
     return *this;
 }
 
@@ -41,11 +42,13 @@ CardCode Card::suite() const {
 
 Card& Card::suite(CardCode c) {
     set(CardMaskElement::SUITE, c);
+    set(CardMaskElement::SEPARATOR, 0);
     return *this;
 }
 
 Card& Card::turnup(bool ut) {
     set(CardMaskElement::UPTURNED, ut);
+    set(CardMaskElement::SEPARATOR, 0);
     return *this;
 }
 

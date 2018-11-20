@@ -6,10 +6,16 @@
 #include <iostream>
 
 #include "Card.hpp"
+#include "VersatileMask.hpp"
 
-class SingleVectorPileStep {
+enum StateMaskElement {
+    CARD_CODE = 0, PILE_FROM, PILE_TO, TURNED_UP, CARD_POS, NEW_POS, STOCK_STEP, WEIGHT
+};
+
+class SingleVectorPileStep : public VersatileMask<uint32_t, StateMaskElement> {
 public:
     SingleVectorPileStep(uint32_t);
+    virtual ~SingleVectorPileStep();
 
     bool is_stock_move() const;
     CardCode card_code() const;
@@ -25,16 +31,9 @@ public:
     bool operator<(const SingleVectorPileStep&) const;
 
     friend std::ostream& operator<<(std::ostream&, const SingleVectorPileStep&);
-protected:
-    enum MaskElement {
-        CARD_CODE = 0, PILE_FROM, PILE_TO, TURNED_UP, CARD_POS, NEW_POS, STOCK_STEP, WEIGHT
-    };
-    void init(uint32_t);
 private:
-    virtual uint32_t mask(MaskElement) const = 0;
-    virtual uint32_t shift(MaskElement) const = 0;
-
-    uint32_t data;
+    virtual uint32_t mask(StateMaskElement) const = 0;
+    virtual uint8_t shift(StateMaskElement) const = 0;
 };
 
 template<class Step>

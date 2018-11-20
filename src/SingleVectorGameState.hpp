@@ -43,12 +43,6 @@ public:
         unsigned size() const;
         bool empty() const;
 
-        // template<class Func>
-        // void top_to_bottom(Func f) const {
-        //     for (unsigned i = ref.pile_top(pile_no); i >= ref.pile_bottom(pile_no); --i) {
-        //         f(i, ref[i]);
-        //     }
-        // }
         void top_to_bottom(CardCodeFn) const;
         void top_to_bottom(CardFn) const;
     private:

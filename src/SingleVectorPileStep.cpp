@@ -2,52 +2,49 @@
 
 #include "SingleVectorPileStep.hpp"
 
-SingleVectorPileStep::SingleVectorPileStep(uint32_t d) : data(d) {}
+SingleVectorPileStep::SingleVectorPileStep(uint32_t d) : VersatileMask(d) {}
+
+SingleVectorPileStep::~SingleVectorPileStep() {}
 
 bool SingleVectorPileStep::is_stock_move() const {
-    return (data & mask(STOCK_STEP));
+    return get(STOCK_STEP);
 }
 
 CardCode SingleVectorPileStep::card_code() const {
-    return (data & mask(CARD_CODE)) >> shift(CARD_CODE);
+    return get(CARD_CODE);
 }
 
-unsigned SingleVectorPileStep::pile_from() const {
-    return (data & mask(PILE_FROM)) >> shift(PILE_FROM);
+uint32_t SingleVectorPileStep::pile_from() const {
+    return get(PILE_FROM);
 }
 
-unsigned SingleVectorPileStep::pile_to() const {
-    return (data & mask(PILE_TO)) >> shift(PILE_TO);
+uint32_t SingleVectorPileStep::pile_to() const {
+    return get(PILE_TO);
 }
 
 bool SingleVectorPileStep::turned_up() const {
-    return (data & mask(TURNED_UP)) >> shift(TURNED_UP);
+    return get(TURNED_UP);
 }
 
-unsigned SingleVectorPileStep::card_pos() const {
-    return (data & mask(CARD_POS)) >> shift(CARD_POS);
+uint32_t SingleVectorPileStep::card_pos() const {
+    return get(CARD_POS);
 }
 
-unsigned SingleVectorPileStep::new_pos() const {
-    return (data & mask(NEW_POS)) >> shift(NEW_POS);
+uint32_t SingleVectorPileStep::new_pos() const {
+    return get(NEW_POS);
 }
 
-unsigned SingleVectorPileStep::weight() const {
-    return (data & mask(WEIGHT)) >> shift(WEIGHT);
+uint32_t SingleVectorPileStep::weight() const {
+    return get(WEIGHT);
 }
 
 void SingleVectorPileStep::turned_up(bool ut) {
-    data &= ~mask(TURNED_UP);
-    data |= (ut) ? 1 << shift(TURNED_UP) : 0;
+    set(TURNED_UP, ut);
 }
 
 bool SingleVectorPileStep::operator<(const SingleVectorPileStep& s) const {
     // sorry about this but I need descending order on weights
     return weight() > s.weight();
-}
-
-void SingleVectorPileStep::init(uint32_t d) {
-    data = d;
 }
 
 std::ostream& operator<<(std::ostream& os, const SingleVectorPileStep& s) {

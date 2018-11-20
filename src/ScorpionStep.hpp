@@ -18,11 +18,11 @@ public:
 
     static const uint32_t STOCK_MOVE;
 private:
-    virtual uint32_t mask(MaskElement) const override;
-    virtual uint32_t shift(MaskElement) const override;
+    virtual uint32_t mask(StateMaskElement) const override;
+    virtual uint8_t shift(StateMaskElement) const override;
 
     static const std::array<uint32_t, 8> MASKS;
-    static const std::array<uint32_t, 8> SHIFTS;
+    static const std::array<uint8_t, 8> SHIFTS;
 };
 
 #endif

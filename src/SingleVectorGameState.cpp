@@ -104,7 +104,7 @@ void SingleVectorGameState::move_cards_backward(unsigned from, unsigned to, unsi
     middle = pile_top(from) + 1;
     last = pile_bottom(to) + new_pos;
     diff = middle - first;
-    // std::cout << "mb f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+    // std::cout << "mb " << state[first] << ": f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
 
     auto st = state.begin();
     std::rotate(st + first, st + middle, st + last);
@@ -120,7 +120,7 @@ void SingleVectorGameState::move_cards_forward(unsigned from, unsigned to, unsig
     middle = pile_bottom(from) + card_pos;
     last = pile_top(from) + 1;
     diff = last - middle;
-    // std::cout << "mf f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+    // std::cout << "mf " << state[middle] << ": f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
 
     auto st = state.begin();
     std::rotate(st + first, st + middle, st + last);
@@ -136,7 +136,7 @@ void SingleVectorGameState::move_single_card_backward(unsigned from, unsigned to
     middle = first + 1;
     last = pile_bottom(to) + new_pos;
     diff = middle - first;
-    // std::cout << "mb f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+    // std::cout << "msb " << state[first] << ": f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
 
     auto st = state.begin();
     std::rotate(st + first, st + middle, st + last);
@@ -152,7 +152,7 @@ void SingleVectorGameState::move_single_card_forward(unsigned from, unsigned to,
     middle = pile_bottom(from) + card_pos;
     last = middle + 1;
     diff = last - middle;
-    // std::cout << "mf f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+    // std::cout << "msf " << state[middle] << ": f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
 
     auto st = state.begin();
     std::rotate(st + first, st + middle, st + last);

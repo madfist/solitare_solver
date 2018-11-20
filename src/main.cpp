@@ -9,10 +9,11 @@
 #include "ScorpionGame.hpp"
 #include "KlondikeGame.hpp"
 #include "Solver.hpp"
+#include "ParallelSolver.hpp"
 #include "Log.hpp"
 
-template<class Game, class Step>
-void solve_game(const std::string& filename) {
+template<class Game>
+void solve_game(const std::string& filename, bool parallel, bool filter) {
     auto game = std::make_shared<Game>();
     if (!filename.empty()) {
         Log(Log::INFO) << "Reading: " << filename << std::endl;
@@ -31,12 +32,17 @@ void solve_game(const std::string& filename) {
 
     Log(Log::INFO) << *game;
 
-    Solver<Step> solver(game);
-    auto solution = solver.solve();
+    if (!parallel) {
+        Solver<typename Game::step_type> solver(game, {filter});
+        auto solution = solver.solve();
 
-    Log(Log::INFO) << solution;
-    if (solution) {
-        Log(Log::INFO) << "YEAH";
+        Log(Log::INFO) << solution;
+        if (solution) {
+            Log(Log::INFO) << "YEAH";
+        }
+    } else {
+        ParallelSolver<Game> solver(game);
+        solver.solve();
     }
 }
 
@@ -49,6 +55,8 @@ int main(int argc, char *argv[]) {
         ("i,input", "input game state", cxxopts::value<std::string>())
         ("v,verbose", "info messages")
         ("d,debug", "debug messages")
+        ("p,parallel", "use parallel solver")
+        ("f,filter", "filter valid steps")
         ("h,help", "display this help");
 
     try {
@@ -72,9 +80,9 @@ int main(int argc, char *argv[]) {
             filename = opts["input"].as<std::string>();
 
         if (opts["game"].as<std::string>() == "scorpion") {
-            solve_game<ScorpionGame, ScorpionStep>(filename);
+            solve_game<ScorpionGame>(filename, opts.count("parallel"), opts.count("filter"));
         } else if (opts.count("game") && opts["game"].as<std::string>() == "klondike") {
-            solve_game<KlondikeGame, KlondikeStep>(filename);
+            solve_game<KlondikeGame>(filename, opts.count("parallel"), opts.count("filter"));
         } else {
             Log(Log::ERROR) << "Unknown game type: " << opts["game"].as<std::string>() << std::endl;
             return 1;

@@ -11,10 +11,14 @@
 #include "StepNode.hpp"
 #include "Log.hpp"
 
+struct SolverProperties {
+    bool filter;
+};
+
 template<class Step>
 class Solver {
 public:
-    Solver(GamePtr<Step> g) : game(g), level(0), max_level(0) {}
+    Solver(GamePtr<Step> g, SolverProperties p = {false}) : game(g), level(0), max_level(0), properties(p) {}
 
     /**
      * @brief      Solve the game with BFS and taboo heap
@@ -75,6 +79,8 @@ private:
     int next_node(int node_id) {
         Log log(Log::DEBUG);
         auto steps = game->valid_steps();
+        if (properties.filter)
+            filter_steps(steps);
         int last_node_id = nodes.size() + steps.size();
         int next_node_id = nodes.size() + 1;
 
@@ -131,8 +137,21 @@ private:
         taboo.insert(game->hash());
     }
 
+    void filter_steps(std::vector<Step>& steps) {
+        std::remove_if(steps.begin(), steps.end(), [=](const Step& s) -> bool {
+            for (auto it = previous_steps.begin(); it != previous_steps.end(); ++it) {
+                if (*it == s)
+                    return true;
+            }
+            return false;
+        });
+        previous_steps = steps;
+    }
+
+    SolverProperties properties;
     GamePtr<Step> game;
     std::vector<StepNode<Step>> nodes;
+    std::vector<Step> previous_steps;
     std::unordered_set<std::size_t> taboo;
     unsigned level, max_level;
 };
