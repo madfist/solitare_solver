@@ -38,7 +38,8 @@ set(LIB_SRCS
     KlondikeStep.hpp KlondikeStep.cpp
     VersatileMask.hpp
     ParallelSolver.hpp
-    shared_mutex.hpp shared_mutex.cpp)
+    shared_mutex.hpp shared_mutex.cpp
+    PrettyPrint.hpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 

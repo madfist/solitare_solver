@@ -7,16 +7,7 @@
 
 #include "Card.hpp"
 #include "SingleVectorPileStep.hpp"
-
-class PrettyPrintWrapper {
-public:
-    PrettyPrintWrapper(std::ostream& os): output_stream(os) {}
-    std::ostream& output_stream;
-};
-
-struct PrettyPrint {};
-
-PrettyPrintWrapper operator<<(std::ostream& os, PrettyPrint);
+#include "PrettyPrint.hpp"
 
 using CardCodeFn = std::function<void(unsigned, const CardCode&)>;
 using CardFn = std::function<void(unsigned, const Card&)>;
@@ -72,12 +63,28 @@ public:
     unsigned find_card(const CardCode&) const;
     unsigned first_card_pos() const;
 
-    std::ostream& pretty_print(std::ostream&);
     friend std::ostream& operator<<(std::ostream&, const SingleVectorGameState&);
-    friend std::ostream& operator<<(PrettyPrintWrapper, const SingleVectorGameState&);
+    template<class Output>
+    friend Output& operator<<(PrettyPrintWrapper<Output>, const SingleVectorGameState&);
 private:
     std::vector<CardCode> state;
     unsigned last_pile;
 };
+
+template<class Output>
+Output& operator<<(PrettyPrintWrapper<Output> ppw, const SingleVectorGameState& gs) {
+    unsigned i = gs.last_pile;
+    for (unsigned p = 0; p <= gs.last_pile; ++p) {
+        ppw.output << p+1 << ":";
+        for (; i < gs.state.size() && i < gs[p]; ++i) {
+            ppw.output << Card(gs[i]);
+            if (i < gs[p] - 1)
+                ppw.output << ' ';
+        }
+        if (p < gs.last_pile)
+            ppw.output << '\n';
+    }
+    return ppw.output;
+}
 
 #endif

@@ -201,22 +201,3 @@ std::ostream& operator<<(std::ostream &os, const SingleVectorGameState &gs) {
     }
     return os;
 }
-
-PrettyPrintWrapper operator<<(std::ostream& os, PrettyPrint) {
-    return PrettyPrintWrapper(os);
-}
-
-std::ostream& operator<<(PrettyPrintWrapper ppw, const SingleVectorGameState& gs) {
-    unsigned i = gs.last_pile;
-    for (unsigned p = 0; p <= gs.last_pile; ++p) {
-        ppw.output_stream << p+1 << ":";
-        for (; i < gs.state.size() && i < gs[p]; ++i) {
-            ppw.output_stream << Card(gs[i]);
-            if (i < gs[p] - 1)
-                ppw.output_stream << ' ';
-        }
-        if (p < gs.last_pile)
-            ppw.output_stream << '\n';
-    }
-    return ppw.output_stream;
-}

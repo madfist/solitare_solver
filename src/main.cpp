@@ -11,20 +11,25 @@
 #include "Solver.hpp"
 #include "ParallelSolver.hpp"
 #include "Log.hpp"
+#include "PrettyPrint.hpp"
+
+template <class Game>
+std::shared_ptr<Game> load_game(const std::string& filename) {
+    auto game = std::make_shared<Game>();
+    std::ifstream in(filename);
+    if (in.fail()) {
+        return game;
+    }
+    in >> *game;
+    in.close();
+    return game;
+}
 
 template<class Game>
 void solve_game(const std::string& filename, bool parallel, bool filter) {
     auto game = std::make_shared<Game>();
     if (!filename.empty()) {
-        Log(Log::INFO) << "Reading: " << filename << std::endl;
-        std::ifstream in(filename.c_str());
-        if (in.good())
-            in >> *game;
-        else {
-            Log(Log::ERROR) << "Cannot open input file " << filename << std::endl;
-            return;
-        }
-        in.close();
+        game = load_game<Game>(filename);
     } else {
         Deck deck;
         game.reset(new Game(deck, true));
@@ -46,6 +51,30 @@ void solve_game(const std::string& filename, bool parallel, bool filter) {
     }
 }
 
+template<class Game>
+void run_steps(const std::string& filename, const std::string& steps_filename) {
+    auto game = load_game<Game>(filename);
+    std::vector<typename Game::step_type> steps;
+    if (steps_filename.empty()) {
+        Log(Log::ERROR) << "Provide steps filename";
+        return;
+    }
+    std::ifstream in(steps_filename);
+    if (in.good()) {
+        in >> steps;
+    }
+
+    Log(Log::INFO) << *game;
+
+    struct PrettyPrint pp;
+
+    for (auto s = steps.begin(); s != steps.end(); ++s) {
+        Log(Log::INFO) << "\t\t\t------------\t step: " << pp << *s;
+        game->do_step(*s);
+        Log(Log::INFO) << *game;
+    }
+}
+
 int main(int argc, char *argv[]) {
     Log::set_level(Log::WARN);
 
@@ -57,6 +86,7 @@ int main(int argc, char *argv[]) {
         ("d,debug", "debug messages")
         ("p,parallel", "use parallel solver")
         ("f,filter", "filter valid steps")
+        ("s,steps", "steps to run", cxxopts::value<std::string>())
         ("h,help", "display this help");
 
     try {
@@ -80,9 +110,17 @@ int main(int argc, char *argv[]) {
             filename = opts["input"].as<std::string>();
 
         if (opts["game"].as<std::string>() == "scorpion") {
-            solve_game<ScorpionGame>(filename, opts.count("parallel"), opts.count("filter"));
+            if (opts.count("steps")) {
+                run_steps<ScorpionGame>(filename, opts["steps"].as<std::string>());
+            } else {
+                solve_game<ScorpionGame>(filename, opts.count("parallel"), opts.count("filter"));
+            }
         } else if (opts.count("game") && opts["game"].as<std::string>() == "klondike") {
-            solve_game<KlondikeGame>(filename, opts.count("parallel"), opts.count("filter"));
+            if (opts.count("steps")) {
+                run_steps<KlondikeGame>(filename, opts["steps"].as<std::string>());
+            } else {
+                solve_game<KlondikeGame>(filename, opts.count("parallel"), opts.count("filter"));
+            }
         } else {
             Log(Log::ERROR) << "Unknown game type: " << opts["game"].as<std::string>() << std::endl;
             return 1;
