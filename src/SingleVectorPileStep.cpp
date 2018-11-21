@@ -45,7 +45,7 @@ void SingleVectorPileStep::turned_up(bool ut) {
 
 bool SingleVectorPileStep::operator<(const SingleVectorPileStep& s) const {
     // sorry about this but I need descending order on weights
-    return weight() > s.weight();
+    return weight() > s.weight() || (weight() == s.weight() && pile_from() < s.pile_from());
 }
 
 void SingleVectorPileStep::parse(const std::string& s) {

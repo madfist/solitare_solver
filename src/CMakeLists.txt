@@ -39,7 +39,8 @@ set(LIB_SRCS
     VersatileMask.hpp
     ParallelSolver.hpp
     shared_mutex.hpp shared_mutex.cpp
-    PrettyPrint.hpp)
+    PrettyPrint.hpp
+    Taboo.hpp Taboo.cpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 

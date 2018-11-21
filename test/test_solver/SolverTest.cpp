@@ -4,6 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "Solver.hpp"
+#include "Taboo.hpp"
 #include "ScorpionGame.hpp"
 #include "TestUtils.hpp"
 
@@ -12,7 +13,8 @@ TEST(solver_test, scorpion_solve_one_step) {
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 
-    Solver<ScorpionStep> solver(game);
+    std::shared_ptr<Taboo> taboo(new Taboo());
+    Solver<ScorpionStep> solver(game, taboo);
     Solution<ScorpionStep> solution = solver.solve();
 
     EXPECT_TRUE(game->win());

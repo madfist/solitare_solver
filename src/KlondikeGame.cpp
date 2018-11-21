@@ -131,7 +131,7 @@ std::vector<KlondikeStep> KlondikeGame::valid_steps() const {
                     // if (step_found) std::cout << "| normal step " << cc << ":" << from << "->" << to << std::endl;
                 }
                 if (step_found) {
-                    if (i > state.pile_bottom(from) && Card(state[i-1]).rank() == Card(state(to).top()).rank() && from != STOCK_PILE) {
+                    if (i > state.pile_bottom(from) && Card(state[i-1]) && Card(state[i-1]).rank() == Card(state(to).top()).rank() && from != STOCK_PILE) {
                         // std::cout << "| invariant step " << cc << ":" << from << "->" << to << std::endl;
                         if (!check_next_step_for_circle(KlondikeStep(cc, from, to, i - state.pile_bottom(from), state(to).size(), 0, false))) {
                             // std::cout << "| invariant step " << cc << ":" << from+1 << "->" << to+1 << std::endl;

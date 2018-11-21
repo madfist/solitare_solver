@@ -5,6 +5,10 @@ template<typename CarrierType, typename MaskElementEnum>
 class VersatileMask {
 public:
     VersatileMask(CarrierType d) : data(d) {}
+    VersatileMask& operator=(const VersatileMask<CarrierType, MaskElementEnum>& m) {
+        data = m.data;
+        return *this;
+    }
     bool operator==(const VersatileMask<CarrierType, MaskElementEnum>& m) const {
         return (data == m.data);
     }
@@ -30,7 +34,15 @@ protected:
 private:
     virtual CarrierType mask(MaskElementEnum) const = 0;
     virtual uint8_t shift(MaskElementEnum) const = 0;
+
     CarrierType data;
+};
+
+template<typename CarrierType, typename MaskElementEnum>
+struct VersatileMaskHash {
+    std::size_t operator()(const VersatileMask<CarrierType, MaskElementEnum>& m) const {
+        return m.get();
+    }
 };
 
 #endif

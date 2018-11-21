@@ -21,6 +21,9 @@ Usage:
   -i, --input arg  input game state
   -v, --verbose    info messages
   -d, --debug      debug messages
+  -p, --parallel   use parallel solver
+  -f, --filter     filter valid steps
+  -s, --steps arg  steps to run
   -h, --help       display this help
 ```
 
@@ -28,3 +31,5 @@ Usage:
 - [googletest](https://github.com/google/googletest)
 - [cxxopts](https://github.com/jarro2783/cxxopts)
 - [DownloadProject CMake extension](https://github.com/Crascit/DownloadProject)
+- [CTPL](https://github.com/vit-vit/ctpl)
+- [C++11 shared_mutex](https://github.com/HowardHinnant/HowardHinnant.github.io/blob/master/shared_mutex)

@@ -10,6 +10,7 @@
 #include "Solution.hpp"
 #include "StepNode.hpp"
 #include "Log.hpp"
+#include "Taboo.hpp"
 
 struct SolverProperties {
     bool filter;
@@ -18,7 +19,7 @@ struct SolverProperties {
 template<class Step>
 class Solver {
 public:
-    Solver(GamePtr<Step> g, SolverProperties p = {false}) : game(g), level(0), max_level(0), properties(p) {}
+    Solver(GamePtr<Step> g, std::shared_ptr<Taboo> t, SolverProperties p = {false}) : game(g), taboo(t), level(0), max_level(0), properties(p) {}
 
     /**
      * @brief      Solve the game with BFS and taboo heap
@@ -34,9 +35,9 @@ public:
         int i = 0;
         while (!game->win()) {
             ++solution;
-            if (!is_taboo()) {
+            if (!taboo->check(game->hash())) {
                 next_node_id = next_node(current_node_id);
-                add_taboo();
+                taboo->add(game->hash());
             } else {
                 --solution;
             }
@@ -53,7 +54,7 @@ public:
 
                 //if we got back to ROOT => return solution
                 if (next_node_id == StepNode<Step>::ROOT)
-                    return solution.finish(max_level, nodes.size(), taboo.size());
+                    return solution.finish(max_level, nodes.size(), taboo->size());
             }
 
             game->do_step(nodes[next_node_id].step());
@@ -68,8 +69,14 @@ public:
             next_node_id = nodes[next_node_id].root();
         } while (next_node_id != StepNode<Step>::ROOT);
 
-        return solution.finish(max_level, nodes.size(), taboo.size());
+        return solution.finish(max_level, nodes.size(), taboo->size());
     }
+
+    friend std::ostream& operator<<(std::ostream& os, const Solver<Step>& s) {
+        os << *(s.game);
+        return os;
+    }
+
 private:
     Solver();
     Solver(const Solver&);
@@ -129,30 +136,23 @@ private:
         return next_node_id;
     }
 
-    bool is_taboo() const {
-        return (taboo.find(game->hash()) != taboo.end());
-    }
-
-    void add_taboo() {
-        taboo.insert(game->hash());
-    }
-
     void filter_steps(std::vector<Step>& steps) {
-        std::remove_if(steps.begin(), steps.end(), [=](const Step& s) -> bool {
-            for (auto it = previous_steps.begin(); it != previous_steps.end(); ++it) {
-                if (*it == s)
-                    return true;
-            }
-            return false;
+        std::vector<Step> tmp;
+        std::copy_if(steps.begin(), steps.end(), std::back_inserter(tmp), [=](const Step& s) -> bool {
+            return previous_steps.find(s) == previous_steps.end();
         });
-        previous_steps = steps;
+        // std::remove_if(steps.begin(), steps.end(), [=](const Step& s) -> bool {
+        //     return previous_steps.find(s) != previous_steps.end();
+        // });
+        steps = tmp;
+        previous_steps.insert(steps.begin(), steps.end());
     }
 
     SolverProperties properties;
     GamePtr<Step> game;
     std::vector<StepNode<Step>> nodes;
-    std::vector<Step> previous_steps;
-    std::unordered_set<std::size_t> taboo;
+    std::unordered_set<Step, typename Step::Hash> previous_steps;
+    std::shared_ptr<Taboo> taboo;
     unsigned level, max_level;
 };
 

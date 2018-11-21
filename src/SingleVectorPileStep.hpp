@@ -18,6 +18,8 @@ public:
     SingleVectorPileStep(uint32_t);
     virtual ~SingleVectorPileStep();
 
+    using Hash = VersatileMaskHash<uint32_t, StateMaskElement>;
+
     bool is_stock_move() const;
     CardCode card_code() const;
     unsigned pile_from() const;
@@ -55,11 +57,20 @@ Output& operator<<(PrettyPrintWrapper<Output> ppw, const SingleVectorPileStep& s
 
 template<class Step>
 std::ostream& operator<<(std::ostream& os, const std::vector<Step>& ss) {
-    std::for_each(ss.begin(), ss.end() - 1, [&] (const Step& s) {
+    for (auto s : ss) {
         os << s << ' ';
-    });
+    }
     os << ss.back();
     return os;
+}
+
+template<class Output, class Step>
+Output& operator<<(PrettyPrintWrapper<Output> ppw, const std::vector<Step>& ss) {
+    for (auto s : ss) {
+        ppw << s << ' ';
+    }
+    ppw << ss.back();
+    return ppw.output;
 }
 
 template<class Step>

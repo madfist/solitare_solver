@@ -12,6 +12,7 @@
 #include "ParallelSolver.hpp"
 #include "Log.hpp"
 #include "PrettyPrint.hpp"
+#include "Taboo.hpp"
 
 template <class Game>
 std::shared_ptr<Game> load_game(const std::string& filename) {
@@ -38,7 +39,8 @@ void solve_game(const std::string& filename, bool parallel, bool filter) {
     Log(Log::INFO) << *game;
 
     if (!parallel) {
-        Solver<typename Game::step_type> solver(game, {filter});
+        auto taboo = std::make_shared<Taboo>();
+        Solver<typename Game::step_type> solver(game, taboo, {filter});
         auto solution = solver.solve();
 
         Log(Log::INFO) << solution;
@@ -46,8 +48,13 @@ void solve_game(const std::string& filename, bool parallel, bool filter) {
             Log(Log::INFO) << "YEAH";
         }
     } else {
-        ParallelSolver<Game> solver(game);
-        solver.solve();
+        ParallelSolver<Game> solver(game, {filter});
+        auto solution = solver.solve();
+
+        Log(Log::INFO) << solution;
+        if (solution) {
+            Log(Log::INFO) << "YEAH";
+        }
     }
 }
 
@@ -70,8 +77,9 @@ void run_steps(const std::string& filename, const std::string& steps_filename) {
 
     for (auto s = steps.begin(); s != steps.end(); ++s) {
         Log(Log::INFO) << "\t\t\t------------\t step: " << pp << *s;
+        Log(Log::INFO) << "*** " << pp << game->valid_steps();
         game->do_step(*s);
-        Log(Log::INFO) << *game;
+        Log(Log::INFO) << "--------------------------------------------------------\n" << *game;
     }
 }
 

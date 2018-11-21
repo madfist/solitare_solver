@@ -196,8 +196,8 @@ unsigned SingleVectorGameState::first_card_pos() const {
 }
 
 std::ostream& operator<<(std::ostream &os, const SingleVectorGameState &gs) {
-    for (auto cc = gs.state.begin(); cc != gs.state.end(); ++cc) {
-        os << '[' << *cc << ']';
+    for (auto cc : gs.state) {
+        os << '[' << cc << ']';
     }
     return os;
 }
