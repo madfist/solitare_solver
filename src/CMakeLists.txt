@@ -1,24 +1,4 @@
-cmake_minimum_required(VERSION 2.8.2)
-
-if (CMAKE_VERSION VERSION_LESS 3.2)
-    set(UPDATE_DISCONNECTED_IF_AVAILABLE "")
-else()
-    set(UPDATE_DISCONNECTED_IF_AVAILABLE "UPDATE_DISCONNECTED 1")
-endif()
-
-include(../DownloadProject.cmake)
-download_project(PROJ                cxxopts
-                 GIT_REPOSITORY      https://github.com/jarro2783/cxxopts.git
-                 GIT_TAG             v2.1.1
-                 PREFIX              external
-                 ${UPDATE_DISCONNECTED_IF_AVAILABLE}
-)
-
-add_subdirectory(${cxxopts_SOURCE_DIR} ${cxxopts_BINARY_DIR})
-
-# if (CMAKE_VERSION VERSION_LESS 2.8.11)
-    include_directories("${cxxopts_SOURCE_DIR}/include")
-# endif()
+include_directories("${cxxopts_SOURCE_DIR}/include")
 
 set(LIB_SRCS
     Card.hpp Card.cpp

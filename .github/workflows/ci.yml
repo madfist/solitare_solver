@@ -1,0 +1,39 @@
+name: CI
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Get CMake
+        uses: lukka/get-cmake@v3.23.0
+      - name: Build and test project
+        run: |
+          cmake -Bbuild .
+          make -Cbuild
+          make -Cbuild test
+
+  docs:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }} # publish only from master
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Get CMake
+        uses: lukka/get-cmake@v3.23.0
+      - name: Get Doxygen
+        run: sudo apt-get install doxygen -y
+      - name: Build documentation
+        run: |
+          cmake -Bbuild
+          make -Cbuild docs
+      - name: Publish to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs/html
+          full_commit_message: "Update documentation
+
+            [skip ci]"

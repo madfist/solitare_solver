@@ -3,9 +3,10 @@ C++ practice project to create a solver for some solitare games
 
 ## Build and test
 ```
-cmake .
-make
-make test
+mkdir build
+cmake -Bbuild .
+make -Cbuild
+make -Cbuild test
 ```
 > If built on cygwin after the downloading of `googletest` modify its `CMakeFiles.txt` to enable compiler extension and run `cmake` again.
 
@@ -25,6 +26,15 @@ Usage:
   -f, --filter     filter valid steps
   -s, --steps arg  steps to run
   -h, --help       display this help
+```
+
+## Documentation
+
+Doxygen documentation is available here.
+
+It can also be generated (`build/docs/html/index.html`):
+```
+make -Cbuild docs
 ```
 
 ## Using
