@@ -1,3 +1,8 @@
+/**
+ * Single-vector game state
+ * @file SingleVectorGameState.hpp
+ * @author Adam Koleszar
+ */
 #ifndef SOLITARE_SOLVER_GAME_STATE_HEADER
 #define SOLITARE_SOLVER_GAME_STATE_HEADER
 
@@ -9,48 +14,60 @@
 #include "SingleVectorPileStep.hpp"
 #include "PrettyPrint.hpp"
 
-using CardCodeFn = std::function<void(unsigned, const CardCode&)>;
-using CardFn = std::function<void(unsigned, const Card&)>;
+using CardCodeFn = std::function<void(unsigned pos, const CardCode& card)>; ///< Card handling function
+using CardFn = std::function<void(unsigned pos, const Card& card)>;         ///< Card handling function
 
+/// Game state represented as a vector of ::CardCode
 class SingleVectorGameState {
 public:
-    SingleVectorGameState();
+    SingleVectorGameState(); ///< Create empty state
+    /**
+     * @brief Create empty state
+     * @param state_size number of cards
+     * @param piles number of piles
+     */
     SingleVectorGameState(unsigned state_size, unsigned piles);
     SingleVectorGameState(const SingleVectorGameState&);
     ~SingleVectorGameState();
 
-    CardCode& operator[](std::size_t);
-    const CardCode& operator[](std::size_t) const;
+    CardCode& operator[](std::size_t pos);               ///< Get card at position @param pos card position
+    const CardCode& operator[](std::size_t pos) const;   ///< Get card at position @param pos card position
 
-    bool operator==(const SingleVectorGameState&) const;
-    explicit operator bool() const;
+    bool operator==(const SingleVectorGameState&) const; ///< Compare states
+    explicit operator bool() const;                      ///< Check state is not empty and valid
 
+    /// Helper class for piles
     class Pile {
     public:
-        Pile(const SingleVectorGameState&, unsigned);
+        /**
+         * @brief Get a pile from game
+         * @param ref game state
+         * @param pile_no pile number
+         */
+        Pile(const SingleVectorGameState& ref, unsigned pile_no);
 
-        CardCode bottom(unsigned offset = 0) const;
-        CardCode top(unsigned offset = 0) const;
-        unsigned size() const;
-        bool empty() const;
+        CardCode bottom(unsigned offset = 0) const; ///< Get card from the bottom of the pile @param offset offset from bottom
+        CardCode top(unsigned offset = 0) const;    ///< Get card from the top of the pile @param offset offset from top
+        unsigned size() const;                      ///< Get pile size
+        bool empty() const;                         ///< Check if pile is empty
 
-        void top_to_bottom(CardCodeFn) const;
-        void top_to_bottom(CardFn) const;
+        void top_to_bottom(CardCodeFn) const;       ///< Run card function from top to bottom of the pile 
+        void top_to_bottom(CardFn) const;           ///< Run card function from top to bottom of the pile 
     private:
         unsigned pile_no;
         const SingleVectorGameState& ref;
     };
 
-    const Pile operator()(unsigned) const;
+    const Pile operator()(unsigned p) const; ///< Get pile @param p pile number
 
     std::size_t hash() const;
-    void reset();
-    void reset(unsigned, unsigned);
+    void reset();                            ///< Reset game state to empty
+    void reset(unsigned size, unsigned p);   ///< Reset and resize game state @param size new size @param p number of piles
 
-    bool pile_empty(unsigned) const;
-    unsigned pile_size(unsigned) const;
-    unsigned pile_bottom(unsigned) const;
-    unsigned pile_top(unsigned) const;
+    bool pile_empty(unsigned p) const;       ///< Check if pile is empty
+    unsigned pile_size(unsigned p) const;    ///< Get pile size
+    CardCode pile_bottom(unsigned p) const;  ///< Get card from the bottom of the pile
+    CardCode pile_top(unsigned p) const;     ///< Get card from the top of the pile
 
     void do_move_and_upturn(const SingleVectorPileStep& s);
     void undo_move_and_upturn(const SingleVectorPileStep& s);

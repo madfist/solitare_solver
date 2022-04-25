@@ -1,3 +1,8 @@
+/**
+ * Deck of cards
+ * @file Deck.hpp
+ * @author Adam Koleszar
+ */
 #ifndef SOLITARE_SOLVER_DECK_HEADER
 #define SOLITARE_SOLVER_DECK_HEADER
 
@@ -7,17 +12,17 @@
 
 #include "Card.hpp"
 
-typedef std::list<Card> Pile;
+typedef std::list<Card> Pile; ///< Card pile
 
 std::ostream& operator<<(std::ostream& os, const Pile& p);
 std::istream& operator>>(std::istream& is, Pile& p);
 
-///Standard 52 card deck
+/// Standard 52 card deck
 class Deck {
 public:
-    Deck(bool ut = true);
+    Deck(bool ut = true); ///< Create deck @param ut upturned state
 
-    void shuffle();
+    void shuffle();       ///< Shuffle cards
 
     /**
      * @brief Deal a pile with the same upturned state
@@ -35,17 +40,22 @@ public:
      */
     Pile deal(int nd, int nu);
 
-    template<class Func>
-    Func deal(Func f) const {
-        return std::for_each(deck.rbegin(), deck.rend(), f);
+    /**
+     * @brief Custom dealer function
+     * @param f a void function that decides what to do with each card in the deck
+     * @tparam CardConsumer void function that accepts a single Card
+     */ 
+    template<class CardConsumer>
+    void deal(CardConsumer f) const {
+        std::for_each(deck.rbegin(), deck.rend(), f);
     }
 
     static const unsigned DECK_SIZE;
     static const unsigned SUITE_SIZE;
     static const unsigned RANK_SIZE;
 
-    friend std::ostream& operator<<(std::ostream& os, const Deck& d);
-    friend std::istream& operator>>(std::istream& is, Deck& d);
+    friend std::ostream& operator<<(std::ostream& os, const Deck& d); ///< Stream output operator
+    friend std::istream& operator>>(std::istream& is, Deck& d);       ///< Stream input operator
 private:
     std::vector<Card> deck;
     std::vector<Card>::reverse_iterator cards_left;

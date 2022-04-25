@@ -55,11 +55,11 @@ unsigned SingleVectorGameState::pile_size(unsigned p) const {
     return pile_top(p) - pile_bottom(p) + 1;
 }
 
-unsigned SingleVectorGameState::pile_bottom(unsigned p) const {
+CardCode SingleVectorGameState::pile_bottom(unsigned p) const {
     return (p == 0) ? last_pile : state[p-1];
 }
 
-unsigned SingleVectorGameState::pile_top(unsigned p) const {
+CardCode SingleVectorGameState::pile_top(unsigned p) const {
     return (p == last_pile) ? state.size()-1 : state[p]-1;
 }
 

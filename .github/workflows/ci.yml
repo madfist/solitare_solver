@@ -13,7 +13,7 @@ jobs:
         run: |
           cmake -Bbuild .
           make -Cbuild
-          make -Cbuild test
+          make CTEST_OUTPUT_ON_FAILURE=1 -Cbuild test
 
   docs:
     runs-on: ubuntu-latest

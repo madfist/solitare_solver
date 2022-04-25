@@ -44,3 +44,4 @@ src/external
 test/gtest
 test/external
 solitare_solver.sublime-workspace
+.env

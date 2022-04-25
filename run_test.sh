@@ -1,9 +1,10 @@
 #!/bin/sh
 
-cd test/test_solver
 if [ "$1" = "-d" ]; then
-  gdb solver_test
+  shift
+  cd test/test_solver
+  gdb ../../build/test/test_solver/solver_test $@
+  cd -
 else
-  ./solver_test
+  make CTEST_OUTPUT_ON_FAILURE=1 -Cbuild test
 fi
-cd -

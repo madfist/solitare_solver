@@ -7,8 +7,12 @@
 #include "Rules.hpp"
 #include "SingleVectorGameState.hpp"
 
-typedef unsigned pile;
+typedef unsigned pile; ///< A pile is represented as an `unsigned`
 
+/**
+ * @brief Klondike Game
+ * @details For Windows users: this is Solitare
+ */
 class KlondikeGame : public Game<KlondikeStep> {
 public:
     KlondikeGame();

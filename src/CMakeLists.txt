@@ -23,8 +23,11 @@ set(LIB_SRCS
     Taboo.hpp Taboo.cpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
+add_library(libsolver_cov STATIC ${LIB_SRCS})
 
 target_include_directories(libsolver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(libsolver_cov PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_compile_options(libsolver_cov PUBLIC -fprofile-arcs -ftest-coverage)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 

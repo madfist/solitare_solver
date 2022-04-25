@@ -28,6 +28,8 @@
  *   uint8_t shift(MaskElement m) const {
  *     return SHIFTS[m];
  *   }
+ *   static const std::array<uint32_t, 8> MASKS;
+ *   static const std::array<uint8_t, 8> SHIFTS;
  * }
  * 
  * const std::array<uint8_t, 3> Something::MASKS = {0x0F, 0x30, 0x40};
@@ -90,9 +92,10 @@ private:
     CarrierType data;
 };
 
-/// Helper functor for hash operations (e.g. set, map)
+/// Helper functor for hash operations (for unordered_set)
 template<typename CarrierType, typename MaskElementEnum>
 struct VersatileMaskHash {
+    /// Get hash for mask @return carrier value
     std::size_t operator()(const VersatileMask<CarrierType, MaskElementEnum>& m) const {
         return m.get();
     }

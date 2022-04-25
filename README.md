@@ -37,6 +37,22 @@ It can also be generated (`build/docs/html/index.html`):
 make -Cbuild docs
 ```
 
+## Coverage
+
+The project uses CTest and CDash from CMake, but doesn't have a public profile, so the CDash server can be run with the help of docker.
+```
+cp .env.example .env
+docker-compose run --rm cdash install configure
+docker-compose up -d
+```
+
+Then create a project *SolitareSolverUnitTests* in CDash (http://localhost:8080).
+
+To test and submit coverage run:
+```
+make -Cbuild Experimental
+```
+
 ## Using
 - [googletest](https://github.com/google/googletest)
 - [cxxopts](https://github.com/jarro2783/cxxopts)

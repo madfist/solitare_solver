@@ -1,3 +1,8 @@
+/**
+ * Single-vector pile step
+ * @file SingleVectorPileStep.hpp
+ * @author Adam Koleszar
+ */
 #ifndef SOLITARE_SOLVER_SINGLE_VECTOR_PILE_STEP_HEADER
 #define SOLITARE_SOLVER_SINGLE_VECTOR_PILE_STEP_HEADER
 
@@ -9,10 +14,23 @@
 #include "VersatileMask.hpp"
 #include "PrettyPrint.hpp"
 
+/// Enum for a pile step bitmask
 enum StateMaskElement {
     CARD_CODE = 0, PILE_FROM, PILE_TO, TURNED_UP, CARD_POS, NEW_POS, STOCK_STEP, WEIGHT
 };
 
+/**
+ * @brief Class for representing steps in a game as a bitmask
+ * @details it holds the following information
+ * * card to move
+ * * pile to move from
+ * * pile to move to
+ * * turning up the card on top
+ * * doing a stock move
+ * * original card position
+ * * new card position
+ * * weight of step (for heuristic solving)
+ */
 class SingleVectorPileStep : public VersatileMask<uint32_t, StateMaskElement> {
 public:
     SingleVectorPileStep(uint32_t);
@@ -29,14 +47,24 @@ public:
     unsigned new_pos() const;
     unsigned weight() const;
 
-    void turned_up(bool);
+    void turned_up(bool); ///< Change upturned state
 
-    bool operator<(const SingleVectorPileStep&) const;
+    bool operator<(const SingleVectorPileStep&) const; ///< Order steps by weight or starting pile
 
+    /**
+     * @brief Parse step from text
+     * @details Text have the following
+     * * starts with STOCK_MOVE if needed
+     * * card as text (e.g. `CK_`)
+     * * `:PILE_FROM:CARD_POS`
+     * * `->:PILE_TO:NEW_POS`
+     * * upturned state `[_^]`
+     * * weight
+     */
     void parse(const std::string&);
 
-    friend std::ostream& operator<<(std::ostream&, const SingleVectorPileStep&);
-    friend std::istream& operator>>(std::istream&, SingleVectorPileStep&);
+    friend std::ostream& operator<<(std::ostream&, const SingleVectorPileStep&); ///< Stream output operator
+    friend std::istream& operator>>(std::istream&, SingleVectorPileStep&);       ///< Stream input operator
     template<class Output>
     friend Output& operator<<(PrettyPrintWrapper<Output>, const SingleVectorPileStep&);
 private:
@@ -55,6 +83,7 @@ Output& operator<<(PrettyPrintWrapper<Output> ppw, const SingleVectorPileStep& s
     return ppw.output;
 }
 
+/// Stream output operator for steps
 template<class Step>
 std::ostream& operator<<(std::ostream& os, const std::vector<Step>& ss) {
     for (auto s : ss) {
@@ -73,6 +102,7 @@ Output& operator<<(PrettyPrintWrapper<Output> ppw, const std::vector<Step>& ss) 
     return ppw.output;
 }
 
+/// Stream input operator for steps
 template<class Step>
 std::istream& operator>>(std::istream& is, std::vector<Step>& ss) {
     Step s(0);

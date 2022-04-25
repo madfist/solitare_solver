@@ -19,3 +19,15 @@ TEST(solver_test, scorpion_solve_one_step) {
 
     EXPECT_TRUE(game->win());
 }
+
+TEST(solver_test, scorpion_solve_insane) {
+    auto game = test_solver::load_game<ScorpionGame>("insane.scorpion.game");
+    if (! *game)
+        FAIL() << "Cannot load game data" << std::endl;
+
+    std::shared_ptr<Taboo> taboo(new Taboo());
+    Solver<ScorpionStep> solver(game, taboo);
+    Solution<ScorpionStep> solution = solver.solve();
+
+    EXPECT_FALSE(game->win());
+}
