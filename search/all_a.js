@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['ruledcard_28',['RuledCard',['../classRuledCard.html',1,'']]],
-  ['rules_29',['Rules',['../classRules.html',1,'']]]
+  ['move_5fcards_5fbackward_35',['move_cards_backward',['../classSingleVectorGameState.html#a76aface92adb37492647b4b682e12ff6',1,'SingleVectorGameState']]],
+  ['move_5fcards_5fforward_36',['move_cards_forward',['../classSingleVectorGameState.html#aa8fccfd7a4ce8c327e0e8049834e9c67',1,'SingleVectorGameState']]],
+  ['move_5fsingle_5fcard_5fbackward_37',['move_single_card_backward',['../classSingleVectorGameState.html#ade19d41f07af6e52fb7c9c4d540d922e',1,'SingleVectorGameState']]],
+  ['move_5fsingle_5fcard_5fforward_38',['move_single_card_forward',['../classSingleVectorGameState.html#a8e3fa4715e36d3625c4c56bca7cf3af6',1,'SingleVectorGameState']]]
 ];

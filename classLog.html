@@ -71,43 +71,65 @@ $(function() {
 <div class="title">Log Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Logger.  
+ <a href="classLog.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Log_8hpp_source.html">Log.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a3718f3e276c3d3e23b58a3b8236d196e"><td class="memItemLeft" align="right" valign="top"><a id="a3718f3e276c3d3e23b58a3b8236d196e"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>LogLevel</b> { <b>DEBUG</b>, 
+<tr class="memitem:a3718f3e276c3d3e23b58a3b8236d196e"><td class="memItemLeft" align="right" valign="top"><a id="a3718f3e276c3d3e23b58a3b8236d196e"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> { <b>DEBUG</b>, 
 <b>INFO</b>, 
 <b>WARN</b>, 
 <b>ERROR</b>
  }</td></tr>
+<tr class="memdesc:a3718f3e276c3d3e23b58a3b8236d196e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum log level to display messages. <br /></td></tr>
 <tr class="separator:a3718f3e276c3d3e23b58a3b8236d196e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac73c7db3146fa7ad0624228b8f98bb5f"><td class="memItemLeft" align="right" valign="top"><a id="ac73c7db3146fa7ad0624228b8f98bb5f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Log</b> (LogLevel l=WARN)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f">Log</a> (<a class="el" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> l=WARN)</td></tr>
+<tr class="memdesc:ac73c7db3146fa7ad0624228b8f98bb5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a logger instance to stream messages into. <br /></td></tr>
 <tr class="separator:ac73c7db3146fa7ad0624228b8f98bb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fbfda88fbee5027c89f6eb121059360"><td class="memItemLeft" align="right" valign="top"><a id="a0fbfda88fbee5027c89f6eb121059360"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLog.html#a0fbfda88fbee5027c89f6eb121059360">~Log</a> ()</td></tr>
+<tr class="memdesc:a0fbfda88fbee5027c89f6eb121059360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destruct logger by adding <code>std::endl</code> at the end of the message. <br /></td></tr>
+<tr class="separator:a0fbfda88fbee5027c89f6eb121059360"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bb652e968302abfc7159fb119b08967"><td class="memTemplParams" colspan="2"><a id="a9bb652e968302abfc7159fb119b08967"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:a9bb652e968302abfc7159fb119b08967"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classLog.html">Log</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;</b> (const T &amp;value)</td></tr>
+<tr class="memitem:a9bb652e968302abfc7159fb119b08967"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classLog.html">Log</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classLog.html#a9bb652e968302abfc7159fb119b08967">operator&lt;&lt;</a> (const T &amp;value)</td></tr>
+<tr class="memdesc:a9bb652e968302abfc7159fb119b08967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream operator. <br /></td></tr>
 <tr class="separator:a9bb652e968302abfc7159fb119b08967"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac76d1d774eb0b5c483d45214046440d5"><td class="memItemLeft" align="right" valign="top"><a id="ac76d1d774eb0b5c483d45214046440d5"></a>
-<a class="el" href="classLog.html">Log</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;(*manip)(std::ostream &amp;))</td></tr>
+<a class="el" href="classLog.html">Log</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLog.html#ac76d1d774eb0b5c483d45214046440d5">operator&lt;&lt;</a> (std::ostream &amp;(*manip)(std::ostream &amp;))</td></tr>
+<tr class="memdesc:ac76d1d774eb0b5c483d45214046440d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream operator accepting IO manipulation options. <br /></td></tr>
 <tr class="separator:ac76d1d774eb0b5c483d45214046440d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:accaadc51b6ad4d59610e358ca3d154f3"><td class="memItemLeft" align="right" valign="top"><a id="accaadc51b6ad4d59610e358ca3d154f3"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>set_level</b> (LogLevel l)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLog.html#accaadc51b6ad4d59610e358ca3d154f3">set_level</a> (<a class="el" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> l)</td></tr>
+<tr class="memdesc:accaadc51b6ad4d59610e358ca3d154f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change minimum log level. <br /></td></tr>
 <tr class="separator:accaadc51b6ad4d59610e358ca3d154f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e40b65003dc705de5083930012d46db"><td class="memItemLeft" align="right" valign="top"><a id="a3e40b65003dc705de5083930012d46db"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_stream</b> (std::ostream *)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLog.html#a3e40b65003dc705de5083930012d46db">set_output_stream</a> (std::ostream *)</td></tr>
+<tr class="memdesc:a3e40b65003dc705de5083930012d46db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change output stream (default is <code>std::cout</code>) <br /></td></tr>
 <tr class="separator:a3e40b65003dc705de5083930012d46db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Logger. </p>
+<p>Usage: </p><div class="fragment"><div class="line"><a class="code" href="classLog.html#accaadc51b6ad4d59610e358ca3d154f3">Log::set_level</a>(Log::DEBUG)</div>
+<div class="line"><a class="code" href="classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f">Log</a>() &lt;&lt; <span class="stringliteral">&quot;Message on default level&quot;</span></div>
+<div class="line"><a class="code" href="classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f">Log</a>(Log::ERROR) &lt;&lt; <span class="stringliteral">&quot;Message on error level&quot;</span>;</div>
+</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="Log_8hpp_source.html">Log.hpp</a></li>
 <li>src/Log.cpp</li>
 </ul>
 </div><!-- contents -->
+<div class="ttc" id="aclassLog_html_ac73c7db3146fa7ad0624228b8f98bb5f"><div class="ttname"><a href="classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f">Log::Log</a></div><div class="ttdeci">Log(LogLevel l=WARN)</div><div class="ttdoc">Construct a logger instance to stream messages into.</div><div class="ttdef"><b>Definition:</b> Log.cpp:6</div></div>
+<div class="ttc" id="aclassLog_html_accaadc51b6ad4d59610e358ca3d154f3"><div class="ttname"><a href="classLog.html#accaadc51b6ad4d59610e358ca3d154f3">Log::set_level</a></div><div class="ttdeci">static void set_level(LogLevel l)</div><div class="ttdoc">Change minimum log level.</div><div class="ttdef"><b>Definition:</b> Log.cpp:14</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

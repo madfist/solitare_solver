@@ -70,41 +70,54 @@ $(function() {
 <div class="title">Rules.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef SOLITARE_SOLVER_RULES_HEADER</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define SOLITARE_SOLVER_RULES_HEADER</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Card_8hpp.html">Card.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classRules.html">    7</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRules.html">Rules</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">enum</span> SuiteOrder {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        SAME, ALTERNATE, ANY</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    };</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">enum</span> RankOrder {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        ACE_KING_ENABLED,</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        ACE_KING_DISABLED</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    };</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="classRules.html">Rules</a>();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classRules.html">Rules</a>(SuiteOrder, RankOrder);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">bool</span> is_before(<span class="keyword">const</span> <a class="code" href="classCard.html">Card</a>&amp;, <span class="keyword">const</span> <a class="code" href="classCard.html">Card</a>&amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">bool</span> is_before(<span class="keyword">const</span> CardCode&amp;, <span class="keyword">const</span> CardCode&amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    std::vector&lt;Card&gt; next(<span class="keyword">const</span> <a class="code" href="classCard.html">Card</a>&amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    std::vector&lt;CardCode&gt; next(<span class="keyword">const</span> CardCode&amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">bool</span> is_alternate_suite(<span class="keyword">const</span> CardCode&amp;, <span class="keyword">const</span> CardCode&amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    SuiteOrder suite_order;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    RankOrder rank_order;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
+<a href="Rules_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef SOLITARE_SOLVER_RULES_HEADER</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define SOLITARE_SOLVER_RULES_HEADER</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Card_8hpp.html">Card.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classRules.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRules.html">Rules</a> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">   18</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">SuiteOrder</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517aa113426fe079c94ba5f5a55253b7b65a">   19</a></span>&#160;        <a class="code" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517aa113426fe079c94ba5f5a55253b7b65a">SAME</a>,      </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a6ce0c597a99b6810e097989700d1f9e8">   20</a></span>&#160;        <a class="code" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a6ce0c597a99b6810e097989700d1f9e8">ALTERNATE</a>, </div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a14537ec70eab439b531e59378e0c5fd7">   21</a></span>&#160;        <a class="code" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a14537ec70eab439b531e59378e0c5fd7">ANY</a>        </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    };</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">   24</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">RankOrder</a> {</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa2f0e14df59fd43554073bf66a3d7cfa6">   25</a></span>&#160;        <a class="code" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa2f0e14df59fd43554073bf66a3d7cfa6">ACE_KING_ENABLED</a>, </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa9d772130e4485d67634f325f03c74f02">   26</a></span>&#160;        <a class="code" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa9d772130e4485d67634f325f03c74f02">ACE_KING_DISABLED</a> </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    };</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classRules.html">Rules</a>();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classRules.html">Rules</a>(<a class="code" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">SuiteOrder</a>, <a class="code" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">RankOrder</a>);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRules.html#a08a41b44068b9c8ed1c85406fd7e7097">is_before</a>(<span class="keyword">const</span> <a class="code" href="classCard.html">Card</a>&amp;, <span class="keyword">const</span> <a class="code" href="classCard.html">Card</a>&amp;) <span class="keyword">const</span>;         </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRules.html#a08a41b44068b9c8ed1c85406fd7e7097">is_before</a>(<span class="keyword">const</span> <a class="code" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>&amp;, <span class="keyword">const</span> <a class="code" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>&amp;) <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    std::vector&lt;Card&gt; <a class="code" href="classRules.html#a563d21d17050fb76adacdfe80c825ffc">next</a>(<span class="keyword">const</span> <a class="code" href="classCard.html">Card</a>&amp;) <span class="keyword">const</span>;         </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    std::vector&lt;CardCode&gt; <a class="code" href="classRules.html#a563d21d17050fb76adacdfe80c825ffc">next</a>(<span class="keyword">const</span> <a class="code" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>&amp;) <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">bool</span> is_alternate_suite(<span class="keyword">const</span> <a class="code" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>&amp;, <span class="keyword">const</span> <a class="code" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>&amp;) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">SuiteOrder</a> suite_order;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">RankOrder</a> rank_order;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassCard_html"><div class="ttname"><a href="classCard.html">Card</a></div><div class="ttdoc">Normal french cards A-2-10-J-Q-K, spade, club, heart, diamond.</div><div class="ttdef"><b>Definition:</b> Card.hpp:27</div></div>
-<div class="ttc" id="aclassRules_html"><div class="ttname"><a href="classRules.html">Rules</a></div><div class="ttdef"><b>Definition:</b> Rules.hpp:7</div></div>
+<div class="ttc" id="aclassRules_html_aa94c65e1e500d9eeaf054bef36f2847fa2f0e14df59fd43554073bf66a3d7cfa6"><div class="ttname"><a href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa2f0e14df59fd43554073bf66a3d7cfa6">Rules::ACE_KING_ENABLED</a></div><div class="ttdeci">@ ACE_KING_ENABLED</div><div class="ttdoc">A pile ending in Ace can be continued with a King.</div><div class="ttdef"><b>Definition:</b> Rules.hpp:25</div></div>
+<div class="ttc" id="aclassRules_html_aa94c65e1e500d9eeaf054bef36f2847fa9d772130e4485d67634f325f03c74f02"><div class="ttname"><a href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa9d772130e4485d67634f325f03c74f02">Rules::ACE_KING_DISABLED</a></div><div class="ttdeci">@ ACE_KING_DISABLED</div><div class="ttdoc">A pile ending in Ace cannot be continued with a King.</div><div class="ttdef"><b>Definition:</b> Rules.hpp:26</div></div>
+<div class="ttc" id="aclassRules_html_a9cb20c5b61d18f46e3b2f4c74fb87517"><div class="ttname"><a href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">Rules::SuiteOrder</a></div><div class="ttdeci">SuiteOrder</div><div class="ttdoc">Pile rule on available suites.</div><div class="ttdef"><b>Definition:</b> Rules.hpp:18</div></div>
+<div class="ttc" id="aclassCard_html"><div class="ttname"><a href="classCard.html">Card</a></div><div class="ttdoc">Normal french cards A-2-10-J-Q-K, spade, club, heart, diamond.</div><div class="ttdef"><b>Definition:</b> Card.hpp:28</div></div>
+<div class="ttc" id="aclassRules_html_a563d21d17050fb76adacdfe80c825ffc"><div class="ttname"><a href="classRules.html#a563d21d17050fb76adacdfe80c825ffc">Rules::next</a></div><div class="ttdeci">std::vector&lt; Card &gt; next(const Card &amp;) const</div><div class="ttdoc">Get next possible cards in the order.</div><div class="ttdef"><b>Definition:</b> Rules.cpp:32</div></div>
+<div class="ttc" id="aclassRules_html"><div class="ttname"><a href="classRules.html">Rules</a></div><div class="ttdef"><b>Definition:</b> Rules.hpp:15</div></div>
+<div class="ttc" id="aclassRules_html_aa94c65e1e500d9eeaf054bef36f2847f"><div class="ttname"><a href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">Rules::RankOrder</a></div><div class="ttdeci">RankOrder</div><div class="ttdoc">Pile rule for continuing a pile after Ace or King.</div><div class="ttdef"><b>Definition:</b> Rules.hpp:24</div></div>
+<div class="ttc" id="aCard_8hpp_html_ac1d0537bdc07b280ef7c8c77ac37b93e"><div class="ttname"><a href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a></div><div class="ttdeci">uint8_t CardCode</div><div class="ttdoc">A byte to represent a card.</div><div class="ttdef"><b>Definition:</b> Card.hpp:14</div></div>
+<div class="ttc" id="aclassRules_html_a9cb20c5b61d18f46e3b2f4c74fb87517aa113426fe079c94ba5f5a55253b7b65a"><div class="ttname"><a href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517aa113426fe079c94ba5f5a55253b7b65a">Rules::SAME</a></div><div class="ttdeci">@ SAME</div><div class="ttdoc">All card needs to be the same suite.</div><div class="ttdef"><b>Definition:</b> Rules.hpp:19</div></div>
+<div class="ttc" id="aclassRules_html_a9cb20c5b61d18f46e3b2f4c74fb87517a6ce0c597a99b6810e097989700d1f9e8"><div class="ttname"><a href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a6ce0c597a99b6810e097989700d1f9e8">Rules::ALTERNATE</a></div><div class="ttdeci">@ ALTERNATE</div><div class="ttdoc">Card can alternate between black and red suites.</div><div class="ttdef"><b>Definition:</b> Rules.hpp:20</div></div>
+<div class="ttc" id="aclassRules_html_a9cb20c5b61d18f46e3b2f4c74fb87517a14537ec70eab439b531e59378e0c5fd7"><div class="ttname"><a href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a14537ec70eab439b531e59378e0c5fd7">Rules::ANY</a></div><div class="ttdeci">@ ANY</div><div class="ttdoc">Any card can fit into the pile.</div><div class="ttdef"><b>Definition:</b> Rules.hpp:21</div></div>
+<div class="ttc" id="aclassRules_html_a08a41b44068b9c8ed1c85406fd7e7097"><div class="ttname"><a href="classRules.html#a08a41b44068b9c8ed1c85406fd7e7097">Rules::is_before</a></div><div class="ttdeci">bool is_before(const Card &amp;, const Card &amp;) const</div><div class="ttdoc">Check if card order is valid.</div><div class="ttdef"><b>Definition:</b> Rules.cpp:14</div></div>
 <div class="ttc" id="aCard_8hpp_html"><div class="ttname"><a href="Card_8hpp.html">Card.hpp</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

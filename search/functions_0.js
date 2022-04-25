@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['deal_94',['deal',['../classDeck.html#a90b58f07b78d4f24b548e93429122a23',1,'Deck::deal(int n, bool ut)'],['../classDeck.html#a5dc389561881018b390ce0fdca065198',1,'Deck::deal(int nd, int nu)']]],
-  ['do_5fstep_95',['do_step',['../classGame.html#a3170bd2c281d05f6e104418b1b30bbc5',1,'Game::do_step()'],['../classKlondikeGame.html#aa309be91ab99fb3c671ee52197145c82',1,'KlondikeGame::do_step()'],['../classScorpionGame.html#a153d20c72f333d7fdc64f465bb7bcb25',1,'ScorpionGame::do_step()']]]
+  ['bottom_153',['bottom',['../classSingleVectorGameState_1_1Pile.html#ac3887a1620261ce3e9880122158ff236',1,'SingleVectorGameState::Pile']]]
 ];

@@ -70,6 +70,8 @@ $(function() {
 <div class="title">Game&lt; Step &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Game_8hpp_source.html">Game.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -91,12 +93,11 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#acb20af747be100d2a49fa74e351db080">hash</a> () const =0</td></tr>
 <tr class="memdesc:acb20af747be100d2a49fa74e351db080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash value for the game state (CRC32/CRC64) <br /></td></tr>
 <tr class="separator:acb20af747be100d2a49fa74e351db080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3170bd2c281d05f6e104418b1b30bbc5"><td class="memItemLeft" align="right" valign="top"><a id="a3170bd2c281d05f6e104418b1b30bbc5"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a3170bd2c281d05f6e104418b1b30bbc5">do_step</a> (const Step &amp;)=0</td></tr>
-<tr class="memdesc:a3170bd2c281d05f6e104418b1b30bbc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a step. <br /></td></tr>
+<tr class="memitem:a3170bd2c281d05f6e104418b1b30bbc5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a3170bd2c281d05f6e104418b1b30bbc5">do_step</a> (const Step &amp;)=0</td></tr>
 <tr class="separator:a3170bd2c281d05f6e104418b1b30bbc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bf3f04936d94f6ec9ad0544400b5251"><td class="memItemLeft" align="right" valign="top"><a id="a2bf3f04936d94f6ec9ad0544400b5251"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>do_steps</b> (const std::vector&lt; Step &gt; &amp;steps)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a2bf3f04936d94f6ec9ad0544400b5251">do_steps</a> (const std::vector&lt; Step &gt; &amp;steps)</td></tr>
+<tr class="memdesc:a2bf3f04936d94f6ec9ad0544400b5251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take multiple steps. <br /></td></tr>
 <tr class="separator:a2bf3f04936d94f6ec9ad0544400b5251"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af847de1c6acb33f041a9d7d620e7f4ed"><td class="memItemLeft" align="right" valign="top"><a id="af847de1c6acb33f041a9d7d620e7f4ed"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#af847de1c6acb33f041a9d7d620e7f4ed">undo_step</a> (const Step &amp;)=0</td></tr>
@@ -115,12 +116,56 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a8a334c6d39c5d7b7eec24c5fc167be0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if it even worth trying to solve the game. <br /></td></tr>
 <tr class="separator:a8a334c6d39c5d7b7eec24c5fc167be0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5c634c2fae916a05ea7d79c5536bebb"><td class="memItemLeft" align="right" valign="top"><a id="aa5c634c2fae916a05ea7d79c5536bebb"></a>
-virtual std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>print</b> (std::ostream &amp;) const =0</td></tr>
+virtual std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#aa5c634c2fae916a05ea7d79c5536bebb">print</a> (std::ostream &amp;) const =0</td></tr>
+<tr class="memdesc:aa5c634c2fae916a05ea7d79c5536bebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stream output method. <br /></td></tr>
 <tr class="separator:aa5c634c2fae916a05ea7d79c5536bebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91bbffadc9ab52f79ca62190d7b91621"><td class="memItemLeft" align="right" valign="top"><a id="a91bbffadc9ab52f79ca62190d7b91621"></a>
-virtual std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>read</b> (std::istream &amp;)=0</td></tr>
+virtual std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a91bbffadc9ab52f79ca62190d7b91621">read</a> (std::istream &amp;)=0</td></tr>
+<tr class="memdesc:a91bbffadc9ab52f79ca62190d7b91621"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stream input method. <br /></td></tr>
 <tr class="separator:a91bbffadc9ab52f79ca62190d7b91621"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;class Step&gt;<br />
+class Game&lt; Step &gt;</h3>
+
+<p>Abstract card game </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Step</td><td>step type </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3170bd2c281d05f6e104418b1b30bbc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3170bd2c281d05f6e104418b1b30bbc5">&#9670;&nbsp;</a></span>do_step()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classGame.html">Game</a>&lt; Step &gt;::do_step </td>
+          <td>(</td>
+          <td class="paramtype">const Step &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Take a step </p>
+
+<p>Implemented in <a class="el" href="classScorpionGame.html#a153d20c72f333d7fdc64f465bb7bcb25">ScorpionGame</a>, and <a class="el" href="classKlondikeGame.html#aa309be91ab99fb3c671ee52197145c82">KlondikeGame</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="Game_8hpp_source.html">Game.hpp</a></li>
 </ul>

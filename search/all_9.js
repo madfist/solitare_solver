@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['queue_26',['Queue',['../classctpl_1_1detail_1_1Queue.html',1,'ctpl::detail']]],
-  ['queue_3c_20std_3a_3afunction_3c_20void_28int_20id_29_3e_20_2a_20_3e_27',['Queue&lt; std::function&lt; void(int id)&gt; * &gt;',['../classctpl_1_1detail_1_1Queue.html',1,'ctpl::detail']]]
+  ['log_33',['Log',['../classLog.html',1,'Log'],['../classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f',1,'Log::Log()']]],
+  ['loglevel_34',['LogLevel',['../classLog.html#a3718f3e276c3d3e23b58a3b8236d196e',1,'Log']]]
 ];

@@ -70,37 +70,94 @@ $(function() {
 <div class="title">Rules Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Rules_8hpp_source.html">Rules.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a9cb20c5b61d18f46e3b2f4c74fb87517"><td class="memItemLeft" align="right" valign="top"><a id="a9cb20c5b61d18f46e3b2f4c74fb87517"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>SuiteOrder</b> { <b>SAME</b>, 
-<b>ALTERNATE</b>, 
-<b>ANY</b>
+<tr class="memitem:a9cb20c5b61d18f46e3b2f4c74fb87517"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">SuiteOrder</a> { <a class="el" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517aa113426fe079c94ba5f5a55253b7b65a">SAME</a>, 
+<a class="el" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a6ce0c597a99b6810e097989700d1f9e8">ALTERNATE</a>, 
+<a class="el" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517a14537ec70eab439b531e59378e0c5fd7">ANY</a>
  }</td></tr>
+<tr class="memdesc:a9cb20c5b61d18f46e3b2f4c74fb87517"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pile rule on available suites.  <a href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">More...</a><br /></td></tr>
 <tr class="separator:a9cb20c5b61d18f46e3b2f4c74fb87517"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa94c65e1e500d9eeaf054bef36f2847f"><td class="memItemLeft" align="right" valign="top"><a id="aa94c65e1e500d9eeaf054bef36f2847f"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>RankOrder</b> { <b>ACE_KING_ENABLED</b>, 
-<b>ACE_KING_DISABLED</b>
+<tr class="memitem:aa94c65e1e500d9eeaf054bef36f2847f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">RankOrder</a> { <a class="el" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa2f0e14df59fd43554073bf66a3d7cfa6">ACE_KING_ENABLED</a>, 
+<a class="el" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847fa9d772130e4485d67634f325f03c74f02">ACE_KING_DISABLED</a>
  }</td></tr>
+<tr class="memdesc:aa94c65e1e500d9eeaf054bef36f2847f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pile rule for continuing a pile after Ace or King.  <a href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">More...</a><br /></td></tr>
 <tr class="separator:aa94c65e1e500d9eeaf054bef36f2847f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad1a5cd023856addef64a1115bac9e4ed"><td class="memItemLeft" align="right" valign="top"><a id="ad1a5cd023856addef64a1115bac9e4ed"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Rules</b> (SuiteOrder, RankOrder)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Rules</b> (<a class="el" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">SuiteOrder</a>, <a class="el" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">RankOrder</a>)</td></tr>
 <tr class="separator:ad1a5cd023856addef64a1115bac9e4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08a41b44068b9c8ed1c85406fd7e7097"><td class="memItemLeft" align="right" valign="top"><a id="a08a41b44068b9c8ed1c85406fd7e7097"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_before</b> (const <a class="el" href="classCard.html">Card</a> &amp;, const <a class="el" href="classCard.html">Card</a> &amp;) const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRules.html#a08a41b44068b9c8ed1c85406fd7e7097">is_before</a> (const <a class="el" href="classCard.html">Card</a> &amp;, const <a class="el" href="classCard.html">Card</a> &amp;) const</td></tr>
+<tr class="memdesc:a08a41b44068b9c8ed1c85406fd7e7097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if card order is valid. <br /></td></tr>
 <tr class="separator:a08a41b44068b9c8ed1c85406fd7e7097"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ce185a605fb2d2db8a07b04adcff284"><td class="memItemLeft" align="right" valign="top"><a id="a7ce185a605fb2d2db8a07b04adcff284"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_before</b> (const CardCode &amp;, const CardCode &amp;) const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRules.html#a7ce185a605fb2d2db8a07b04adcff284">is_before</a> (const <a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a> &amp;, const <a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a> &amp;) const</td></tr>
+<tr class="memdesc:a7ce185a605fb2d2db8a07b04adcff284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if card order is valid. <br /></td></tr>
 <tr class="separator:a7ce185a605fb2d2db8a07b04adcff284"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a563d21d17050fb76adacdfe80c825ffc"><td class="memItemLeft" align="right" valign="top"><a id="a563d21d17050fb76adacdfe80c825ffc"></a>
-std::vector&lt; <a class="el" href="classCard.html">Card</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>next</b> (const <a class="el" href="classCard.html">Card</a> &amp;) const</td></tr>
+std::vector&lt; <a class="el" href="classCard.html">Card</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRules.html#a563d21d17050fb76adacdfe80c825ffc">next</a> (const <a class="el" href="classCard.html">Card</a> &amp;) const</td></tr>
+<tr class="memdesc:a563d21d17050fb76adacdfe80c825ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get next possible cards in the order. <br /></td></tr>
 <tr class="separator:a563d21d17050fb76adacdfe80c825ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7a9f71a893c27bacb33f6260ab133d1"><td class="memItemLeft" align="right" valign="top"><a id="ac7a9f71a893c27bacb33f6260ab133d1"></a>
-std::vector&lt; CardCode &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>next</b> (const CardCode &amp;) const</td></tr>
+std::vector&lt; <a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRules.html#ac7a9f71a893c27bacb33f6260ab133d1">next</a> (const <a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a> &amp;) const</td></tr>
+<tr class="memdesc:ac7a9f71a893c27bacb33f6260ab133d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get next possible cards in the order. <br /></td></tr>
 <tr class="separator:ac7a9f71a893c27bacb33f6260ab133d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Helper class to decide step validity </p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="aa94c65e1e500d9eeaf054bef36f2847f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa94c65e1e500d9eeaf054bef36f2847f">&#9670;&nbsp;</a></span>RankOrder</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classRules.html#aa94c65e1e500d9eeaf054bef36f2847f">Rules::RankOrder</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pile rule for continuing a pile after Ace or King. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa94c65e1e500d9eeaf054bef36f2847fa2f0e14df59fd43554073bf66a3d7cfa6"></a>ACE_KING_ENABLED&#160;</td><td class="fielddoc"><p>A pile ending in Ace can be continued with a King. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa94c65e1e500d9eeaf054bef36f2847fa9d772130e4485d67634f325f03c74f02"></a>ACE_KING_DISABLED&#160;</td><td class="fielddoc"><p>A pile ending in Ace cannot be continued with a King. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a9cb20c5b61d18f46e3b2f4c74fb87517"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cb20c5b61d18f46e3b2f4c74fb87517">&#9670;&nbsp;</a></span>SuiteOrder</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517">Rules::SuiteOrder</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pile rule on available suites. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9cb20c5b61d18f46e3b2f4c74fb87517aa113426fe079c94ba5f5a55253b7b65a"></a>SAME&#160;</td><td class="fielddoc"><p>All card needs to be the same suite. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9cb20c5b61d18f46e3b2f4c74fb87517a6ce0c597a99b6810e097989700d1f9e8"></a>ALTERNATE&#160;</td><td class="fielddoc"><p><a class="el" href="classCard.html" title="Normal french cards A-2-10-J-Q-K, spade, club, heart, diamond.">Card</a> can alternate between black and red suites. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9cb20c5b61d18f46e3b2f4c74fb87517a14537ec70eab439b531e59378e0c5fd7"></a>ANY&#160;</td><td class="fielddoc"><p>Any card can fit into the pile. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="Rules_8hpp_source.html">Rules.hpp</a></li>
 <li>src/Rules.cpp</li>

@@ -73,11 +73,11 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef SOLITARE_SOLVER_SCORPION_GAME_HEADER</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define SOLITARE_SOLVER_SCORPION_GAME_HEADER</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;Game.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;Deck.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;Rules.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Game_8hpp.html">Game.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Deck_8hpp.html">Deck.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Rules_8hpp.html">Rules.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;ScorpionStep.hpp&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;SingleVectorGameState.hpp&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SingleVectorGameState_8hpp.html">SingleVectorGameState.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classScorpionGame.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="classScorpionGame.html">ScorpionGame</a> : <span class="keyword">public</span> <a class="code" href="classGame.html">Game</a>&lt;ScorpionStep&gt; {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">public</span>:</div>
@@ -93,8 +93,8 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    std::vector&lt;ScorpionStep&gt; valid_steps() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">bool</span> win() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">bool</span> sanity() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    std::ostream&amp; print(std::ostream&amp;) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    std::istream&amp; read(std::istream&amp;) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    std::ostream&amp; <a class="code" href="classScorpionGame.html#a4494c4b741a2c266bacaa69d0b822e7e">print</a>(std::ostream&amp;) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    std::istream&amp; <a class="code" href="classScorpionGame.html#ae94daa95ceca304228a47b8f1a66e2cc">read</a>(std::istream&amp;) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> do_stock_move();</div>
@@ -110,20 +110,27 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="classRules.html">Rules</a> rules;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;};</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;std::ostream&amp; operator&lt;&lt;(std::ostream&amp;, <span class="keyword">const</span> <a class="code" href="classScorpionGame.html">ScorpionGame</a>&amp;);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;std::ostream&amp; <a class="code" href="Card_8hpp.html#ace2045ebb1cf7c1e36e624618f4f1806">operator&lt;&lt;</a>(std::ostream&amp;, <span class="keyword">const</span> <a class="code" href="classScorpionGame.html">ScorpionGame</a>&amp;);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;std::istream&amp; operator&gt;&gt;(std::istream&amp;, <a class="code" href="classScorpionGame.html">ScorpionGame</a>&amp;);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassScorpionGame_html"><div class="ttname"><a href="classScorpionGame.html">ScorpionGame</a></div><div class="ttdef"><b>Definition:</b> ScorpionGame.hpp:10</div></div>
+<div class="ttc" id="aclassScorpionGame_html_ae94daa95ceca304228a47b8f1a66e2cc"><div class="ttname"><a href="classScorpionGame.html#ae94daa95ceca304228a47b8f1a66e2cc">ScorpionGame::read</a></div><div class="ttdeci">std::istream &amp; read(std::istream &amp;) override</div><div class="ttdoc">Stream input method.</div><div class="ttdef"><b>Definition:</b> ScorpionGame.cpp:283</div></div>
 <div class="ttc" id="aclassScorpionGame_html_ad95410428cf47dc9b0dede2129f31a9b"><div class="ttname"><a href="classScorpionGame.html#ad95410428cf47dc9b0dede2129f31a9b">ScorpionGame::operator==</a></div><div class="ttdeci">bool operator==(const Game &amp;) const override</div><div class="ttdoc">Compare games on state level.</div><div class="ttdef"><b>Definition:</b> ScorpionGame.cpp:38</div></div>
-<div class="ttc" id="aclassScorpionGame_html_a153d20c72f333d7fdc64f465bb7bcb25"><div class="ttname"><a href="classScorpionGame.html#a153d20c72f333d7fdc64f465bb7bcb25">ScorpionGame::do_step</a></div><div class="ttdeci">void do_step(const ScorpionStep &amp;) override</div><div class="ttdoc">Take a step.</div><div class="ttdef"><b>Definition:</b> ScorpionGame.cpp:55</div></div>
-<div class="ttc" id="aclassRules_html"><div class="ttname"><a href="classRules.html">Rules</a></div><div class="ttdef"><b>Definition:</b> Rules.hpp:7</div></div>
+<div class="ttc" id="aclassScorpionGame_html_a153d20c72f333d7fdc64f465bb7bcb25"><div class="ttname"><a href="classScorpionGame.html#a153d20c72f333d7fdc64f465bb7bcb25">ScorpionGame::do_step</a></div><div class="ttdeci">void do_step(const ScorpionStep &amp;) override</div><div class="ttdef"><b>Definition:</b> ScorpionGame.cpp:55</div></div>
+<div class="ttc" id="aclassRules_html"><div class="ttname"><a href="classRules.html">Rules</a></div><div class="ttdef"><b>Definition:</b> Rules.hpp:15</div></div>
+<div class="ttc" id="aCard_8hpp_html_ace2045ebb1cf7c1e36e624618f4f1806"><div class="ttname"><a href="Card_8hpp.html#ace2045ebb1cf7c1e36e624618f4f1806">operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;, const CardCode &amp;cc)</div><div class="ttdoc">Stream output operator.</div><div class="ttdef"><b>Definition:</b> Card.cpp:116</div></div>
 <div class="ttc" id="aclassScorpionGame_html_abfb4251e92a12198f27670a42a48077d"><div class="ttname"><a href="classScorpionGame.html#abfb4251e92a12198f27670a42a48077d">ScorpionGame::undo_step</a></div><div class="ttdeci">void undo_step(const ScorpionStep &amp;) override</div><div class="ttdoc">Undo a step.</div><div class="ttdef"><b>Definition:</b> ScorpionGame.cpp:63</div></div>
 <div class="ttc" id="aclassScorpionStep_html"><div class="ttname"><a href="classScorpionStep.html">ScorpionStep</a></div><div class="ttdef"><b>Definition:</b> ScorpionStep.hpp:14</div></div>
-<div class="ttc" id="aclassDeck_html"><div class="ttname"><a href="classDeck.html">Deck</a></div><div class="ttdoc">Standard 52 card deck.</div><div class="ttdef"><b>Definition:</b> Deck.hpp:16</div></div>
-<div class="ttc" id="aclassGame_html"><div class="ttname"><a href="classGame.html">Game</a></div><div class="ttdef"><b>Definition:</b> Game.hpp:15</div></div>
-<div class="ttc" id="aclassSingleVectorGameState_html"><div class="ttname"><a href="classSingleVectorGameState.html">SingleVectorGameState</a></div><div class="ttdef"><b>Definition:</b> SingleVectorGameState.hpp:15</div></div>
+<div class="ttc" id="aclassScorpionGame_html_a4494c4b741a2c266bacaa69d0b822e7e"><div class="ttname"><a href="classScorpionGame.html#a4494c4b741a2c266bacaa69d0b822e7e">ScorpionGame::print</a></div><div class="ttdeci">std::ostream &amp; print(std::ostream &amp;) const override</div><div class="ttdoc">Stream output method.</div><div class="ttdef"><b>Definition:</b> ScorpionGame.cpp:263</div></div>
+<div class="ttc" id="aclassDeck_html"><div class="ttname"><a href="classDeck.html">Deck</a></div><div class="ttdoc">Standard 52 card deck.</div><div class="ttdef"><b>Definition:</b> Deck.hpp:21</div></div>
+<div class="ttc" id="aSingleVectorGameState_8hpp_html"><div class="ttname"><a href="SingleVectorGameState_8hpp.html">SingleVectorGameState.hpp</a></div></div>
+<div class="ttc" id="aDeck_8hpp_html"><div class="ttname"><a href="Deck_8hpp.html">Deck.hpp</a></div></div>
+<div class="ttc" id="aclassGame_html"><div class="ttname"><a href="classGame.html">Game</a></div><div class="ttdef"><b>Definition:</b> Game.hpp:24</div></div>
+<div class="ttc" id="aRules_8hpp_html"><div class="ttname"><a href="Rules_8hpp.html">Rules.hpp</a></div></div>
+<div class="ttc" id="aclassSingleVectorGameState_html"><div class="ttname"><a href="classSingleVectorGameState.html">SingleVectorGameState</a></div><div class="ttdoc">Game state represented as a vector of CardCode.</div><div class="ttdef"><b>Definition:</b> SingleVectorGameState.hpp:21</div></div>
+<div class="ttc" id="aGame_8hpp_html"><div class="ttname"><a href="Game_8hpp.html">Game.hpp</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

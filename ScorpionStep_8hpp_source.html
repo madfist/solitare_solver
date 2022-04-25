@@ -76,7 +76,7 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Card_8hpp.html">Card.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;SingleVectorPileStep.hpp&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SingleVectorPileStep_8hpp.html">SingleVectorPileStep.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> * Step information</span></div>
@@ -86,12 +86,12 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classScorpionStep.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classScorpionStep.html">ScorpionStep</a> : <span class="keyword">public</span> <a class="code" href="classSingleVectorPileStep.html">SingleVectorPileStep</a> {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="classScorpionStep.html">ScorpionStep</a>(uint32_t);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="classScorpionStep.html">ScorpionStep</a>(CardCode, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span> w = 0);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="classScorpionStep.html">ScorpionStep</a>(<a class="code" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span>, <span class="keywordtype">unsigned</span> w = 0);</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> uint32_t STOCK_MOVE;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">virtual</span> uint32_t mask(StateMaskElement) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> uint8_t shift(StateMaskElement) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">virtual</span> uint32_t mask(<a class="code" href="SingleVectorPileStep_8hpp.html#a384bf4d8d68f088d19f5bcdef392f767">StateMaskElement</a>) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> uint8_t shift(<a class="code" href="SingleVectorPileStep_8hpp.html#a384bf4d8d68f088d19f5bcdef392f767">StateMaskElement</a>) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::array&lt;uint32_t, 8&gt; MASKS;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::array&lt;uint8_t, 8&gt; SHIFTS;</div>
@@ -99,7 +99,10 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassSingleVectorPileStep_html"><div class="ttname"><a href="classSingleVectorPileStep.html">SingleVectorPileStep</a></div><div class="ttdef"><b>Definition:</b> SingleVectorPileStep.hpp:16</div></div>
+<div class="ttc" id="aSingleVectorPileStep_8hpp_html"><div class="ttname"><a href="SingleVectorPileStep_8hpp.html">SingleVectorPileStep.hpp</a></div></div>
+<div class="ttc" id="aCard_8hpp_html_ac1d0537bdc07b280ef7c8c77ac37b93e"><div class="ttname"><a href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a></div><div class="ttdeci">uint8_t CardCode</div><div class="ttdoc">A byte to represent a card.</div><div class="ttdef"><b>Definition:</b> Card.hpp:14</div></div>
+<div class="ttc" id="aSingleVectorPileStep_8hpp_html_a384bf4d8d68f088d19f5bcdef392f767"><div class="ttname"><a href="SingleVectorPileStep_8hpp.html#a384bf4d8d68f088d19f5bcdef392f767">StateMaskElement</a></div><div class="ttdeci">StateMaskElement</div><div class="ttdoc">Enum for a pile step bitmask.</div><div class="ttdef"><b>Definition:</b> SingleVectorPileStep.hpp:18</div></div>
+<div class="ttc" id="aclassSingleVectorPileStep_html"><div class="ttname"><a href="classSingleVectorPileStep.html">SingleVectorPileStep</a></div><div class="ttdoc">Class for representing steps in a game as a bitmask.</div><div class="ttdef"><b>Definition:</b> SingleVectorPileStep.hpp:34</div></div>
 <div class="ttc" id="aclassScorpionStep_html"><div class="ttname"><a href="classScorpionStep.html">ScorpionStep</a></div><div class="ttdef"><b>Definition:</b> ScorpionStep.hpp:14</div></div>
 <div class="ttc" id="aCard_8hpp_html"><div class="ttname"><a href="Card_8hpp.html">Card.hpp</a></div></div>
 <!-- start footer part -->

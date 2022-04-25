@@ -97,6 +97,13 @@ Documentation</h1>
 <p>Doxygen documentation is available here.</p>
 <p>It can also be generated (<code>build/docs/html/index.html</code>): </p><div class="fragment"><div class="line">make -Cbuild docs</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+Coverage</h1>
+<p>The project uses CTest and CDash from CMake, but doesn't have a public profile, so the CDash server can be run with the help of docker. </p><div class="fragment"><div class="line">cp .env.example .env</div>
+<div class="line">docker-compose run --rm cdash install configure</div>
+<div class="line">docker-compose up -d</div>
+</div><!-- fragment --><p>Then create a project <em>SolitareSolverUnitTests</em> in CDash (<a href="http://localhost:8080">http://localhost:8080</a>).</p>
+<p>To test and submit coverage run: </p><div class="fragment"><div class="line">make -Cbuild Experimental</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Using</h1>
 <ul>
 <li><a href="https://github.com/google/googletest">googletest</a></li>

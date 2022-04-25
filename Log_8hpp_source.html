@@ -76,44 +76,50 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;PrettyPrint.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classLog.html">    7</a></span>&#160;<span class="keyword">class </span><a class="code" href="classLog.html">Log</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">enum</span> LogLevel {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        DEBUG, INFO, WARN, ERROR</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    };</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="classLog.html">Log</a>(LogLevel l = WARN);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    ~<a class="code" href="classLog.html">Log</a>();</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> set_level(LogLevel l);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> set_output_stream(std::ostream*);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classLog.html">Log</a>&amp; operator&lt;&lt;(<span class="keyword">const</span> T&amp; value) {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">return</span> write_log(value);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="classLog.html">Log</a>&amp; operator&lt;&lt;(std::ostream&amp; (*manip)(std::ostream&amp;));</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classLog.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classLog.html">Log</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">   19</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        DEBUG, INFO, WARN, ERROR</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    };</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f">Log</a>(<a class="code" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> l = WARN); </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="classLog.html#a0fbfda88fbee5027c89f6eb121059360">~Log</a>();                 </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="comment">// friend PrettyPrintWrapper operator&lt;&lt;(Log&amp;, PrettyPrint);</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classLog.html">Log</a>&amp; write_log(<span class="keyword">const</span> T&amp; value) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordflow">if</span> (msg_level &gt;= log_level) {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            *out &lt;&lt; value;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            msg_written = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">static</span> LogLevel log_level;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">static</span> std::ostream* out;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    LogLevel msg_level;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">bool</span> msg_written;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classLog.html#accaadc51b6ad4d59610e358ca3d154f3">set_level</a>(<a class="code" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> l);            </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classLog.html#a3e40b65003dc705de5083930012d46db">set_output_stream</a>(std::ostream*); </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classLog.html#a9bb652e968302abfc7159fb119b08967">   31</a></span>&#160;    <a class="code" href="classLog.html">Log</a>&amp; <a class="code" href="classLog.html#a9bb652e968302abfc7159fb119b08967">operator&lt;&lt;</a>(<span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">return</span> write_log(value);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="classLog.html">Log</a>&amp; <a class="code" href="classLog.html#a9bb652e968302abfc7159fb119b08967">operator&lt;&lt;</a>(std::ostream&amp; (*manip)(std::ostream&amp;));</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment">// friend PrettyPrintWrapper operator&lt;&lt;(Log&amp;, PrettyPrint);</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classLog.html">Log</a>&amp; write_log(<span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span> (msg_level &gt;= log_level) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            *out &lt;&lt; value;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            msg_written = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">static</span> <a class="code" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> log_level;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">static</span> std::ostream* out;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">LogLevel</a> msg_level;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">bool</span> msg_written;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassLog_html"><div class="ttname"><a href="classLog.html">Log</a></div><div class="ttdef"><b>Definition:</b> Log.hpp:7</div></div>
+<div class="ttc" id="aclassLog_html_a9bb652e968302abfc7159fb119b08967"><div class="ttname"><a href="classLog.html#a9bb652e968302abfc7159fb119b08967">Log::operator&lt;&lt;</a></div><div class="ttdeci">Log &amp; operator&lt;&lt;(const T &amp;value)</div><div class="ttdoc">Output stream operator.</div><div class="ttdef"><b>Definition:</b> Log.hpp:31</div></div>
+<div class="ttc" id="aclassLog_html_a3718f3e276c3d3e23b58a3b8236d196e"><div class="ttname"><a href="classLog.html#a3718f3e276c3d3e23b58a3b8236d196e">Log::LogLevel</a></div><div class="ttdeci">LogLevel</div><div class="ttdoc">Minimum log level to display messages.</div><div class="ttdef"><b>Definition:</b> Log.hpp:19</div></div>
+<div class="ttc" id="aclassLog_html_ac73c7db3146fa7ad0624228b8f98bb5f"><div class="ttname"><a href="classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f">Log::Log</a></div><div class="ttdeci">Log(LogLevel l=WARN)</div><div class="ttdoc">Construct a logger instance to stream messages into.</div><div class="ttdef"><b>Definition:</b> Log.cpp:6</div></div>
+<div class="ttc" id="aclassLog_html"><div class="ttname"><a href="classLog.html">Log</a></div><div class="ttdoc">Logger.</div><div class="ttdef"><b>Definition:</b> Log.hpp:16</div></div>
+<div class="ttc" id="aclassLog_html_accaadc51b6ad4d59610e358ca3d154f3"><div class="ttname"><a href="classLog.html#accaadc51b6ad4d59610e358ca3d154f3">Log::set_level</a></div><div class="ttdeci">static void set_level(LogLevel l)</div><div class="ttdoc">Change minimum log level.</div><div class="ttdef"><b>Definition:</b> Log.cpp:14</div></div>
+<div class="ttc" id="aclassLog_html_a3e40b65003dc705de5083930012d46db"><div class="ttname"><a href="classLog.html#a3e40b65003dc705de5083930012d46db">Log::set_output_stream</a></div><div class="ttdeci">static void set_output_stream(std::ostream *)</div><div class="ttdoc">Change output stream (default is std::cout)</div><div class="ttdef"><b>Definition:</b> Log.cpp:18</div></div>
+<div class="ttc" id="aclassLog_html_a0fbfda88fbee5027c89f6eb121059360"><div class="ttname"><a href="classLog.html#a0fbfda88fbee5027c89f6eb121059360">Log::~Log</a></div><div class="ttdeci">~Log()</div><div class="ttdoc">Destruct logger by adding std::endl at the end of the message.</div><div class="ttdef"><b>Definition:</b> Log.cpp:9</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

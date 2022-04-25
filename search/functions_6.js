@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['undo_5fstep_106',['undo_step',['../classGame.html#af847de1c6acb33f041a9d7d620e7f4ed',1,'Game::undo_step()'],['../classKlondikeGame.html#a1e6190c985dc179297bb17586a5f4545',1,'KlondikeGame::undo_step()'],['../classScorpionGame.html#abfb4251e92a12198f27670a42a48077d',1,'ScorpionGame::undo_step()']]]
+  ['is_5fbefore_165',['is_before',['../classRules.html#a08a41b44068b9c8ed1c85406fd7e7097',1,'Rules::is_before(const Card &amp;, const Card &amp;) const'],['../classRules.html#a7ce185a605fb2d2db8a07b04adcff284',1,'Rules::is_before(const CardCode &amp;, const CardCode &amp;) const']]]
 ];
