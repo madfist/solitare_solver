@@ -1,5 +1,5 @@
 /**
- * General card game rules
+ * @brief General card game rules
  * @file Rules.hpp
  * @author Adam Koleszar
  */

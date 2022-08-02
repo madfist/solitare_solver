@@ -31,28 +31,30 @@ TEST(test_card, parse) {
     EXPECT_EQ(card, Card(SAU));
 }
 
-// TEST(test_card, set) {
-//     Card card(SA_);
-//     EXPECT_EQ(Card(S7_), card.rank(6));
-//     EXPECT_EQ(Card(C7_), card.suite(1));
-//     EXPECT_EQ(Card(SA_), card.set(0));
-//     EXPECT_EQ(Card(SAU), card.turnup(true));
-//     CardCode cc = SAU;
-//     EXPECT_EQ(SA_, Card::turnup(cc, false));
+TEST(test_card, set) {
+    Card card(SA_);
+    EXPECT_EQ(Card(S7_), card.rank(6));
+    EXPECT_EQ(Card(C7_), card.suite(1));
+    EXPECT_EQ(Card(SA_), card = 0);
+    EXPECT_EQ(Card(SAU), card.turnup(true));
+    CardCode cc = SAU;
+    EXPECT_EQ(SA_, Card::turnup(cc, false));
 
-//     Card sep = Card();
-//     EXPECT_EQ(sep.get(), Card::CARD_SEPARATOR);
-// }
+    Card sep = Card();
+    EXPECT_EQ(sep.get(), Card::CARD_SEPARATOR);
+    EXPECT_EQ(Card("#"), sep);
+}
 
-// TEST(test_card, get) {
-//     Card card("C7_");
-//     EXPECT_EQ(card.get(), C7_);
-//     EXPECT_EQ(card.rank(), 6);
-//     EXPECT_EQ(card.suite(), 1);
-//     EXPECT_EQ(card.upturned(), false);
-//     EXPECT_EQ(Card::upturned(C7_), false);
-//     EXPECT_EQ(Card().rank(), 0);
-// }
+TEST(test_card, get) {
+    Card card("C7_");
+    EXPECT_EQ(card.get(), C7_);
+    EXPECT_EQ(static_cast<CardCode>(card), C7_);
+    EXPECT_EQ(card.rank(), 6);
+    EXPECT_EQ(card.suite(), 1);
+    EXPECT_FALSE(static_cast<bool>(card));
+    EXPECT_TRUE(static_cast<bool>(card.turnup()));
+    EXPECT_EQ(Card().rank(), 0);
+}
 
 TEST(test_card, io) {
     std::istringstream in("CA^ HK_ D3_");
@@ -67,4 +69,7 @@ TEST(test_card, io) {
     std::stringstream out;
     out << card;
     EXPECT_EQ(out.str(), "D3_");
+    out.str("");
+    out << Card::CARD_SEPARATOR;
+    EXPECT_EQ(out.str(), "#[128]");
 }

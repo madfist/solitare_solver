@@ -20,7 +20,8 @@ set(LIB_SRCS
     ParallelSolver.hpp
     shared_mutex.hpp shared_mutex.cpp
     PrettyPrint.hpp
-    Taboo.hpp Taboo.cpp)
+    Taboo.hpp Taboo.cpp
+    Trace.hpp Trace.cpp)
 
 add_library(libsolver STATIC ${LIB_SRCS})
 add_library(libsolver_cov STATIC ${LIB_SRCS})

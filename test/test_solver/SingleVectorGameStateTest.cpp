@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "Deck.hpp"
+#include "Trace.hpp"
 
 #define private public
 #include "SingleVectorGameState.hpp"
@@ -9,19 +10,21 @@
 
 static struct PrettyPrint pretty_print;
 
-std::shared_ptr<SingleVectorGameState> create_state_from_deck(Deck& deck) {
-    std::shared_ptr<SingleVectorGameState> state(new SingleVectorGameState(Deck::DECK_SIZE + 3, 4));
-    unsigned i = 3;
+/// create equal sized piles from deck
+std::shared_ptr<SingleVectorGameState> create_state_from_deck(Deck& deck, unsigned piles = 4) {
+    std::shared_ptr<SingleVectorGameState> state(new SingleVectorGameState(Deck::DECK_SIZE + piles - 1, piles));
+    unsigned i = piles - 1;
     deck.deal([&](const Card& c) {
         Card card(c);
         (*state)[i++] = card.get();
     });
-    for (int j = 0; j < 3; ++j) {
-        (*state)[j] = (j+1)*13 + 3;
+    for (int j = 0; j < piles - 1; ++j) {
+        (*state)[j] = (j+1)*(Deck::DECK_SIZE / piles) + piles - 1;
     }
     return state;
 }
 
+/// create a state with the given pile size borders
 std::shared_ptr<SingleVectorGameState> create_test_state(unsigned size, unsigned piles, ...) {
     std::shared_ptr<SingleVectorGameState> state(new SingleVectorGameState(size, piles));
     va_list args;
@@ -30,6 +33,9 @@ std::shared_ptr<SingleVectorGameState> create_test_state(unsigned size, unsigned
         (*state)[i] = va_arg(args, unsigned);
     }
     va_end(args);
+    for (int i = piles - 1; i < size; ++i) {
+        (*state)[i] = i - piles + 1;
+    }
     return state;
 }
 
@@ -55,11 +61,14 @@ TEST(svec_game_state, pile_empty) {
     auto state = create_test_state(10, 3, 2, 2);
 
     EXPECT_TRUE(state->pile_empty(0));
+    EXPECT_TRUE((*state)(0).empty());
     EXPECT_TRUE(state->pile_empty(1));
+    EXPECT_TRUE((*state)(1).empty());
 
     (*state)[1] = 10;
 
     EXPECT_TRUE(state->pile_empty(2));
+    EXPECT_TRUE((*state)(2).empty());
 }
 
 TEST(svec_game_state, pile_size) {
@@ -68,6 +77,9 @@ TEST(svec_game_state, pile_size) {
     EXPECT_THAT(state->pile_size(0), 3);
     EXPECT_THAT(state->pile_size(1), 2);
     EXPECT_THAT(state->pile_size(2), 3);
+    EXPECT_THAT((*state)(0).size(), 3);
+    EXPECT_THAT((*state)(1).size(), 2);
+    EXPECT_THAT((*state)(2).size(), 3);
 }
 
 TEST(svec_game_state, pile_bottom) {
@@ -76,6 +88,9 @@ TEST(svec_game_state, pile_bottom) {
     EXPECT_THAT(state->pile_bottom(0), 2);
     EXPECT_THAT(state->pile_bottom(1), 5);
     EXPECT_THAT(state->pile_bottom(2), 7);
+    EXPECT_THAT((*state)(0).bottom(), static_cast<CardCode>(Card("SA_")));
+    EXPECT_THAT((*state)(1).bottom(), static_cast<CardCode>(Card("S4_")));
+    EXPECT_THAT((*state)(2).bottom(), static_cast<CardCode>(Card("S6_")));
 }
 
 TEST(svec_game_state, pile_top) {
@@ -84,6 +99,9 @@ TEST(svec_game_state, pile_top) {
     EXPECT_THAT(state->pile_top(0), 4);
     EXPECT_THAT(state->pile_top(1), 6);
     EXPECT_THAT(state->pile_top(2), 9);
+    EXPECT_THAT((*state)(0).top(), static_cast<CardCode>(Card("S3_")));
+    EXPECT_THAT((*state)(1).top(), static_cast<CardCode>(Card("S5_")));
+    EXPECT_THAT((*state)(2).top(), static_cast<CardCode>(Card("S8_")));
 }
 
 TEST(svec_game_state, move_cards_backward) {

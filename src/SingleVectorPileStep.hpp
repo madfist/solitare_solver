@@ -27,8 +27,8 @@ enum StateMaskElement {
  * * pile to move to
  * * turning up the card on top
  * * doing a stock move
- * * original card position
- * * new card position
+ * * original card position in source pile
+ * * new card position in destination pile
  * * weight of step (for heuristic solving)
  */
 class SingleVectorPileStep : public VersatileMask<uint32_t, StateMaskElement> {

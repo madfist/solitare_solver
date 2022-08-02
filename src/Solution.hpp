@@ -5,6 +5,10 @@
 #include <forward_list>
 #include <iostream>
 
+/**
+ * A solution to a game, representing a list of steps and some statistics
+ * @tparam Step type of game step
+ */
 template<class Step>
 class Solution {
 public:
@@ -14,16 +18,19 @@ public:
         steps.push_front(s);
     }
 
+    /// Increase the total number of steps checked
     Solution& operator++() {
         ++total_steps;
         return *this;
     }
 
+    /// Increase the number of taboo hits
     Solution& operator--() { // this makes no sense I know, but it is fancy ;)
         ++taboo_hits;
         return *this;
     }
 
+    /// Combine solution data @param sl another solution
     Solution& operator+=(const Solution& sl) {
         total_steps += sl.total_steps;
         taboo_hits += sl.taboo_hits;
@@ -32,10 +39,17 @@ public:
         taboo_tree_size += sl.taboo_tree_size;
     }
 
+    /// Check if the solution has any steps
     explicit operator bool() const {
         return !steps.empty();
     }
 
+    /**
+     * Finish a solution and set statistics
+     * @param ml max level
+     * @param ss step tree size
+     * @param ts taboo tree size
+     */
     Solution& finish(unsigned ml, unsigned ss, unsigned ts) {
         max_level = ml;
         step_tree_size = ss;
@@ -43,6 +57,7 @@ public:
         return *this;
     }
 
+    /// Check if solution has any steps
     bool insane() const {
         return total_steps == 0;
     }

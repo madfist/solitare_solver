@@ -1,10 +1,10 @@
 #include "ScorpionStep.hpp"
 
-const uint32_t ScorpionStep::STOCK_MOVE = 0x08000000;
+const uint32_t ScorpionStep::STOCK_MOVE = 0x20000000;
 
-const std::array<uint32_t, 8> ScorpionStep::MASKS = {0x000000FF,0x00000700,0x00003800,0x00004000,0x001F8000,0x07E00000,0x08000000,0xFC000000};
+const std::array<uint32_t, 8> ScorpionStep::MASKS = {0x000000FF,0x00000700,0x00003800,0x00004000,0x003F8000,0x1FC00000,0x20000000,0xC0000000};
 
-const std::array<uint8_t, 8> ScorpionStep::SHIFTS = {0, 8, 11, 14, 15, 21, 27, 28};
+const std::array<uint8_t, 8> ScorpionStep::SHIFTS = {0, 8, 11, 14, 15, 22, 29, 30};
 
 ScorpionStep::ScorpionStep(uint32_t d) : SingleVectorPileStep(d) {}
 

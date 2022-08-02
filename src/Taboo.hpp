@@ -4,6 +4,9 @@
 #include <unordered_set>
 #include "shared_mutex.hpp"
 
+/**
+ * Stores unsuccesful game state hashes
+ */
 class Taboo {
 public:
     virtual ~Taboo();

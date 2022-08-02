@@ -6,6 +6,7 @@
 #include "Card.hpp"
 #include "Deck.hpp"
 #include "TestUtils.hpp"
+#include "Trace.hpp"
 
 #define private public
 #include "ScorpionGame.hpp"
@@ -38,27 +39,20 @@ TEST(scorpion_game_test, io) {
 
     GameState firstthree(game->state.state.begin()+7, game->state.state.begin()+10);
     EXPECT_THAT(firstthree, testing::ElementsAre(Card("SA^").get(), Card("SK^").get(), Card("SQ^").get()));
-
-    // std::cout << "game:" << std::endl << *game << std::endl;
 }
 
 TEST(scorpion_game_test, valid_steps) {
     auto game = test_solver::load_game<ScorpionGame>("one_step_win.scorpion.game");
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
-    // std::cout << *game << std::endl;
-    // std::cout << game->state << std::endl;
 
     auto steps = game->valid_steps();
-    // std::cout << steps << std::endl;
 
     EXPECT_EQ(steps.size(), 1);
     EXPECT_EQ(steps.front().card_code(), Card("SA^").get());
     EXPECT_EQ(steps.front().pile_from(), 0);
     EXPECT_EQ(steps.front().pile_to(), 1);
-    // std::cout << *game << std::endl;
 
-    // std::cout << steps << std::endl;
     auto hash = game->hash();
 
     EXPECT_TRUE(!game->win());
@@ -78,26 +72,24 @@ TEST(scorpion_game_test, valid_steps) {
     game->undo_move_and_upturn(steps.front());
     EXPECT_TRUE(!game->win());
     EXPECT_EQ(hash, game->hash());
-
-    // std::cout << *game << std::endl;
 }
 
 TEST(scorpion_game_test, stock_move) {
     auto game = test_solver::load_game<ScorpionGame>("one_stock_step_win.scorpion.game");
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
-    // std::cout << *game << std::endl;
+    Trace(TraceComponent::TEST) << *game;
 
     auto hash = game->hash();
     auto steps = game->valid_steps();
     EXPECT_TRUE(!game->win());
     game->do_step(steps.front());
     EXPECT_TRUE(game->win());
-    // std::cout << *game << std::endl;
+    Trace(TraceComponent::TEST) << *game;
     game->undo_step(steps.front());
     EXPECT_TRUE(!game->win());
     EXPECT_EQ(hash, game->hash());
-    // std::cout << *game << std::endl;
+    Trace(TraceComponent::TEST) << *game;
 }
 
 TEST(scorpion_game_test, win) {

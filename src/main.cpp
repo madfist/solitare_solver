@@ -13,6 +13,7 @@
 #include "Log.hpp"
 #include "PrettyPrint.hpp"
 #include "Taboo.hpp"
+#include "Trace.hpp"
 
 template <class Game>
 std::shared_ptr<Game> load_game(const std::string& filename) {
@@ -92,6 +93,7 @@ int main(int argc, char *argv[]) {
         ("i,input", "input game state", cxxopts::value<std::string>())
         ("v,verbose", "info messages")
         ("d,debug", "debug messages")
+        ("t,trace", "trace component (solver|game)", cxxopts::value<std::vector<std::string>>())
         ("p,parallel", "use parallel solver")
         ("f,filter", "filter valid steps")
         ("s,steps", "steps to run", cxxopts::value<std::string>())
@@ -113,6 +115,20 @@ int main(int argc, char *argv[]) {
             Log::set_level(Log::DEBUG);
         }
 
+        if (opts.count("trace")) {
+            auto trace_opts = opts["trace"].as<std::vector<std::string>>();
+            std::for_each(trace_opts.begin(), trace_opts.end(), [&] (const std::string& t){
+                if (t == "solver") {
+                    Trace::enable_component(TraceComponent::SOLVER);
+                } else if (t == "game") {
+                    Trace::enable_component(TraceComponent::GAME);
+                } else {
+                    Log(Log::ERROR) << "Unknown trace component: " << t;
+                    exit(1);
+                }
+            });
+        }
+
         std::string filename;
         if (opts.count("input"))
             filename = opts["input"].as<std::string>();
@@ -130,7 +146,7 @@ int main(int argc, char *argv[]) {
                 solve_game<KlondikeGame>(filename, opts.count("parallel"), opts.count("filter"));
             }
         } else {
-            Log(Log::ERROR) << "Unknown game type: " << opts["game"].as<std::string>() << std::endl;
+            Log(Log::ERROR) << "Unknown game type: " << opts["game"].as<std::string>();
             return 1;
         }
     } catch(cxxopts::OptionParseException e) {

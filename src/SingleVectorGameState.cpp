@@ -1,6 +1,8 @@
 #include "SingleVectorGameState.hpp"
+#include "Trace.hpp"
 #include "crc.hpp"
 #include <algorithm>
+#include <cassert>
 #include <numeric>
 
 SingleVectorGameState::SingleVectorGameState() : state(), last_pile(0) {}
@@ -55,11 +57,13 @@ unsigned SingleVectorGameState::pile_size(unsigned p) const {
     return pile_top(p) - pile_bottom(p) + 1;
 }
 
-CardCode SingleVectorGameState::pile_bottom(unsigned p) const {
+std::size_t SingleVectorGameState::pile_bottom(unsigned p) const {
+    assert((p == 0 ? true : state[p-1] != 0));
     return (p == 0) ? last_pile : state[p-1];
 }
 
-CardCode SingleVectorGameState::pile_top(unsigned p) const {
+std::size_t SingleVectorGameState::pile_top(unsigned p) const {
+    assert((p == last_pile ? true : state[p] != 0));
     return (p == last_pile) ? state.size()-1 : state[p]-1;
 }
 
@@ -97,7 +101,15 @@ void SingleVectorGameState::Pile::top_to_bottom(CardFn f) const {
     }
 }
 
-/// Move cards towards the back of the vector
+std::ostream& operator<<(std::ostream& os, const SingleVectorGameState::Pile &p) {
+    if (p.empty()) {
+        os << "P(" << p.pile_no << ")_";
+    } else {
+        os << "P(" << p.pile_no << ")[" << p.ref.pile_bottom(p.pile_no) << ',' << p.ref.pile_top(p.pile_no) << "]~" << p.size();
+    }
+    return os;
+}
+
 void SingleVectorGameState::move_cards_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
     first = pile_bottom(from) + card_pos;
@@ -113,7 +125,6 @@ void SingleVectorGameState::move_cards_backward(unsigned from, unsigned to, unsi
         state[p] -= diff;
 }
 
-/// Move cards towards the front of the vector
 void SingleVectorGameState::move_cards_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
     first = pile_bottom(to) + new_pos;
@@ -129,14 +140,14 @@ void SingleVectorGameState::move_cards_forward(unsigned from, unsigned to, unsig
         state[p] += diff;
 }
 
-/// Move cards towards the back of the vector
 void SingleVectorGameState::move_single_card_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
+    Trace(TraceComponent::TEST) << "msb input (from" << from << ",to" << to << ",card_pos" << card_pos << ",new_pos" << new_pos << ')';
     unsigned first, middle, last, diff;
     first = pile_bottom(from) + card_pos;
     middle = first + 1;
     last = pile_bottom(to) + new_pos;
     diff = middle - first;
-    // std::cout << "msb " << state[first] << ": f" << first << " m" << middle << " l" << last << " d" << diff << std::endl;
+    Trace(TraceComponent::TEST) << "msb " << state[first] << ": f" << first << " m" << middle << " l" << last << " d" << diff;
 
     auto st = state.begin();
     std::rotate(st + first, st + middle, st + last);
@@ -145,7 +156,6 @@ void SingleVectorGameState::move_single_card_backward(unsigned from, unsigned to
         state[p] -= diff;
 }
 
-/// Move cards towards the front of the vector
 void SingleVectorGameState::move_single_card_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos) {
     unsigned first, middle, last, diff;
     first = pile_bottom(to) + new_pos;

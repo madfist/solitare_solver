@@ -64,9 +64,15 @@ protected:
     CarrierType get(MaskElementEnum mask_element) const {
         return (data & mask(mask_element)) >> shift(mask_element);
     }
+    /**
+     * @brief Set the whole mask to value
+     */
     void set(CarrierType carrier) {
         data = carrier;
     }
+    /**
+     * @brief Set value for the chosen element in the mask
+     */
     void set(MaskElementEnum mask_element, CarrierType carrier) {
         // shift value to the right place and cut off anyhing outside the masked part
         CarrierType value = (carrier << shift(mask_element)) & mask(mask_element);

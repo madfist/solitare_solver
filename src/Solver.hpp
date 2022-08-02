@@ -11,19 +11,29 @@
 #include "StepNode.hpp"
 #include "Log.hpp"
 #include "Taboo.hpp"
+#include "Trace.hpp"
 
 struct SolverProperties {
     bool filter;
 };
 
+/**
+ * @brief Solver
+ * @tparam Step type of game step
+ */
 template<class Step>
 class Solver {
 public:
-    Solver(GamePtr<Step> g, std::shared_ptr<Taboo> t, SolverProperties p = {false}) : game(g), taboo(t), level(0), max_level(0), properties(p) {}
+    Solver(GamePtr<Step> g, std::shared_ptr<Taboo> t, SolverProperties p = {false})
+        : game(g)
+        , taboo(t)
+        , level(0)
+        , max_level(0)
+        , properties(p) {}
 
     /**
      * @brief      Solve the game with BFS and taboo heap
-     * The step tree is represented by a vector and we store "pointer" information inside as vector index
+     * @details    The step tree is represented by a vector and we store "pointer" information inside as vector index
      * @return     solution
      */
     Solution<Step> solve() {
@@ -41,7 +51,7 @@ public:
             } else {
                 --solution;
             }
-            Log(Log::DEBUG) << "curr:" << current_node_id << "next:" << next_node_id;
+            Trace(TraceComponent::SOLVER) << "NODES curr:" << current_node_id << " next:" << next_node_id;
 
             //out of steps to take => undo until we find new steps
             if (next_node_id == nodes.size() || next_node_id == current_node_id) {
@@ -56,9 +66,8 @@ public:
                 if (next_node_id == StepNode<Step>::ROOT)
                     return solution.finish(max_level, nodes.size(), taboo->size());
             }
-
+            Trace(TraceComponent::SOLVER) << "do node[" << next_node_id << "]:" << nodes[next_node_id];
             game->do_step(nodes[next_node_id].step());
-            Log(Log::DEBUG) << *game << std::endl;
             ++level;
             current_node_id = next_node_id;
             max_level = std::max(level, max_level);
@@ -82,29 +91,38 @@ private:
     Solver(const Solver&);
     Solver& operator=(const Solver&);
 
-    /// Adds new node with new valid steps as leaves
+    /**
+     * @brief Adds new node with new valid steps as leaves
+     * @param node_id current node ID
+     * @return number of nodes before new steps are added
+     */
     int next_node(int node_id) {
-        Log log(Log::DEBUG);
+        Trace trace(TraceComponent::SOLVER);
         auto steps = game->valid_steps();
         if (properties.filter)
             filter_steps(steps);
         int last_node_id = nodes.size() + steps.size();
         int next_node_id = nodes.size() + 1;
 
-        log << "L" << level << " s:" << steps.size() << " ";
+        trace << "Level" << level << " steps:" << steps.size() << " ";
         std::for_each(steps.begin(), steps.end(), [&] (const Step& s) {
-            log << s;
+            trace << s;
             if (next_node_id == last_node_id)
                 next_node_id = StepNode<Step>::END;
             nodes.emplace_back(node_id, next_node_id++, s);
         });
-        log << " s:" << nodes.size() << "-" << steps.size();
+        trace << " nodes:" << nodes.size() << "-" << steps.size();
 
         return nodes.size() - steps.size();
     }
 
-    /// Go back up nodes until we find a node to do
+    /**
+     * @brief Go back up nodes until we find a node to do
+     * @param node_id current node ID
+     * @return next node ID
+     */
     int undo_node(int node_id) {
+        Trace(TraceComponent::SOLVER) << "undo node[" << node_id << "]:" << nodes[node_id];
         // get previous step
         int node_root = nodes[node_id].root();
 
@@ -121,6 +139,7 @@ private:
             --level;
 
             // go back more
+            Trace(TraceComponent::SOLVER) << "undo node[" << node_root << "]:" << nodes[node_root];
             node_root = nodes[node_root].root();
 
             // stop if we are already at ROOT
@@ -130,7 +149,6 @@ private:
             // set next node to try
             next_node_id = nodes[node_root].next();
         }
-        Log(Log::DEBUG) << "undo: " << nodes[node_root].step() << std::endl;
         game->undo_step(nodes[node_root].step());
         --level;
         return next_node_id;

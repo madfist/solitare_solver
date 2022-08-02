@@ -31,9 +31,11 @@ bool Rules::is_before(const CardCode& cc1, const CardCode& cc2) const {
 
 std::vector<Card> Rules::next(const Card& c) const {
     std::vector<Card> cards;
-    CardCode new_rank = (c.rank() == KING) ? c.rank() : c.rank()+1;
+    CardCode new_rank = Card::CARD_SEPARATOR;
     if (rank_order == ACE_KING_ENABLED) {
         new_rank = (c.rank()+1)%13;
+    } else {
+        new_rank = c.rank() == KING ? c.rank() : c.rank()+1;
     }
     switch (suite_order) {
         case SAME:

@@ -34,8 +34,8 @@ public:
      * @brief Create card from string
      * @details Parsing rules
      * * `#` separator
-     * * `2-10, A, J, Q, K` suites
-     * * `S, C, H, D` ranks
+     * * `2-10, A, J, Q, K` ranks
+     * * `S, C, H, D` suites
      * * `^, _` upturned state
      */
     Card(const std::string&);
@@ -44,9 +44,9 @@ public:
 
     Card& operator=(const CardCode&);
 
-    CardCode rank() const;                ///< Get rank (spade, club, heart, diamond)
+    CardCode rank() const;                ///< Get rank (A-2-10-J-Q-K)
     Card& rank(CardCode);                 ///< Set rank
-    CardCode suite() const;               ///< Get suite (A-2-10-J-Q-K)
+    CardCode suite() const;               ///< Get suite (spade, club, heart, diamond)
     Card& suite(CardCode);                ///< Set suite
     Card& turnup(bool ut = true);         ///< Change upturned state
 

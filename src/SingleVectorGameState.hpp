@@ -17,7 +17,11 @@
 using CardCodeFn = std::function<void(unsigned pos, const CardCode& card)>; ///< Card handling function
 using CardFn = std::function<void(unsigned pos, const Card& card)>;         ///< Card handling function
 
-/// Game state represented as a vector of ::CardCode
+/**
+ * @brief Game state represented as a vector of ::CardCode
+ * @details First part of the vector stores the indexes where each pile of cards start. Cards starts from the
+ * *pile_size* index and goes from the bottom of the pile to the top.
+ */
 class SingleVectorGameState {
 public:
     SingleVectorGameState(); ///< Create empty state
@@ -53,6 +57,7 @@ public:
 
         void top_to_bottom(CardCodeFn) const;       ///< Run card function from top to bottom of the pile 
         void top_to_bottom(CardFn) const;           ///< Run card function from top to bottom of the pile 
+        friend std::ostream& operator<<(std::ostream& os, const Pile& p);
     private:
         unsigned pile_no;
         const SingleVectorGameState& ref;
@@ -66,16 +71,44 @@ public:
 
     bool pile_empty(unsigned p) const;       ///< Check if pile is empty
     unsigned pile_size(unsigned p) const;    ///< Get pile size
-    CardCode pile_bottom(unsigned p) const;  ///< Get card from the bottom of the pile
-    CardCode pile_top(unsigned p) const;     ///< Get card from the top of the pile
+    std::size_t pile_bottom(unsigned p) const;  ///< Get card from the bottom of the pile
+    std::size_t pile_top(unsigned p) const;     ///< Get card from the top of the pile
 
     void do_move_and_upturn(const SingleVectorPileStep& s);
     void undo_move_and_upturn(const SingleVectorPileStep& s);
 
-    void move_cards_backward(unsigned, unsigned, unsigned, unsigned);
-    void move_cards_forward(unsigned, unsigned, unsigned, unsigned);
-    void move_single_card_backward(unsigned, unsigned, unsigned, unsigned);
-    void move_single_card_forward(unsigned, unsigned, unsigned, unsigned);
+    /**
+     * @brief Move cards towards the back of the vector
+     * @param from pile to move from
+     * @param to pile to move to
+     * @param card_pos position in source pile
+     * @param new_pos position in destination pile
+     */
+    void move_cards_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos);
+    /**
+     * @brief Move cards from the top of the pile to another pile
+     * @param from pile to move from
+     * @param to pile to move to
+     * @param card_pos position in source pile
+     * @param new_pos position in destination pile
+     */
+    void move_cards_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos);
+    /**
+     * @brief Move cards towards the front of the vector
+     * @param from pile to move from
+     * @param to pile to move to
+     * @param card_pos position in source pile
+     * @param new_pos position in destination pile
+     */
+    void move_single_card_backward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos);
+    /**
+     * @brief Move cards towards the front of the vector
+     * @param from pile to move from
+     * @param to pile to move to
+     * @param card_pos position in source pile
+     * @param new_pos position in destination pile
+     */
+    void move_single_card_forward(unsigned from, unsigned to, unsigned card_pos, unsigned new_pos);
 
     unsigned find_card(const CardCode&) const;
     unsigned first_card_pos() const;
