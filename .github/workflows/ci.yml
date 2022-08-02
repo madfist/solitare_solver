@@ -9,11 +9,13 @@ jobs:
         uses: actions/checkout@v3
       - name: Get CMake
         uses: lukka/get-cmake@v3.23.0
+      - name: Get Valgrind
+        run: sudo apt-get install -y valgrind
       - name: Build and test project
         run: |
           cmake -Bbuild .
           make -Cbuild
-          make CTEST_OUTPUT_ON_FAILURE=1 -Cbuild test
+          make CTEST_OUTPUT_ON_FAILURE=1 -Cbuild test ARGS='-T memcheck'
 
   docs:
     runs-on: ubuntu-latest
@@ -24,7 +26,7 @@ jobs:
       - name: Get CMake
         uses: lukka/get-cmake@v3.23.0
       - name: Get Doxygen
-        run: sudo apt-get install doxygen -y
+        run: sudo apt-get install -y doxygen
       - name: Build documentation
         run: |
           cmake -Bbuild

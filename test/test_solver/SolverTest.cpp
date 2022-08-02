@@ -46,8 +46,8 @@ TEST(solver_test, scorpion_win_with_taboo) {
 }
 
 TEST(solver_test, scorpion_no_solution) {
-    GTEST_SKIP() << "This is skipped until fixed";
-    auto game = test_solver::load_game<ScorpionGame>("68k_no_solution.scorpion.game");
+    // GTEST_SKIP() << "This is skipped until fixed";
+    auto game = test_solver::load_game<ScorpionGame>("57k_no_solution.scorpion.game");
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 

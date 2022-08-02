@@ -39,7 +39,8 @@ std::vector<Card> Rules::next(const Card& c) const {
     }
     switch (suite_order) {
         case SAME:
-            cards.push_back(Card(c).rank(new_rank)); break;
+            cards.push_back(Card(c).rank(new_rank));
+            break;
         case ALTERNATE:
             if (c.suite() == SPADE || c.suite() == CLUB) {
                 cards.push_back(Card(c).rank(new_rank).suite(HEART));

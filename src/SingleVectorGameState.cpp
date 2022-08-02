@@ -14,10 +14,12 @@ SingleVectorGameState::SingleVectorGameState(const SingleVectorGameState& s) : s
 SingleVectorGameState::~SingleVectorGameState() {}
 
 CardCode& SingleVectorGameState::operator[](std::size_t pos) {
+    assert(pos < state.size());
     return state[pos];
 }
 
 const CardCode& SingleVectorGameState::operator[](std::size_t pos) const {
+    assert(pos < state.size());
     return state[pos];
 }
 
@@ -194,7 +196,7 @@ void SingleVectorGameState::undo_move_and_upturn(const SingleVectorPileStep& s) 
 }
 
 unsigned SingleVectorGameState::find_card(const CardCode& cc) const {
-    for (unsigned i = 0; i < state.size(); ++i) {
+    for (unsigned i = last_pile; i < state.size(); ++i) {
         if (state[i] == cc)
             return i;
     }

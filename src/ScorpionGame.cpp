@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "ScorpionGame.hpp"
+#include "Log.hpp"
 #include "Trace.hpp"
 #include "crc.hpp"
 
@@ -75,7 +76,8 @@ void ScorpionGame::undo_step(const ScorpionStep& s) {
 
 /**
  * @brief Valid steps:
- * @details * part of a pile can be moved if the bottom of it is a rank below the top of the other pile
+ * @details
+ * * part of a pile can be moved if the bottom of it is a rank below the top of the other pile
  * * king can be moved to an empty pile
  * * stock can be spread to the first 3 piles
  */
@@ -180,43 +182,42 @@ bool ScorpionGame::is_four_pile_all_ace() const {
 }
 
 bool ScorpionGame::deadlock() const {
-    SingleVectorGameState temp_state(state);
     unsigned p = 0;
     for (unsigned i = state.first_card_pos(); i < STATE_SIZE; ++i) {
-        // std::cout << "CHECK:" << Card(temp_state[i]) << std::endl;
-        // if (!Card::upturned(temp_state[i]))
-        if (!Card(temp_state[i]))
+        // only upturned cards
+        if (!Card(state[i]))
             continue;
+        // change piles at top
         if (i == state.pile_top(p)) {
             ++p;
             continue;
         }
-        if (rules.is_before(temp_state[i+1], temp_state[i]) || Card(temp_state[i+1]).rank() == KING)
+        // skip valid sequences or kings
+        if (rules.is_before(state[i+1], state[i]) || Card(state[i+1]).rank() == KING)
             continue;
-        // std::cout << "  FLOW:" << Card(temp_state[i]) << Card(temp_state[i+1]);
-        unsigned next_pos = state.find_card(rules.next(temp_state[i+1])[0]);
-        while (temp_state[i] != temp_state[next_pos]) {
-            // std::cout << Card(temp_state[next_pos]);
-            // if (!Card::upturned(temp_state[next_pos]))
-            if (!Card(temp_state[next_pos]))
+
+        unsigned next_pos = state.find_card(rules.next(state[i+1])[0]);
+        if (next_pos == Card::CARD_SEPARATOR)
+            continue;
+        while (next_pos != Card::CARD_SEPARATOR && state[i] != state[next_pos]) {
+            if (!Card(state[next_pos]))
                 break;
             bool at_pile_top = false;
             for (unsigned p = 0; p < GAME_PILES; ++p)
                 at_pile_top |= (next_pos == state.pile_top(p));
             if (at_pile_top)
                 break;
-            if (Card(temp_state[next_pos+1]).rank() == KING)
+            if (Card(state[next_pos+1]).rank() == KING)
                 break;
-            // std::cout << Card(temp_state[next_pos+1]);
-            next_pos = state.find_card(rules.next(temp_state[next_pos+1])[0]);
+
+            next_pos = state.find_card(rules.next(state[next_pos+1])[0]);
         }
-        // std::cout << std::endl;
-        if (temp_state[i] == temp_state[next_pos]) {
-            // std::cout << "DEADLOCK " << Card(state[i]) << std::endl;
+
+        if (next_pos != Card::CARD_SEPARATOR && state[i] == state[next_pos]) {
+            Log(Log::INFO) << "DEADLOCK " << Card(state[i]) << std::endl;
             return true;
         }
     }
-    // std::cout << "END_STATE:" << temp_state << std::endl;
     return false;
 }
 

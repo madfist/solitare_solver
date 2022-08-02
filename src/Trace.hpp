@@ -30,6 +30,7 @@ private:
  * ```
  * Trace::enable_component(Trace::SOLVER)
  * Trace(TraceComponent::SOLVER) << "message"
+ * ```
  */
 class Trace {
 public:

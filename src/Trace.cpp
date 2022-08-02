@@ -1,6 +1,6 @@
 #include "Trace.hpp"
 
-TraceComponentMask Trace::enabled_components = TraceComponentMask();
+TraceComponentMask Trace::enabled_components;
 std::ostream* Trace::out = &std::cout;
 std::string Trace::component_strings[] = {"SOLVER", "GAME", "TEST"};
 
