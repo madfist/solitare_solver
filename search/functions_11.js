@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['win_204',['win',['../classGame.html#a6a2778d83ba2570130a75c4d94d56e27',1,'Game']]]
+  ['valid_5fsteps_222',['valid_steps',['../classGame.html#a709f0b7d78a47049f056e6609f5bb922',1,'Game::valid_steps()'],['../classScorpionGame.html#a50db221d74d3b6a4d8f11733ed9731ec',1,'ScorpionGame::valid_steps()']]]
 ];

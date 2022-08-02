@@ -100,11 +100,12 @@ std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>hash</b> () co
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classScorpionGame.html#abfb4251e92a12198f27670a42a48077d">undo_step</a> (const <a class="el" href="classScorpionStep.html">ScorpionStep</a> &amp;) override</td></tr>
 <tr class="memdesc:abfb4251e92a12198f27670a42a48077d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Undo a step. <br /></td></tr>
 <tr class="separator:abfb4251e92a12198f27670a42a48077d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50db221d74d3b6a4d8f11733ed9731ec"><td class="memItemLeft" align="right" valign="top"><a id="a50db221d74d3b6a4d8f11733ed9731ec"></a>
-std::vector&lt; <a class="el" href="classScorpionStep.html">ScorpionStep</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>valid_steps</b> () const override</td></tr>
+<tr class="memitem:a50db221d74d3b6a4d8f11733ed9731ec"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classScorpionStep.html">ScorpionStep</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classScorpionGame.html#a50db221d74d3b6a4d8f11733ed9731ec">valid_steps</a> () const override</td></tr>
+<tr class="memdesc:a50db221d74d3b6a4d8f11733ed9731ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid steps:  <a href="classScorpionGame.html#a50db221d74d3b6a4d8f11733ed9731ec">More...</a><br /></td></tr>
 <tr class="separator:a50db221d74d3b6a4d8f11733ed9731ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f39d998903c6a7c9e8d581718d308d3"><td class="memItemLeft" align="right" valign="top"><a id="a3f39d998903c6a7c9e8d581718d308d3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>win</b> () const override</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classScorpionGame.html#a3f39d998903c6a7c9e8d581718d308d3">win</a> () const override</td></tr>
+<tr class="memdesc:a3f39d998903c6a7c9e8d581718d308d3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classGame.html">Game</a> is won when all non-empty piles has ace on top and cards are in order. <br /></td></tr>
 <tr class="separator:a3f39d998903c6a7c9e8d581718d308d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91fff4f7ce8d856da7784df87517e507"><td class="memItemLeft" align="right" valign="top"><a id="a91fff4f7ce8d856da7784df87517e507"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>sanity</b> () const override</td></tr>
@@ -177,6 +178,38 @@ typedef <a class="el" href="classScorpionStep.html">ScorpionStep</a>&#160;</td><
 <p>Take a step </p>
 
 <p>Implements <a class="el" href="classGame.html#a3170bd2c281d05f6e104418b1b30bbc5">Game&lt; ScorpionStep &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a50db221d74d3b6a4d8f11733ed9731ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50db221d74d3b6a4d8f11733ed9731ec">&#9670;&nbsp;</a></span>valid_steps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="classScorpionStep.html">ScorpionStep</a> &gt; ScorpionGame::valid_steps </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Valid steps: </p>
+<ul>
+<li>part of a pile can be moved if the bottom of it is a rank below the top of the other pile</li>
+<li>king can be moved to an empty pile</li>
+<li>stock can be spread to the first 3 piles </li>
+</ul>
 
 </div>
 </div>

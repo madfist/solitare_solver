@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['rank_187',['rank',['../classCard.html#a298a3a27e3ecafc46f8bec4cccdb93c5',1,'Card::rank() const'],['../classCard.html#a66144f66610205eea6be0f2b829804fe',1,'Card::rank(CardCode)']]],
-  ['read_188',['read',['../classGame.html#a91bbffadc9ab52f79ca62190d7b91621',1,'Game::read()'],['../classKlondikeGame.html#ae58d55f2a30c0ae0271ac57ec11a864a',1,'KlondikeGame::read()'],['../classScorpionGame.html#ae94daa95ceca304228a47b8f1a66e2cc',1,'ScorpionGame::read()']]],
-  ['reset_189',['reset',['../classSingleVectorGameState.html#a6b4cfbeb0121caa91b5fc7b61bfd6ac6',1,'SingleVectorGameState::reset()'],['../classSingleVectorGameState.html#a8df79bc6e1be09e353208224c2869f16',1,'SingleVectorGameState::reset(unsigned size, unsigned p)']]]
+  ['parse_196',['parse',['../classSingleVectorPileStep.html#adbe5edcf1096f7c1e8618b2b5ff34c14',1,'SingleVectorPileStep']]],
+  ['pile_197',['Pile',['../classSingleVectorGameState_1_1Pile.html#a24f39327d8beff3529dc611471318af6',1,'SingleVectorGameState::Pile']]],
+  ['pile_5fbottom_198',['pile_bottom',['../classSingleVectorGameState.html#a5b59d01d36b985765cf838d786b2644a',1,'SingleVectorGameState']]],
+  ['pile_5fempty_199',['pile_empty',['../classSingleVectorGameState.html#a2fa3c741c8f6ef4ca9de53eb72c1b235',1,'SingleVectorGameState']]],
+  ['pile_5fsize_200',['pile_size',['../classSingleVectorGameState.html#a11034ae817c1c6dceff173dc10529c86',1,'SingleVectorGameState']]],
+  ['pile_5ftop_201',['pile_top',['../classSingleVectorGameState.html#a1fbe26cc7e1add5789a2ba69cfb55db1',1,'SingleVectorGameState']]],
+  ['print_202',['print',['../classGame.html#aa5c634c2fae916a05ea7d79c5536bebb',1,'Game::print()'],['../classKlondikeGame.html#aa831dc37998c26ce60bd1ec87f84a4bc',1,'KlondikeGame::print()'],['../classScorpionGame.html#a4494c4b741a2c266bacaa69d0b822e7e',1,'ScorpionGame::print()']]]
 ];

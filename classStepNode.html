@@ -65,16 +65,22 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classStepNode-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">StepNode&lt; Step &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Step node for the solver.  
+ <a href="classStepNode.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="StepNode_8hpp_source.html">StepNode.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a29fc40610665c002f1103ecdd2c183f0"><td class="memItemLeft" align="right" valign="top"><a id="a29fc40610665c002f1103ecdd2c183f0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>StepNode</b> (int r, int n, const Step &amp;s)</td></tr>
+<tr class="memitem:a29fc40610665c002f1103ecdd2c183f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classStepNode.html#a29fc40610665c002f1103ecdd2c183f0">StepNode</a> (int r, int n, const Step &amp;s)</td></tr>
+<tr class="memdesc:a29fc40610665c002f1103ecdd2c183f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create step node.  <a href="classStepNode.html#a29fc40610665c002f1103ecdd2c183f0">More...</a><br /></td></tr>
 <tr class="separator:a29fc40610665c002f1103ecdd2c183f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f0674dd716d6f302d8b1b5e6a27c837"><td class="memItemLeft" align="right" valign="top"><a id="a2f0674dd716d6f302d8b1b5e6a27c837"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>root</b> ()</td></tr>
@@ -94,7 +100,79 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>ROOT</b> = -2</
 <tr class="memitem:a1257c008abad8340c41828808f06664f"><td class="memItemLeft" align="right" valign="top"><a id="a1257c008abad8340c41828808f06664f"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>END</b> = -1</td></tr>
 <tr class="separator:a1257c008abad8340c41828808f06664f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a31e2b0a38ced8efe0800b48ad0e1530b"><td class="memItemLeft" align="right" valign="top"><a id="a31e2b0a38ced8efe0800b48ad0e1530b"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="classStepNode.html">StepNode</a>&lt; Step &gt; &amp;s)</td></tr>
+<tr class="separator:a31e2b0a38ced8efe0800b48ad0e1530b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;class Step&gt;<br />
+class StepNode&lt; Step &gt;</h3>
+
+<p>Step node for the solver. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Step</td><td>type of game step </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a29fc40610665c002f1103ecdd2c183f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29fc40610665c002f1103ecdd2c183f0">&#9670;&nbsp;</a></span>StepNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classStepNode.html">StepNode</a>&lt; Step &gt;::<a class="el" href="classStepNode.html">StepNode</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Step &amp;&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create step node. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>root</td></tr>
+    <tr><td class="paramname">n</td><td>next</td></tr>
+    <tr><td class="paramname">s</td><td>step </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="StepNode_8hpp_source.html">StepNode.hpp</a></li>
 </ul>

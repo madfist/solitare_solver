@@ -1,26 +1,10 @@
 var searchData=
 [
-  ['solitare_5fsolver_67',['solitare_solver',['../index.html',1,'']]],
-  ['same_68',['SAME',['../classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517aa113426fe079c94ba5f5a55253b7b65a',1,'Rules']]],
-  ['sanity_69',['sanity',['../classGame.html#a8a334c6d39c5d7b7eec24c5fc167be0f',1,'Game']]],
-  ['scorpiongame_70',['ScorpionGame',['../classScorpionGame.html',1,'']]],
-  ['scorpionstep_71',['ScorpionStep',['../classScorpionStep.html',1,'']]],
-  ['set_5flevel_72',['set_level',['../classLog.html#accaadc51b6ad4d59610e358ca3d154f3',1,'Log']]],
-  ['set_5foutput_5fstream_73',['set_output_stream',['../classLog.html#a3e40b65003dc705de5083930012d46db',1,'Log']]],
-  ['shared_5flock_74',['shared_lock',['../classting_1_1shared__lock.html',1,'ting']]],
-  ['shared_5fmutex_75',['shared_mutex',['../classting_1_1shared__mutex.html',1,'ting']]],
-  ['shuffle_76',['shuffle',['../classDeck.html#ae5a1e52ab00ae5924f2bc6b730dba3eb',1,'Deck']]],
-  ['singlevectorgamestate_77',['SingleVectorGameState',['../classSingleVectorGameState.html',1,'SingleVectorGameState'],['../classSingleVectorGameState.html#a275e7b0c4c66bd2c94c1fac8dee9ddf0',1,'SingleVectorGameState::SingleVectorGameState()'],['../classSingleVectorGameState.html#a38aff119f84f3778519a48b363489f6c',1,'SingleVectorGameState::SingleVectorGameState(unsigned state_size, unsigned piles)']]],
-  ['singlevectorgamestate_2ehpp_78',['SingleVectorGameState.hpp',['../SingleVectorGameState_8hpp.html',1,'']]],
-  ['singlevectorpilestep_79',['SingleVectorPileStep',['../classSingleVectorPileStep.html',1,'']]],
-  ['singlevectorpilestep_2ehpp_80',['SingleVectorPileStep.hpp',['../SingleVectorPileStep_8hpp.html',1,'']]],
-  ['size_81',['size',['../classSingleVectorGameState_1_1Pile.html#a7445ac630af7a5eb678495e17dc43d15',1,'SingleVectorGameState::Pile']]],
-  ['solution_82',['Solution',['../classSolution.html',1,'']]],
-  ['solve_83',['solve',['../classSolver.html#a9b802080c23e0c03c82b296efcf7b987',1,'Solver']]],
-  ['solver_84',['Solver',['../classSolver.html',1,'']]],
-  ['solverproperties_85',['SolverProperties',['../structSolverProperties.html',1,'']]],
-  ['statemaskelement_86',['StateMaskElement',['../SingleVectorPileStep_8hpp.html#a384bf4d8d68f088d19f5bcdef392f767',1,'SingleVectorPileStep.hpp']]],
-  ['stepnode_87',['StepNode',['../classStepNode.html',1,'']]],
-  ['suite_88',['suite',['../classCard.html#a58f50938c040618693de83bef71f2d57',1,'Card::suite() const'],['../classCard.html#a7fa1412063a9c3e4875b4baf912dc800',1,'Card::suite(CardCode)']]],
-  ['suiteorder_89',['SuiteOrder',['../classRules.html#a9cb20c5b61d18f46e3b2f4c74fb87517',1,'Rules']]]
+  ['rank_65',['rank',['../classCard.html#a298a3a27e3ecafc46f8bec4cccdb93c5',1,'Card::rank() const'],['../classCard.html#a66144f66610205eea6be0f2b829804fe',1,'Card::rank(CardCode)']]],
+  ['rankorder_66',['RankOrder',['../classRules.html#aa94c65e1e500d9eeaf054bef36f2847f',1,'Rules']]],
+  ['read_67',['read',['../classGame.html#a91bbffadc9ab52f79ca62190d7b91621',1,'Game::read()'],['../classKlondikeGame.html#ae58d55f2a30c0ae0271ac57ec11a864a',1,'KlondikeGame::read()'],['../classScorpionGame.html#ae94daa95ceca304228a47b8f1a66e2cc',1,'ScorpionGame::read()']]],
+  ['reset_68',['reset',['../classSingleVectorGameState.html#a6b4cfbeb0121caa91b5fc7b61bfd6ac6',1,'SingleVectorGameState::reset()'],['../classSingleVectorGameState.html#a8df79bc6e1be09e353208224c2869f16',1,'SingleVectorGameState::reset(unsigned size, unsigned p)']]],
+  ['ruledcard_69',['RuledCard',['../classRuledCard.html',1,'']]],
+  ['rules_70',['Rules',['../classRules.html',1,'']]],
+  ['rules_2ehpp_71',['Rules.hpp',['../Rules_8hpp.html',1,'']]]
 ];

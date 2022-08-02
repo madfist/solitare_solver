@@ -114,7 +114,7 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="classSolution.html">Solution&lt;Step&gt;</a> solve() {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classSolution.html">Solution&lt;Step&gt;</a> solution;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">if</span> (!game-&gt;sanity())</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">return</span> solution.finish(0, 0, 0);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">return</span> solution.<a class="code" href="classSolution.html#ae8f6213a251131923ebcfff3cf3baaf4">finish</a>(0, 0, 0);</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">auto</span> taboo = std::make_shared&lt;ConcurrentTaboo&gt;();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">auto</span> first_steps = game-&gt;valid_steps();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        std::vector&lt;std::future&lt;Solution&lt;Step&gt;&gt;&gt; results(first_steps.size());</div>
@@ -194,11 +194,12 @@ $(function() {
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassSolution_html"><div class="ttname"><a href="classSolution.html">Solution</a></div><div class="ttdef"><b>Definition:</b> Solution.hpp:9</div></div>
-<div class="ttc" id="aclassSolver_html"><div class="ttname"><a href="classSolver.html">Solver</a></div><div class="ttdef"><b>Definition:</b> Solver.hpp:20</div></div>
+<div class="ttc" id="aclassSolution_html"><div class="ttname"><a href="classSolution.html">Solution</a></div><div class="ttdef"><b>Definition:</b> Solution.hpp:13</div></div>
+<div class="ttc" id="aclassSolver_html"><div class="ttname"><a href="classSolver.html">Solver</a></div><div class="ttdoc">Solver.</div><div class="ttdef"><b>Definition:</b> Solver.hpp:25</div></div>
 <div class="ttc" id="aclassctpl_1_1thread__pool_html"><div class="ttname"><a href="classctpl_1_1thread__pool.html">ctpl::thread_pool</a></div><div class="ttdef"><b>Definition:</b> ctpl_stl.hpp:87</div></div>
 <div class="ttc" id="aclassParallelSolver_html"><div class="ttname"><a href="classParallelSolver.html">ParallelSolver</a></div><div class="ttdef"><b>Definition:</b> ParallelSolver.hpp:8</div></div>
-<div class="ttc" id="astructSolverProperties_html"><div class="ttname"><a href="structSolverProperties.html">SolverProperties</a></div><div class="ttdef"><b>Definition:</b> Solver.hpp:15</div></div>
+<div class="ttc" id="aclassSolution_html_ae8f6213a251131923ebcfff3cf3baaf4"><div class="ttname"><a href="classSolution.html#ae8f6213a251131923ebcfff3cf3baaf4">Solution::finish</a></div><div class="ttdeci">Solution &amp; finish(unsigned ml, unsigned ss, unsigned ts)</div><div class="ttdef"><b>Definition:</b> Solution.hpp:53</div></div>
+<div class="ttc" id="astructSolverProperties_html"><div class="ttname"><a href="structSolverProperties.html">SolverProperties</a></div><div class="ttdef"><b>Definition:</b> Solver.hpp:16</div></div>
 <div class="ttc" id="aGame_8hpp_html"><div class="ttname"><a href="Game_8hpp.html">Game.hpp</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

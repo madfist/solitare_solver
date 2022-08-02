@@ -109,7 +109,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a07dedc34b50abcbe1a51245d3112837c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a298a3a27e3ecafc46f8bec4cccdb93c5"><td class="memItemLeft" align="right" valign="top"><a id="a298a3a27e3ecafc46f8bec4cccdb93c5"></a>
 <a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCard.html#a298a3a27e3ecafc46f8bec4cccdb93c5">rank</a> () const</td></tr>
-<tr class="memdesc:a298a3a27e3ecafc46f8bec4cccdb93c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get rank (spade, club, heart, diamond) <br /></td></tr>
+<tr class="memdesc:a298a3a27e3ecafc46f8bec4cccdb93c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get rank (A-2-10-J-Q-K) <br /></td></tr>
 <tr class="separator:a298a3a27e3ecafc46f8bec4cccdb93c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66144f66610205eea6be0f2b829804fe"><td class="memItemLeft" align="right" valign="top"><a id="a66144f66610205eea6be0f2b829804fe"></a>
 <a class="el" href="classCard.html">Card</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCard.html#a66144f66610205eea6be0f2b829804fe">rank</a> (<a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>)</td></tr>
@@ -117,7 +117,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a66144f66610205eea6be0f2b829804fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58f50938c040618693de83bef71f2d57"><td class="memItemLeft" align="right" valign="top"><a id="a58f50938c040618693de83bef71f2d57"></a>
 <a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCard.html#a58f50938c040618693de83bef71f2d57">suite</a> () const</td></tr>
-<tr class="memdesc:a58f50938c040618693de83bef71f2d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get suite (A-2-10-J-Q-K) <br /></td></tr>
+<tr class="memdesc:a58f50938c040618693de83bef71f2d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get suite (spade, club, heart, diamond) <br /></td></tr>
 <tr class="separator:a58f50938c040618693de83bef71f2d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fa1412063a9c3e4875b4baf912dc800"><td class="memItemLeft" align="right" valign="top"><a id="a7fa1412063a9c3e4875b4baf912dc800"></a>
 <a class="el" href="classCard.html">Card</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCard.html#a7fa1412063a9c3e4875b4baf912dc800">suite</a> (<a class="el" href="Card_8hpp.html#ac1d0537bdc07b280ef7c8c77ac37b93e">CardCode</a>)</td></tr>
@@ -183,10 +183,12 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memdesc:a8c6e69e9dee97e7df8a3673f0375927e inherit pro_methods_classVersatileMask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value in mask shifted to the least significant bit. <br /></td></tr>
 <tr class="separator:a8c6e69e9dee97e7df8a3673f0375927e inherit pro_methods_classVersatileMask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f9c5e227b4dcabc3ed463c421d66f7c inherit pro_methods_classVersatileMask"><td class="memItemLeft" align="right" valign="top"><a id="a1f9c5e227b4dcabc3ed463c421d66f7c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (uint8_t carrier)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVersatileMask.html#a1f9c5e227b4dcabc3ed463c421d66f7c">set</a> (uint8_t carrier)</td></tr>
+<tr class="memdesc:a1f9c5e227b4dcabc3ed463c421d66f7c inherit pro_methods_classVersatileMask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the whole mask to value. <br /></td></tr>
 <tr class="separator:a1f9c5e227b4dcabc3ed463c421d66f7c inherit pro_methods_classVersatileMask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e7419d6c35bc9c4e539d282852cd6c3 inherit pro_methods_classVersatileMask"><td class="memItemLeft" align="right" valign="top"><a id="a4e7419d6c35bc9c4e539d282852cd6c3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (<a class="el" href="Card_8hpp.html#a3ba72cb111f5503168a376bda1ccb218">CardMaskElement</a> mask_element, uint8_t carrier)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVersatileMask.html#a4e7419d6c35bc9c4e539d282852cd6c3">set</a> (<a class="el" href="Card_8hpp.html#a3ba72cb111f5503168a376bda1ccb218">CardMaskElement</a> mask_element, uint8_t carrier)</td></tr>
+<tr class="memdesc:a4e7419d6c35bc9c4e539d282852cd6c3 inherit pro_methods_classVersatileMask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value for the chosen element in the mask. <br /></td></tr>
 <tr class="separator:a4e7419d6c35bc9c4e539d282852cd6c3 inherit pro_methods_classVersatileMask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -212,8 +214,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (<a class="el
 <p>Create card from string. </p>
 <p>Parsing rules</p><ul>
 <li><code>#</code> separator</li>
-<li><code>2-10, A, J, Q, K</code> suites</li>
-<li><code>S, C, H, D</code> ranks</li>
+<li><code>2-10, A, J, Q, K</code> ranks</li>
+<li><code>S, C, H, D</code> suites</li>
 <li><code>^, _</code> upturned state </li>
 </ul>
 

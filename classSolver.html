@@ -70,6 +70,11 @@ $(function() {
 <div class="title">Solver&lt; Step &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="classSolver.html" title="Solver.">Solver</a>.  
+ <a href="classSolver.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Solver_8hpp_source.html">Solver.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -77,7 +82,7 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Solver</b> (GamePtr&lt; Step &gt; g, std::shared_ptr&lt; <a class="el" href="classTaboo.html">Taboo</a> &gt; t, <a class="el" href="structSolverProperties.html">SolverProperties</a> p={false})</td></tr>
 <tr class="separator:a3347936b1e4795550d41cd8b72e5833c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b802080c23e0c03c82b296efcf7b987"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSolution.html">Solution</a>&lt; Step &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html#a9b802080c23e0c03c82b296efcf7b987">solve</a> ()</td></tr>
-<tr class="memdesc:a9b802080c23e0c03c82b296efcf7b987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the game with BFS and taboo heap The step tree is represented by a vector and we store "pointer" information inside as vector index.  <a href="classSolver.html#a9b802080c23e0c03c82b296efcf7b987">More...</a><br /></td></tr>
+<tr class="memdesc:a9b802080c23e0c03c82b296efcf7b987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the game with BFS and taboo heap.  <a href="classSolver.html#a9b802080c23e0c03c82b296efcf7b987">More...</a><br /></td></tr>
 <tr class="separator:a9b802080c23e0c03c82b296efcf7b987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
@@ -86,7 +91,18 @@ Friends</h2></td></tr>
 std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="classSolver.html">Solver</a>&lt; Step &gt; &amp;s)</td></tr>
 <tr class="separator:adff1c1cc6f50409e525c37d9262425fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;class Step&gt;<br />
+class Solver&lt; Step &gt;</h3>
+
+<p><a class="el" href="classSolver.html" title="Solver.">Solver</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Step</td><td>type of game step </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9b802080c23e0c03c82b296efcf7b987"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b802080c23e0c03c82b296efcf7b987">&#9670;&nbsp;</a></span>solve()</h2>
 
@@ -112,8 +128,8 @@ template&lt;class Step &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Solve the game with BFS and taboo heap The step tree is represented by a vector and we store "pointer" information inside as vector index. </p>
-<dl class="section return"><dt>Returns</dt><dd>solution </dd></dl>
+<p>Solve the game with BFS and taboo heap. </p>
+<p>The step tree is represented by a vector and we store "pointer" information inside as vector index </p><dl class="section return"><dt>Returns</dt><dd>solution </dd></dl>
 
 </div>
 </div>

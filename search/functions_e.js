@@ -1,7 +1,14 @@
 var searchData=
 [
-  ['top_198',['top',['../classSingleVectorGameState_1_1Pile.html#a76842def7cc1f017f1e12c5ddaa442ff',1,'SingleVectorGameState::Pile']]],
-  ['top_5fto_5fbottom_199',['top_to_bottom',['../classSingleVectorGameState_1_1Pile.html#a22c438b030ade48685e8e27f1ea2df91',1,'SingleVectorGameState::Pile::top_to_bottom(CardCodeFn) const'],['../classSingleVectorGameState_1_1Pile.html#a82f2628e427f274ba27b3f44181f16df',1,'SingleVectorGameState::Pile::top_to_bottom(CardFn) const']]],
-  ['turned_5fup_200',['turned_up',['../classSingleVectorPileStep.html#a78fcbcdf575f31751cfd4a4fa204d69a',1,'SingleVectorPileStep']]],
-  ['turnup_201',['turnup',['../classCard.html#a2a9741c39a05a27ba9726d959420111c',1,'Card::turnup(bool ut=true)'],['../classCard.html#a5b52378613e544ff4768de57a910f130',1,'Card::turnup(CardCode &amp;, bool ut=true)']]]
+  ['sanity_206',['sanity',['../classGame.html#a8a334c6d39c5d7b7eec24c5fc167be0f',1,'Game']]],
+  ['scorpionstep_207',['ScorpionStep',['../classScorpionStep.html#a076eefba4fe9e1d9355d8fb96ca18d89',1,'ScorpionStep::ScorpionStep(uint32_t)'],['../classScorpionStep.html#aa93e8f46300cf39010ad5ea52863ab34',1,'ScorpionStep::ScorpionStep(CardCode cc, unsigned fr, unsigned to, unsigned p1, unsigned p2, unsigned w=0)']]],
+  ['set_208',['set',['../classVersatileMask.html#a1f9c5e227b4dcabc3ed463c421d66f7c',1,'VersatileMask::set(CarrierType carrier)'],['../classVersatileMask.html#a4e7419d6c35bc9c4e539d282852cd6c3',1,'VersatileMask::set(MaskElementEnum mask_element, CarrierType carrier)']]],
+  ['set_5flevel_209',['set_level',['../classLog.html#accaadc51b6ad4d59610e358ca3d154f3',1,'Log']]],
+  ['set_5foutput_5fstream_210',['set_output_stream',['../classLog.html#a3e40b65003dc705de5083930012d46db',1,'Log']]],
+  ['shuffle_211',['shuffle',['../classDeck.html#ae5a1e52ab00ae5924f2bc6b730dba3eb',1,'Deck']]],
+  ['singlevectorgamestate_212',['SingleVectorGameState',['../classSingleVectorGameState.html#a275e7b0c4c66bd2c94c1fac8dee9ddf0',1,'SingleVectorGameState::SingleVectorGameState()'],['../classSingleVectorGameState.html#a38aff119f84f3778519a48b363489f6c',1,'SingleVectorGameState::SingleVectorGameState(unsigned state_size, unsigned piles)']]],
+  ['size_213',['size',['../classSingleVectorGameState_1_1Pile.html#a7445ac630af7a5eb678495e17dc43d15',1,'SingleVectorGameState::Pile']]],
+  ['solve_214',['solve',['../classSolver.html#a9b802080c23e0c03c82b296efcf7b987',1,'Solver']]],
+  ['stepnode_215',['StepNode',['../classStepNode.html#a29fc40610665c002f1103ecdd2c183f0',1,'StepNode']]],
+  ['suite_216',['suite',['../classCard.html#a58f50938c040618693de83bef71f2d57',1,'Card::suite() const'],['../classCard.html#a7fa1412063a9c3e4875b4baf912dc800',1,'Card::suite(CardCode)']]]
 ];

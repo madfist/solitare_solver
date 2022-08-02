@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['move_5fcards_5fbackward_167',['move_cards_backward',['../classSingleVectorGameState.html#a76aface92adb37492647b4b682e12ff6',1,'SingleVectorGameState']]],
-  ['move_5fcards_5fforward_168',['move_cards_forward',['../classSingleVectorGameState.html#aa8fccfd7a4ce8c327e0e8049834e9c67',1,'SingleVectorGameState']]],
-  ['move_5fsingle_5fcard_5fbackward_169',['move_single_card_backward',['../classSingleVectorGameState.html#ade19d41f07af6e52fb7c9c4d540d922e',1,'SingleVectorGameState']]],
-  ['move_5fsingle_5fcard_5fforward_170',['move_single_card_forward',['../classSingleVectorGameState.html#a8e3fa4715e36d3625c4c56bca7cf3af6',1,'SingleVectorGameState']]]
+  ['log_179',['Log',['../classLog.html#ac73c7db3146fa7ad0624228b8f98bb5f',1,'Log']]]
 ];
