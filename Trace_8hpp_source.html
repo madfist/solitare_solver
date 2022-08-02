@@ -96,41 +96,43 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::array&lt;uint8_t, 3&gt; SHIFTS;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>Trace {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    Trace(TraceComponent);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    ~Trace();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> enable_component(TraceComponent);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> set_output_stream(std::ostream*); </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    Trace&amp; <a class="code" href="Card_8hpp.html#ace2045ebb1cf7c1e36e624618f4f1806">operator&lt;&lt;</a>(<span class="keyword">const</span> T&amp; value) {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">return</span> write_log(value);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    Trace&amp; <a class="code" href="Card_8hpp.html#ace2045ebb1cf7c1e36e624618f4f1806">operator&lt;&lt;</a>(std::ostream&amp; (*manip)(std::ostream&amp;));</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    Trace&amp; write_log(<span class="keyword">const</span> T&amp; value) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">if</span> (enabled_components.enabled(component)) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            *out &lt;&lt; value;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">static</span> <a class="code" href="classTraceComponentMask.html">TraceComponentMask</a> enabled_components;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">static</span> std::ostream* out;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">static</span> std::string component_strings[];</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    TraceComponent component;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">bool</span> msg_written;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classTrace.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTrace.html">Trace</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classTrace.html">Trace</a>(TraceComponent);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ~<a class="code" href="classTrace.html">Trace</a>();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> enable_component(TraceComponent);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classTrace.html#ab62745760f95956f4dab28aac3eefdac">set_output_stream</a>(std::ostream*); </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classTrace.html#aa95ae1f1e89a1ebd1dc6ef453baba41f">   45</a></span>&#160;    <a class="code" href="classTrace.html">Trace</a>&amp; <a class="code" href="classTrace.html#aa95ae1f1e89a1ebd1dc6ef453baba41f">operator&lt;&lt;</a>(<span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> write_log(value);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="classTrace.html">Trace</a>&amp; <a class="code" href="classTrace.html#aa95ae1f1e89a1ebd1dc6ef453baba41f">operator&lt;&lt;</a>(std::ostream&amp; (*manip)(std::ostream&amp;));</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="classTrace.html">Trace</a>&amp; write_log(<span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">if</span> (enabled_components.enabled(component)) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            *out &lt;&lt; value;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">static</span> <a class="code" href="classTraceComponentMask.html">TraceComponentMask</a> enabled_components;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">static</span> std::ostream* out;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">static</span> std::string component_strings[];</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    TraceComponent component;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">bool</span> msg_written;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;};</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassTraceComponentMask_html"><div class="ttname"><a href="classTraceComponentMask.html">TraceComponentMask</a></div><div class="ttdef"><b>Definition:</b> Trace.hpp:14</div></div>
 <div class="ttc" id="aVersatileMask_8hpp_html"><div class="ttname"><a href="VersatileMask_8hpp.html">VersatileMask.hpp</a></div></div>
 <div class="ttc" id="aclassVersatileMask_html"><div class="ttname"><a href="classVersatileMask.html">VersatileMask</a></div><div class="ttdoc">Versatile bitmask with named parts.</div><div class="ttdef"><b>Definition:</b> VersatileMask.hpp:43</div></div>
-<div class="ttc" id="aCard_8hpp_html_ace2045ebb1cf7c1e36e624618f4f1806"><div class="ttname"><a href="Card_8hpp.html#ace2045ebb1cf7c1e36e624618f4f1806">operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;, const CardCode &amp;cc)</div><div class="ttdoc">Stream output operator.</div><div class="ttdef"><b>Definition:</b> Card.cpp:116</div></div>
+<div class="ttc" id="aclassTrace_html_aa95ae1f1e89a1ebd1dc6ef453baba41f"><div class="ttname"><a href="classTrace.html#aa95ae1f1e89a1ebd1dc6ef453baba41f">Trace::operator&lt;&lt;</a></div><div class="ttdeci">Trace &amp; operator&lt;&lt;(const T &amp;value)</div><div class="ttdoc">Output stream operator.</div><div class="ttdef"><b>Definition:</b> Trace.hpp:45</div></div>
+<div class="ttc" id="aclassTrace_html_ab62745760f95956f4dab28aac3eefdac"><div class="ttname"><a href="classTrace.html#ab62745760f95956f4dab28aac3eefdac">Trace::set_output_stream</a></div><div class="ttdeci">static void set_output_stream(std::ostream *)</div><div class="ttdoc">Change output stream (default is std::cout)</div><div class="ttdef"><b>Definition:</b> Trace.cpp:43</div></div>
+<div class="ttc" id="aclassTrace_html"><div class="ttname"><a href="classTrace.html">Trace</a></div><div class="ttdoc">Tracer for debugging.</div><div class="ttdef"><b>Definition:</b> Trace.hpp:35</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

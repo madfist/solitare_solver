@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['solitare_5fsolver_245',['solitare_solver',['../index.html',1,'']]]
+  ['solitare_5fsolver_247',['solitare_solver',['../index.html',1,'']]]
 ];

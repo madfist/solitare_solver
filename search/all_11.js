@@ -7,7 +7,7 @@ var searchData=
   ['scorpionstep_76',['ScorpionStep',['../classScorpionStep.html',1,'ScorpionStep'],['../classScorpionStep.html#a076eefba4fe9e1d9355d8fb96ca18d89',1,'ScorpionStep::ScorpionStep(uint32_t)'],['../classScorpionStep.html#aa93e8f46300cf39010ad5ea52863ab34',1,'ScorpionStep::ScorpionStep(CardCode cc, unsigned fr, unsigned to, unsigned p1, unsigned p2, unsigned w=0)']]],
   ['set_77',['set',['../classVersatileMask.html#a1f9c5e227b4dcabc3ed463c421d66f7c',1,'VersatileMask::set(CarrierType carrier)'],['../classVersatileMask.html#a4e7419d6c35bc9c4e539d282852cd6c3',1,'VersatileMask::set(MaskElementEnum mask_element, CarrierType carrier)']]],
   ['set_5flevel_78',['set_level',['../classLog.html#accaadc51b6ad4d59610e358ca3d154f3',1,'Log']]],
-  ['set_5foutput_5fstream_79',['set_output_stream',['../classLog.html#a3e40b65003dc705de5083930012d46db',1,'Log']]],
+  ['set_5foutput_5fstream_79',['set_output_stream',['../classLog.html#a3e40b65003dc705de5083930012d46db',1,'Log::set_output_stream()'],['../classTrace.html#ab62745760f95956f4dab28aac3eefdac',1,'Trace::set_output_stream()']]],
   ['shared_5flock_80',['shared_lock',['../classting_1_1shared__lock.html',1,'ting']]],
   ['shared_5fmutex_81',['shared_mutex',['../classting_1_1shared__mutex.html',1,'ting']]],
   ['shuffle_82',['shuffle',['../classDeck.html#ae5a1e52ab00ae5924f2bc6b730dba3eb',1,'Deck']]],
