@@ -13,7 +13,7 @@ template<class Step>
 Solution<Step> thread_fn(int id, std::shared_ptr<Solver<Step>> solver) {
     {
         std::unique_lock<std::mutex> lock(output_mutex);
-        std::cout << "thread" << id << '\n' << *solver << '\n';
+        // std::cout << "thread" << id << '\n' << *solver << '\n';
     }
     return solver->solve();
     // {
@@ -42,7 +42,7 @@ public:
     Solution<Step> solve() {
         Solution<Step> solution;
         if (!game->sanity())
-            return solution.finish(0, 0, 0);
+            return solution.finish(false, 0, 0, 0);
         auto taboo = std::make_shared<ConcurrentTaboo>();
         auto first_steps = game->valid_steps();
         std::vector<std::future<Solution<Step>>> results(first_steps.size());
@@ -53,19 +53,20 @@ public:
             auto solver = std::make_shared<Solver<Step>>(g, taboo);
             results[i++] = std::move(thread_pool.push(thread_fn<Step>, solver));
         }
-        auto status(std::future_status::timeout);
         int result_holder = -1;
-        while (status != std::future_status::ready) {
+        bool all_done = false;
+        while (!all_done) {
+            all_done = true;
             for (int r = 0; r < results.size(); ++r) {
-                status = results[r].wait_for(std::chrono::milliseconds(100));
-                if (status == std::future_status::ready) {
-                    result_holder = r;
-                    break;
-                }
+                auto status = results[r].wait_for(std::chrono::milliseconds(100));
+                all_done &= (status == std::future_status::ready);
             }
         }
         thread_pool.stop();
-        return results[result_holder].get();
+        for (int r = 0; r < results.size(); ++r) {
+            solution += results[r].get();
+        }
+        return solution;
     }
 
 private:

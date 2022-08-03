@@ -4,6 +4,7 @@
 
 #include "KlondikeGame.hpp"
 #include "RuledCard.hpp"
+#include "Trace.hpp"
 
 static const unsigned STATE_SIZE = Deck::DECK_SIZE + 11; // 52 cards + 11 index values for piles_start
 static const unsigned GAME_PILES = 7;
@@ -17,13 +18,13 @@ static const CardCode ACE = 0;
 KlondikeGame::KlondikeGame()
         : state()
         , pile_rules(Rules::ALTERNATE, Rules::ACE_KING_DISABLED)
-        , foundation_rules()
+        , foundation_rules(Rules::SAME, Rules::ACE_KING_DISABLED)
         , check_further(true) {}
 
 KlondikeGame::KlondikeGame(Deck& deck, bool shuffle /*false*/)
         : state(STATE_SIZE, ALL_PILES)
         , pile_rules(Rules::ALTERNATE, Rules::ACE_KING_DISABLED)
-        , foundation_rules()
+        , foundation_rules(Rules::SAME, Rules::ACE_KING_DISABLED)
         , check_further(true) {
     if (shuffle)
         deck.shuffle();
@@ -32,7 +33,6 @@ KlondikeGame::KlondikeGame(Deck& deck, bool shuffle /*false*/)
     deck.deal([&] (const Card& c) {
         Card card(c);
         if (pile < GAME_PILES) {
-            // std::cout << "i" << i << " p" << pile << " s" << pile_size << " d" << dealt << " c" << card << std::endl;
             if (i < state.first_card_pos() + dealt + pile_size - 1) {
                 card.turnup(false);
             }
@@ -69,16 +69,17 @@ std::size_t KlondikeGame::hash() const {
 }
 
 void KlondikeGame::do_step(const KlondikeStep& s) {
-    // std::cout << "klondike do step: " << s << std::endl;
+    Trace(TraceComponent::GAME) << "DO " << s;
     if (s.is_stock_move()) {
         state.move_single_card_forward(s.pile_from(), s.pile_to(), s.card_pos(), s.new_pos());
     } else {
         state.do_move_and_upturn(s);
     }
+    Trace(TraceComponent::GAME) << *this;
 }
 
 void KlondikeGame::undo_step(const KlondikeStep& s) {
-    // std::cout << "klondike undo step: " << s << std::endl;
+    Trace(TraceComponent::GAME) << "UNDO " << s;
     if (s.is_stock_move()) {
         // struct PrettyPrint pretty;
         // std::cout << pretty << state << std::endl;
@@ -87,6 +88,7 @@ void KlondikeGame::undo_step(const KlondikeStep& s) {
     } else {
         state.undo_move_and_upturn(s);
     }
+    Trace(TraceComponent::GAME) << *this;
 }
 
 std::vector<KlondikeStep> KlondikeGame::valid_steps() const {

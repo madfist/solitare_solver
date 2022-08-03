@@ -47,11 +47,10 @@ TEST(klondike_game_test, win) {
 
 TEST(klondike_game_test, valid_steps) {
     auto game = test_solver::load_game<KlondikeGame>("win3.klondike.game");
-    // std::cout << *game << std::endl;
     auto steps = game->valid_steps();
-    // std::cout << steps << std::endl;
+    auto hash = game->hash();
     game->do_step(steps.front());
-    // std::cout << *game << std::endl;
+    EXPECT_NE(game->hash(), hash);
     game->undo_step(steps.front());
-    // std::cout << *game << std::endl;
+    EXPECT_EQ(game->hash(), hash);
 }

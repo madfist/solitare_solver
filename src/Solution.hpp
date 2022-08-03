@@ -12,7 +12,7 @@
 template<class Step>
 class Solution {
 public:
-    Solution() : steps(), total_steps(0), taboo_hits(0) {}
+    Solution() : steps(), total_steps(0), taboo_hits(0), win(false) {}
 
     void add(const Step& s) {
         steps.push_front(s);
@@ -32,25 +32,29 @@ public:
 
     /// Combine solution data @param sl another solution
     Solution& operator+=(const Solution& sl) {
+        win |= sl.win;
         total_steps += sl.total_steps;
         taboo_hits += sl.taboo_hits;
         max_level = std::max(max_level, sl.max_level);
         step_tree_size += sl.step_tree_size;
         taboo_tree_size += sl.taboo_tree_size;
+        return *this;
     }
 
     /// Check if the solution has any steps
     explicit operator bool() const {
-        return !steps.empty();
+        return win;
     }
 
     /**
      * Finish a solution and set statistics
+     * @param w win state
      * @param ml max level
      * @param ss step tree size
      * @param ts taboo tree size
      */
-    Solution& finish(unsigned ml, unsigned ss, unsigned ts) {
+    Solution& finish(bool w, unsigned ml, unsigned ss, unsigned ts) {
+        win = w;
         max_level = ml;
         step_tree_size = ss;
         taboo_tree_size = ts;
@@ -68,10 +72,11 @@ public:
         os << "Maximum depth: " << s.max_level << std::endl;
         os << "Step tree size: " << s.step_tree_size << std::endl;
         os << "Taboo tree size: " << s.taboo_tree_size << std::endl;
-        if (s.steps.empty()) {
+        if (!s.win) {
             os << "No solution";
             return os;
         }
+        os << "Steps: ";
         std::for_each(s.steps.begin(), s.steps.end(), [&] (const Step& step) {
             os << step << " ";
         });
@@ -79,6 +84,7 @@ public:
     }
 
 private:
+    bool win;
     unsigned total_steps;
     unsigned taboo_hits;
     unsigned max_level;

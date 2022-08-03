@@ -54,7 +54,6 @@ TEST(solver_test, scorpion_no_solution) {
     std::shared_ptr<Taboo> taboo(new Taboo());
     Solver<ScorpionStep> solver(game, taboo);
     Solution<ScorpionStep> solution = solver.solve();
-    std::cout << solution;
 
     EXPECT_FALSE(game->win());
     EXPECT_TRUE(game->sanity());

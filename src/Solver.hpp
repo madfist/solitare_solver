@@ -39,7 +39,9 @@ public:
     Solution<Step> solve() {
         Solution<Step> solution;
         if (!game->sanity())
-            return solution.finish(0, 0, 0);
+            return solution.finish(false, 0, 0, 0);
+        if (game->win())
+            return solution.finish(true, 0, 0, 0);
         int current_node_id = StepNode<Step>::ROOT;
         int next_node_id = 0;
         int i = 0;
@@ -64,7 +66,7 @@ public:
 
                 //if we got back to ROOT => return solution
                 if (next_node_id == StepNode<Step>::ROOT)
-                    return solution.finish(max_level, nodes.size(), taboo->size());
+                    return solution.finish(false, max_level, nodes.size(), taboo->size());
             }
             Trace(TraceComponent::SOLVER) << "do node[" << next_node_id << "]:" << nodes[next_node_id];
             game->do_step(nodes[next_node_id].step());
@@ -78,7 +80,7 @@ public:
             next_node_id = nodes[next_node_id].root();
         } while (next_node_id != StepNode<Step>::ROOT);
 
-        return solution.finish(max_level, nodes.size(), taboo->size());
+        return solution.finish(true, max_level, nodes.size(), taboo->size());
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Solver<Step>& s) {
