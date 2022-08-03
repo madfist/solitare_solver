@@ -10,6 +10,12 @@ make -Cbuild test
 ```
 > If built on cygwin after the downloading of `googletest` modify its `CMakeFiles.txt` to enable compiler extension and run `cmake` again.
 
+### Build release version
+```
+cmake -Brelease -DCMAKE_BUILD_TYPE=Release .
+make -Crelease
+```
+
 ## Run
 ```
 ./solitare_solver -h
@@ -35,6 +41,11 @@ Doxygen documentation is available here.
 It can also be generated (`build/docs/html/index.html`):
 ```
 make -Cbuild docs
+```
+
+## Memory check
+```
+make -Cbuild test ARGS="-T memcheck"
 ```
 
 ## Coverage

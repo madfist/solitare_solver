@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.11)
 
 project(solitare_solver)
 
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "DEBUG")
+endif()
+string(TOUPPER "${CMAKE_BUILD_TYPE}" UPPER_BUILD_TYPE)
+
 include(FetchContent)
 
 
@@ -19,12 +24,15 @@ FetchContent_Declare(
     UPDATE_DISCONNECTED 1
 )
 
-FetchContent_MakeAvailable(cxxopts googletest)
+FetchContent_MakeAvailable(cxxopts)
+if (UPPER_BUILD_TYPE MATCHES "DEBUG")
+    FetchContent_MakeAvailable(googletest)
+endif()
 
 include(CTest)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CTestCustom.cmake ${CMAKE_CURRENT_BINARY_DIR}/CTestCustom.cmake @ONLY)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 
 # first we can indicate the documentation build as an option and set it to ON by default
 option(BUILD_DOC "Build documentation" ON)
