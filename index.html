@@ -76,7 +76,11 @@ Build and test</h1>
 </div><!-- fragment --><blockquote class="doxtable">
 <p>If built on cygwin after the downloading of <code>googletest</code> modify its <code>CMakeFiles.txt</code> to enable compiler extension and run <code>cmake</code> again. </p>
 </blockquote>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Build release version</h2>
+<div class="fragment"><div class="line">cmake -Brelease -DCMAKE_BUILD_TYPE=Release .</div>
+<div class="line">make -Crelease</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
 Run</h1>
 <div class="fragment"><div class="line">./solitare_solver -h</div>
 <div class="line"> </div>
@@ -92,18 +96,21 @@ Run</h1>
 <div class="line">  -f, --filter     filter valid steps</div>
 <div class="line">  -s, --steps arg  steps to run</div>
 <div class="line">  -h, --help       display this help</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
 Documentation</h1>
 <p>Doxygen documentation is available here.</p>
 <p>It can also be generated (<code>build/docs/html/index.html</code>): </p><div class="fragment"><div class="line">make -Cbuild docs</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+Memory check</h1>
+<div class="fragment"><div class="line">make -Cbuild test ARGS=&quot;-T memcheck&quot;</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Coverage</h1>
 <p>The project uses CTest and CDash from CMake, but doesn't have a public profile, so the CDash server can be run with the help of docker. </p><div class="fragment"><div class="line">cp .env.example .env</div>
 <div class="line">docker-compose run --rm cdash install configure</div>
 <div class="line">docker-compose up -d</div>
 </div><!-- fragment --><p>Then create a project <em>SolitareSolverUnitTests</em> in CDash (<a href="http://localhost:8080">http://localhost:8080</a>).</p>
 <p>To test and submit coverage run: </p><div class="fragment"><div class="line">make -Cbuild Experimental</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
 Using</h1>
 <ul>
 <li><a href="https://github.com/google/googletest">googletest</a></li>
