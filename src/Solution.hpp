@@ -12,7 +12,7 @@
 template<class Step>
 class Solution {
 public:
-    Solution() : steps(), total_steps(0), taboo_hits(0), win(false) {}
+    Solution() : steps(), total_steps(0), max_level(0), step_tree_size(0), taboo_tree_size(0), taboo_hits(0), win(false) {}
 
     void add(const Step& s) {
         steps.push_front(s);
@@ -37,7 +37,7 @@ public:
         taboo_hits += sl.taboo_hits;
         max_level = std::max(max_level, sl.max_level);
         step_tree_size += sl.step_tree_size;
-        taboo_tree_size += sl.taboo_tree_size;
+        taboo_tree_size += std::max(taboo_tree_size, sl.taboo_tree_size);
         return *this;
     }
 
@@ -64,6 +64,10 @@ public:
     /// Check if solution has any steps
     bool insane() const {
         return total_steps == 0;
+    }
+
+    void set_taboo_tree_size(unsigned ts) {
+        taboo_tree_size = ts;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Solution<Step>& s) {

@@ -18,7 +18,6 @@ set(LIB_SRCS
     KlondikeStep.hpp KlondikeStep.cpp
     VersatileMask.hpp
     ParallelSolver.hpp
-    shared_mutex.hpp shared_mutex.cpp
     PrettyPrint.hpp
     Taboo.hpp Taboo.cpp
     Trace.hpp Trace.cpp)

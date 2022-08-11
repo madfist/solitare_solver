@@ -2,10 +2,10 @@
 
 TraceComponentMask Trace::enabled_components;
 std::ostream* Trace::out = &std::cout;
-std::string Trace::component_strings[] = {"SOLVER", "GAME", "TEST"};
+std::string Trace::component_strings[] = {"SOLVER", "GAME", "TEST", "PARALLEL"};
 
-const std::array<uint8_t, 3> TraceComponentMask::MASKS = {0x1, 0x2, 0x4};
-const std::array<uint8_t, 3> TraceComponentMask::SHIFTS = {0, 1, 2};
+const std::array<uint8_t, 4> TraceComponentMask::MASKS = {0x1, 0x2, 0x4, 0x8};
+const std::array<uint8_t, 4> TraceComponentMask::SHIFTS = {0, 1, 2, 3};
 
 TraceComponentMask::TraceComponentMask() : VersatileMask(0) {}
 

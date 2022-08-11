@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
         ("i,input", "input game state", cxxopts::value<std::string>())
         ("v,verbose", "info messages")
         ("d,debug", "debug messages")
-        ("t,trace", "trace component (solver|game)", cxxopts::value<std::vector<std::string>>())
+        ("t,trace", "trace component (solver|game|parallel)", cxxopts::value<std::vector<std::string>>())
         ("p,parallel", "use parallel solver")
         ("f,filter", "filter valid steps")
         ("s,steps", "steps to run", cxxopts::value<std::string>())
@@ -122,6 +122,8 @@ int main(int argc, char *argv[]) {
                     Trace::enable_component(TraceComponent::SOLVER);
                 } else if (t == "game") {
                     Trace::enable_component(TraceComponent::GAME);
+                } else if (t == "parallel") {
+                    Trace::enable_component(TraceComponent::PARALLEL);
                 } else {
                     Log(Log::ERROR) << "Unknown trace component: " << t;
                     exit(1);

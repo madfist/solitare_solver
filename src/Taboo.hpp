@@ -2,7 +2,7 @@
 #define TABOO_HEADER
 
 #include <unordered_set>
-#include "shared_mutex.hpp"
+#include <shared_mutex>
 
 /**
  * Stores unsuccesful game state hashes
@@ -24,7 +24,7 @@ public:
     bool check(std::size_t elem) const override;
     std::size_t size() const override;
 private:
-    mutable ting::shared_mutex mx;
+    mutable std::shared_mutex mx;
 };
 
 #endif

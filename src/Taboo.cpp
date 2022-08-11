@@ -1,3 +1,5 @@
+#include <mutex>
+#include <shared_mutex>
 #include "Taboo.hpp"
 
 Taboo::~Taboo() {}
@@ -17,16 +19,16 @@ std::size_t Taboo::size() const {
 ConcurrentTaboo::~ConcurrentTaboo() {}
 
 void ConcurrentTaboo::add(std::size_t elem) {
-    std::unique_lock<ting::shared_mutex> lock(mx);
+    std::unique_lock lock(mx);
     Taboo::add(elem);
 }
 
 bool ConcurrentTaboo::check(std::size_t elem) const {
-    ting::shared_lock<ting::shared_mutex> lock(mx);
+    std::shared_lock lock(mx);
     return Taboo::check(elem);
 }
 
 std::size_t ConcurrentTaboo::size() const {
-    ting::shared_lock<ting::shared_mutex> lock(mx);
+    std::shared_lock lock(mx);
     return Taboo::size();
 }

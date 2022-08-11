@@ -6,6 +6,8 @@
 #ifndef VERSATILE_MASK_HEADER
 #define VERSATILE_MASK_HEADER
 
+#include <cassert>
+
 /**
  * @brief Versatile bitmask with named parts
  * 
@@ -28,8 +30,8 @@
  *   uint8_t shift(MaskElement m) const {
  *     return SHIFTS[m];
  *   }
- *   static const std::array<uint32_t, 8> MASKS;
- *   static const std::array<uint8_t, 8> SHIFTS;
+ *   static const std::array<uint32_t, 3> MASKS;
+ *   static const std::array<uint8_t, 3> SHIFTS;
  * }
  * 
  * const std::array<uint8_t, 3> Something::MASKS = {0x0F, 0x30, 0x40};
@@ -74,6 +76,8 @@ protected:
      * @brief Set value for the chosen element in the mask
      */
     void set(MaskElementEnum mask_element, CarrierType carrier) {
+        // assert that value fits into the designated bit range
+        assert((carrier >> (shift(static_cast<MaskElementEnum>(mask_element + 1)) - shift(mask_element))) == 0);
         // shift value to the right place and cut off anyhing outside the masked part
         CarrierType value = (carrier << shift(mask_element)) & mask(mask_element);
         // delete masked part

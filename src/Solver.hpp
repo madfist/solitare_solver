@@ -158,7 +158,7 @@ private:
 
     void filter_steps(std::vector<Step>& steps) {
         std::vector<Step> tmp;
-        std::copy_if(steps.begin(), steps.end(), std::back_inserter(tmp), [=](const Step& s) -> bool {
+        std::copy_if(steps.begin(), steps.end(), std::back_inserter(tmp), [this](const Step& s) -> bool {
             return previous_steps.find(s) == previous_steps.end();
         });
         // std::remove_if(steps.begin(), steps.end(), [=](const Step& s) -> bool {

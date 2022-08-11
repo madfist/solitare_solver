@@ -32,7 +32,7 @@ public:
     virtual void do_step(const Step&) = 0;                ///< Take a step
     /// Take multiple steps
     virtual void do_steps(const std::vector<Step>& steps) {
-        std::for_each(steps.begin(), steps.end(), [=](const Step& s) {
+        std::for_each(steps.begin(), steps.end(), [this](const Step& s) {
             do_step(s);
         });
     }

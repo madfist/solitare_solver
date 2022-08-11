@@ -8,7 +8,7 @@
 #include "VersatileMask.hpp"
 
 enum TraceComponent {
-    SOLVER, GAME, TEST
+    SOLVER, GAME, TEST, PARALLEL
 };
 
 class TraceComponentMask : public VersatileMask<uint8_t, TraceComponent> {
@@ -20,8 +20,8 @@ private:
     uint8_t mask(TraceComponent) const;
     uint8_t shift(TraceComponent) const;
 
-    static const std::array<uint8_t, 3> MASKS;
-    static const std::array<uint8_t, 3> SHIFTS;
+    static const std::array<uint8_t, 4> MASKS;
+    static const std::array<uint8_t, 4> SHIFTS;
 };
 
 /**
