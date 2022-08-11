@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['klondikegame_125',['KlondikeGame',['../classKlondikeGame.html',1,'']]],
-  ['klondikestep_126',['KlondikeStep',['../classKlondikeStep.html',1,'']]]
+  ['klondikegame_120',['KlondikeGame',['../classKlondikeGame.html',1,'']]],
+  ['klondikestep_121',['KlondikeStep',['../classKlondikeStep.html',1,'']]]
 ];

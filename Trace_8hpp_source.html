@@ -80,7 +80,7 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="VersatileMask_8hpp.html">VersatileMask.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">enum</span> TraceComponent {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    SOLVER, GAME, TEST</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    SOLVER, GAME, TEST, PARALLEL</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;};</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classTraceComponentMask.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTraceComponentMask.html">TraceComponentMask</a> : <span class="keyword">public</span> <a class="code" href="classVersatileMask.html">VersatileMask</a>&lt;uint8_t, TraceComponent&gt; {</div>
@@ -92,8 +92,8 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    uint8_t mask(TraceComponent) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    uint8_t shift(TraceComponent) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::array&lt;uint8_t, 3&gt; MASKS;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::array&lt;uint8_t, 3&gt; SHIFTS;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::array&lt;uint8_t, 4&gt; MASKS;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::array&lt;uint8_t, 4&gt; SHIFTS;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classTrace.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTrace.html">Trace</a> {</div>
@@ -129,7 +129,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassTraceComponentMask_html"><div class="ttname"><a href="classTraceComponentMask.html">TraceComponentMask</a></div><div class="ttdef"><b>Definition:</b> Trace.hpp:14</div></div>
 <div class="ttc" id="aVersatileMask_8hpp_html"><div class="ttname"><a href="VersatileMask_8hpp.html">VersatileMask.hpp</a></div></div>
-<div class="ttc" id="aclassVersatileMask_html"><div class="ttname"><a href="classVersatileMask.html">VersatileMask</a></div><div class="ttdoc">Versatile bitmask with named parts.</div><div class="ttdef"><b>Definition:</b> VersatileMask.hpp:43</div></div>
+<div class="ttc" id="aclassVersatileMask_html"><div class="ttname"><a href="classVersatileMask.html">VersatileMask</a></div><div class="ttdoc">Versatile bitmask with named parts.</div><div class="ttdef"><b>Definition:</b> VersatileMask.hpp:45</div></div>
 <div class="ttc" id="aclassTrace_html_aa95ae1f1e89a1ebd1dc6ef453baba41f"><div class="ttname"><a href="classTrace.html#aa95ae1f1e89a1ebd1dc6ef453baba41f">Trace::operator&lt;&lt;</a></div><div class="ttdeci">Trace &amp; operator&lt;&lt;(const T &amp;value)</div><div class="ttdoc">Output stream operator.</div><div class="ttdef"><b>Definition:</b> Trace.hpp:45</div></div>
 <div class="ttc" id="aclassTrace_html_ab62745760f95956f4dab28aac3eefdac"><div class="ttname"><a href="classTrace.html#ab62745760f95956f4dab28aac3eefdac">Trace::set_output_stream</a></div><div class="ttdeci">static void set_output_stream(std::ostream *)</div><div class="ttdoc">Change output stream (default is std::cout)</div><div class="ttdef"><b>Definition:</b> Trace.cpp:43</div></div>
 <div class="ttc" id="aclassTrace_html"><div class="ttname"><a href="classTrace.html">Trace</a></div><div class="ttdoc">Tracer for debugging.</div><div class="ttdef"><b>Definition:</b> Trace.hpp:35</div></div>

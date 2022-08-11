@@ -95,7 +95,7 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">virtual</span> std::size_t <a class="code" href="classGame.html#acb20af747be100d2a49fa74e351db080">hash</a>() <span class="keyword">const</span> = 0;                 </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGame.html#a3170bd2c281d05f6e104418b1b30bbc5">do_step</a>(<span class="keyword">const</span> Step&amp;) = 0;                </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGame.html#a2bf3f04936d94f6ec9ad0544400b5251">do_steps</a>(<span class="keyword">const</span> std::vector&lt;Step&gt;&amp; steps) {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        std::for_each(steps.begin(), steps.end(), [=](<span class="keyword">const</span> Step&amp; s) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        std::for_each(steps.begin(), steps.end(), [<span class="keyword">this</span>](<span class="keyword">const</span> Step&amp; s) {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            do_step(s);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        });</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>

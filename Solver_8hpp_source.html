@@ -211,7 +211,7 @@ $(function() {
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordtype">void</span> filter_steps(std::vector&lt;Step&gt;&amp; steps) {</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        std::vector&lt;Step&gt; tmp;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        std::copy_if(steps.begin(), steps.end(), std::back_inserter(tmp), [=](<span class="keyword">const</span> Step&amp; s) -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        std::copy_if(steps.begin(), steps.end(), std::back_inserter(tmp), [<span class="keyword">this</span>](<span class="keyword">const</span> Step&amp; s) -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            return previous_steps.find(s) == previous_steps.end();</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        });</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="comment">// std::remove_if(steps.begin(), steps.end(), [=](const Step&amp; s) -&gt; bool {</span></div>
