@@ -40,7 +40,7 @@ void solve_game(const std::string& filename, bool parallel, bool filter) {
     Log(Log::INFO) << *game;
 
     if (!parallel) {
-        auto taboo = std::make_shared<Taboo>();
+        auto taboo = std::make_shared<Taboo<typename Game::step_type>>();
         Solver<typename Game::step_type> solver(game, taboo, {filter});
         auto solution = solver.solve();
 

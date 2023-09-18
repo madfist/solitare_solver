@@ -11,6 +11,7 @@
 #include <algorithm>
 
 #include "Card.hpp"
+#include "SingleVectorGameState.hpp"
 
 typedef std::vector<CardCode> GameState; ///< State of game represented as ::CardCode vector
 
@@ -20,10 +21,11 @@ std::ostream& operator<<(std::ostream&, const GameState&); ///< Stream output op
  * Abstract card game
  * @tparam Step step type
  */
-template<class Step>
+template<class Step, class State = SingleVectorGameState>
 class Game {
 public:
     typedef Step step_type;
+    using Hash = StateHash<State>;
 
     virtual ~Game() {}
     virtual bool operator==(const Game&) const = 0;       ///< Compare games on state level
@@ -40,8 +42,13 @@ public:
     virtual std::vector<Step> valid_steps() const = 0;    ///< Gather the possible steps from the current state
     virtual bool win() const = 0;                         ///< Tells if the game is in a win state
     virtual bool sanity() const = 0;                      ///< Tells if it even worth trying to solve the game
+    virtual State state() const {
+        return state_;
+    }
     virtual std::ostream& print(std::ostream&) const = 0; ///< Stream output method
     virtual std::istream& read(std::istream&) = 0;        ///< Stream input method
+protected:
+    State state_;
 };
 
 template<class Step>

@@ -30,7 +30,7 @@ public:
         Solution<Step> solution;
         if (!game->sanity())
             return solution.finish(false, 0, 0, 0);
-        auto taboo = std::make_shared<ConcurrentTaboo>();
+        auto taboo = std::make_shared<ConcurrentTaboo<Step>>();
         auto first_steps = game->valid_steps();
         Log(Log::INFO) << "Started " << first_steps.size() << " threads";
         std::vector<std::future<Solution<Step>>> results(first_steps.size());

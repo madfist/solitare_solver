@@ -5,7 +5,6 @@
 #include "Deck.hpp"
 #include "Rules.hpp"
 #include "ScorpionStep.hpp"
-#include "SingleVectorGameState.hpp"
 
 class ScorpionGame : public Game<ScorpionStep> {
 public:
@@ -34,7 +33,7 @@ private:
     bool deadlock() const;
     unsigned locked_down_turned() const;
 
-    SingleVectorGameState state;
+    SingleVectorGameState state_;
     Rules rules;
 };
 

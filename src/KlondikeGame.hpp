@@ -5,7 +5,6 @@
 #include "Deck.hpp"
 #include "KlondikeStep.hpp"
 #include "Rules.hpp"
-#include "SingleVectorGameState.hpp"
 
 typedef unsigned pile; ///< A pile is represented as an `unsigned`
 
@@ -33,7 +32,7 @@ public:
 private:
     bool check_next_step_for_circle(const KlondikeStep&) const;
 
-    SingleVectorGameState state;
+    SingleVectorGameState state_;
     Rules pile_rules;
     Rules foundation_rules;
     bool check_further;

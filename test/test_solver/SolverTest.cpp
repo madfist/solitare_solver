@@ -13,7 +13,7 @@ TEST(solver_test, scorpion_solve_one_step) {
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 
-    std::shared_ptr<Taboo> taboo(new Taboo());
+    std::shared_ptr<Taboo<ScorpionStep>> taboo(new Taboo<ScorpionStep>());
     Solver<ScorpionStep> solver(game, taboo);
     Solution<ScorpionStep> solution = solver.solve();
 
@@ -25,7 +25,7 @@ TEST(solver_test, scorpion_solve_insane) {
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 
-    std::shared_ptr<Taboo> taboo(new Taboo());
+    std::shared_ptr<Taboo<ScorpionStep>> taboo(new Taboo<ScorpionStep>());
     Solver<ScorpionStep> solver(game, taboo);
     Solution<ScorpionStep> solution = solver.solve();
 
@@ -37,9 +37,10 @@ TEST(solver_test, scorpion_win_with_taboo) {
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 
-    std::shared_ptr<Taboo> taboo(new Taboo());
+    std::shared_ptr<Taboo<ScorpionStep>> taboo(new Taboo<ScorpionStep>());
     Solver<ScorpionStep> solver(game, taboo);
     Solution<ScorpionStep> solution = solver.solve();
+    Trace(TraceComponent::TEST) << *game;
 
     EXPECT_TRUE(game->win());
     EXPECT_GT(taboo->size(), 0);
@@ -51,7 +52,7 @@ TEST(solver_test, scorpion_no_solution) {
     if (! *game)
         FAIL() << "Cannot load game data" << std::endl;
 
-    std::shared_ptr<Taboo> taboo(new Taboo());
+    std::shared_ptr<Taboo<ScorpionStep>> taboo(new Taboo<ScorpionStep>());
     Solver<ScorpionStep> solver(game, taboo);
     Solution<ScorpionStep> solution = solver.solve();
 

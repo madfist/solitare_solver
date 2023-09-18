@@ -2,9 +2,9 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "TestUtils.hpp"
 
 #define private public
+#include "TestUtils.hpp"
 #include "KlondikeGame.hpp"
 #undef private
 
@@ -17,15 +17,15 @@ TEST(klondike_game_test, from_deck) {
     Deck deck;
     KlondikeGame game(deck);
     // std::cout << game << std::endl;
-    // std::cout << game.state << std::endl;
+    // std::cout << game.state_ << std::endl;
 
-    GameState positions(game.state.state.begin(), game.state.state.begin()+11);
+    GameState positions(game.state_.state.begin(), game.state_.state.begin()+11);
     EXPECT_THAT(positions, testing::ElementsAre(12, 14, 17, 21, 26, 32, 39, 39, 39, 39, 39));
 
-    GameState firstthree(game.state.state.begin()+11, game.state.state.begin()+14);
+    GameState firstthree(game.state_.state.begin()+11, game.state_.state.begin()+14);
     EXPECT_THAT(firstthree, testing::ElementsAre(Card("DK^").get(), Card("DQ_").get(), Card("DJ^").get()));
 
-    GameState lastthree(game.state.state.end()-3, game.state.state.end());
+    GameState lastthree(game.state_.state.end()-3, game.state_.state.end());
     EXPECT_THAT(lastthree, testing::ElementsAre(Card("S3^").get(), Card("S2^").get(), Card("SA^").get()));
 }
 

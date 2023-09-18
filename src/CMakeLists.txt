@@ -19,7 +19,7 @@ set(LIB_SRCS
     VersatileMask.hpp
     ParallelSolver.hpp
     PrettyPrint.hpp
-    Taboo.hpp Taboo.cpp
+    Taboo.hpp
     Trace.hpp Trace.cpp)
 
 add_library(solver STATIC ${LIB_SRCS})

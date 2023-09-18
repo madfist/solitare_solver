@@ -137,4 +137,12 @@ Output& operator<<(PrettyPrintWrapper<Output> ppw, const SingleVectorGameState& 
     return ppw.output;
 }
 
+/// Helper functor for hash operations (for unordered_set)
+template <class State = SingleVectorGameState>
+struct StateHash {
+    std::size_t operator()(const State& state) const {
+        return state.hash();
+    }
+};
+
 #endif

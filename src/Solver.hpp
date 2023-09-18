@@ -24,7 +24,7 @@ struct SolverProperties {
 template<class Step>
 class Solver {
 public:
-    Solver(GamePtr<Step> g, std::shared_ptr<Taboo> t, SolverProperties p = {false})
+    Solver(GamePtr<Step> g, std::shared_ptr<Taboo<Step>> t, SolverProperties p = {false})
         : game(g)
         , taboo(t)
         , level(0)
@@ -47,9 +47,9 @@ public:
         int i = 0;
         while (!game->win()) {
             ++solution;
-            if (!taboo->check(game->hash())) {
+            if (!taboo->check(game->state())) {
                 next_node_id = next_node(current_node_id);
-                taboo->add(game->hash());
+                taboo->add(game->state());
             } else {
                 --solution;
             }
@@ -172,7 +172,7 @@ private:
     GamePtr<Step> game;
     std::vector<StepNode<Step>> nodes;
     std::unordered_set<Step, typename Step::Hash> previous_steps;
-    std::shared_ptr<Taboo> taboo;
+    std::shared_ptr<Taboo<Step>> taboo;
     unsigned level, max_level;
 };
 
